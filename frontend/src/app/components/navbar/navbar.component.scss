@@ -1,44 +1,38 @@
 $navbar-background-color: #497af5;
 $navbar-active-link-color: #dae2f5;
 
-.navbar {
+.app-navbar {
   background-color: $navbar-background-color;
   position: fixed;
+  z-index: 20;
+  top: 0;
 
-  .navbar__logo {
+  .app-navbar__logo {
     text-decoration: none;
     color: white;
+    font-size: 25px;
   }
 
-  .navbar__spacer {
+  .app-navbar__spacer {
     flex: 1 1 auto;
   }
 
-  .navbar__desktop {
+  .app-navbar__desktop {
     list-style: none;
     display: flex;
+    margin: 0;
 
     li {
       margin: 30px;
       position: relative;
     }
 
-    .navbar__desktop--active {
-      color: $navbar-active-link-color;
-      &::after {
-        content: "";
-        height: 3px;
-        width: 100%;
-        background: $navbar-active-link-color;
-        position: absolute;
-        left: 0;
-        bottom: 0px;
-      }
-    }
-
-    .navbar__desktop--link {
+    .app-navbar__desktop--link {
       color: #fff;
       text-decoration: none;
+      text-transform: uppercase;
+      font-size: 15px;
+      padding: 0 6px;
       cursor: pointer;
       transition: 0.5s ease-in-out;
       &::after {
@@ -59,20 +53,22 @@ $navbar-active-link-color: #dae2f5;
       }
     }
 
-    .navbar__desktop--icon {
+    .app-navbar__desktop--active {
+      color: $navbar-active-link-color;
+      &::after {
+        content: "";
+        height: 3px;
+        width: 100%;
+        background: $navbar-active-link-color;
+        position: absolute;
+        left: 0;
+        bottom: 0px;
+      }
+    }
+
+    .app-navbar__desktop--icon {
       display: flex;
       align-items: center;
-    }
-  }
-
-  @media (max-width: 800px) {
-    .navbar__desktop {
-      display: none;
-    }
-  }
-  @media (min-width: 800px) {
-    .navbar__mobile {
-      display: none;
     }
   }
 }
