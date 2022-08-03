@@ -1,0 +1,72 @@
+<div class="app-signin">
+  <mat-card class="app-signin__card row">
+    <div class="app-signin__card--left col-lg-12 col-md-12 col-sm-12">
+      <form [formGroup]="loginForm">
+        <h1>Logowanie</h1>
+        <div>
+          <mat-form-field appearance="outline" class="app-signin__card--input">
+            <mat-label>Email</mat-label>
+            <input matInput formControlName="email" required />
+            <mat-error
+              *ngIf="
+                loginForm.get('email')?.invalid &&
+                loginForm.get('email')?.touched
+              "
+              >To pole jest wymagane</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="app-signin__card--input">
+            <mat-label>Hasło</mat-label>
+            <input
+              matInput
+              formControlName="password"
+              [type]="passwordIsHide ? 'password' : 'text'"
+            />
+            <button
+              class="app-signin__card--password-button"
+              mat-icon-button
+              matSuffix
+              (click)="passwordIsHide = !passwordIsHide"
+            >
+              <mat-icon>{{
+                passwordIsHide ? "visibility_off" : "visibility"
+              }}</mat-icon>
+            </button>
+            <mat-error
+              *ngIf="
+                loginForm.get('password')?.invalid &&
+                loginForm.get('password')?.touched
+              "
+              >To pole jest wymagane</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div
+          *ngIf="!loginDataAreCorrect"
+          class="app-signin__card--error-message"
+        >
+          Tu bedzię error
+        </div>
+        <div class="app-signin__card--login-button">
+          <button (click)="login()">Zaloguj się</button>
+        </div>
+      </form>
+    </div>
+    <div class="app-signin__card--right col-lg-12 col-md-12 col-sm-12">
+      <h1>Zarządzaj swoją dietą w prosty i szybki sposób!</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
+        velit esse cillum dolore eu fugiat nulla pariatur.
+      </p>
+      <h2>Nie masz konta? Zarejestruj się!</h2>
+      <button routerLink="/register" class="app-signin__card--register-button">
+        REJESTRACJA
+      </button>
+    </div>
+  </mat-card>
+</div>

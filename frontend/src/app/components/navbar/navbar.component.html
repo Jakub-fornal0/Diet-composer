@@ -1,41 +1,37 @@
-<mat-toolbar class="navbar" color="primary">
+<mat-toolbar class="app-navbar" color="primary">
   <span>
-    <a class="navbar__logo" routerLink="/">DietComposer</a>
+    <a class="app-navbar__logo" routerLink="/">DietComposer</a>
   </span>
-  <span class="navbar__spacer"></span>
-  <ul class="navbar__desktop">
+  <span class="app-navbar__spacer"></span>
+  <ul class="app-navbar__desktop">
     <li>
       <a
-        mat-button
         routerLink="/recipes"
-        routerLinkActive="navbar__desktop--active"
-        class="navbar__desktop--link"
+        routerLinkActive="app-navbar__desktop--active"
+        class="app-navbar__desktop--link"
         >Przepisy</a
       >
     </li>
     <li *ngIf="userIsAuthenticated">
       <a
-        mat-button
         routerLink="/products"
-        routerLinkActive="navbar__desktop--active"
-        class="navbar__desktop--link"
+        routerLinkActive="app-navbar__desktop--active"
+        class="app-navbar__desktop--link"
         >Produkty</a
       >
     </li>
     <li *ngIf="userIsAuthenticated">
       <a
-        mat-button
         routerLink="/schedule"
-        routerLinkActive="navbar__desktop--active"
-        class="navbar__desktop--link"
+        routerLinkActive="app-navbar__desktop--active"
+        class="app-navbar__desktop--link"
         >Harmonogram</a
       >
     </li>
     <li *ngIf="userIsAuthenticated">
       <a
-        mat-button
         [matMenuTriggerFor]="account_menu"
-        class="navbar__desktop--link navbar__desktop--icon"
+        class="app-navbar__desktop--link app-navbar__desktop--icon"
       >
         <mat-icon>perm_identity</mat-icon> Konto
       </a>
@@ -48,10 +44,9 @@
     </li>
     <li *ngIf="!userIsAuthenticated">
       <a
-        mat-button
         routerLink="/login"
-        routerLinkActive="navbar__desktop--active"
-        class="navbar__desktop--link"
+        routerLinkActive="app-navbar__desktop--active"
+        class="app-navbar__desktop--link"
         >Logowanie</a
       >
     </li>
