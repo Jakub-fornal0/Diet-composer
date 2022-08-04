@@ -27,6 +27,14 @@ export class SignupComponent implements OnInit {
   register() {
     if (!this.registerForm.valid) {
       this.registerForm.markAllAsTouched();
+    } else {
+      this.registerData.userName = this.registerForm.get('name')?.value;
+      this.registerData.email = this.registerForm.get('email')?.value;
+      this.registerData.password = this.registerForm.get('password')?.value;
+      //
+      // JAK BEDZIE BACKEND ZROBIC SERWIS DO REJESTRACJI I UZUPELNIC
+      // JAK ZLE DANE WSTAWIC WIADOMOSC DO ERRORA
+      //
     }
   }
 }
