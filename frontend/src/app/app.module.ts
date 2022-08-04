@@ -14,9 +14,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SigninComponent } from './components/signin/signin.component';
+import { SignupComponent } from './components/signup/signup.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SigninComponent],
+  declarations: [AppComponent, NavbarComponent, SigninComponent, SignupComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
