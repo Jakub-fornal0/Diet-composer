@@ -47,7 +47,7 @@
           *ngIf="!loginDataAreCorrect"
           class="app-signin__card--error-message"
         >
-          Tu bedzię error
+          {{ error }}
         </div>
         <div class="app-signin__card--login-button">
           <button (click)="login()">Zaloguj się</button>
