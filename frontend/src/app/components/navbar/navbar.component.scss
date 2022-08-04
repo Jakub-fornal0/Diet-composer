@@ -1,15 +1,17 @@
-$navbar-background-color: #497af5;
-$navbar-active-link-color: #dae2f5;
+$navbar-background-color: #f7f6e6;
+$navbar-active-link-color: #858582;
+$navbar-main-link-color: #616159;
 
 .app-navbar {
   background-color: $navbar-background-color;
+  height: 75px;
   position: fixed;
   z-index: 20;
   top: 0;
 
   .app-navbar__logo {
     text-decoration: none;
-    color: white;
+    color: $navbar-main-link-color;
     font-size: 25px;
   }
 
@@ -28,7 +30,7 @@ $navbar-active-link-color: #dae2f5;
     }
 
     .app-navbar__desktop--link {
-      color: #fff;
+      color: $navbar-main-link-color;
       text-decoration: none;
       text-transform: uppercase;
       font-size: 15px;
