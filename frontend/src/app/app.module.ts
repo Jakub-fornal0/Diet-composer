@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -18,7 +19,13 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SigninComponent, SignupComponent, ProductsComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    SigninComponent,
+    SignupComponent,
+    ProductsComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,6 +39,7 @@ import { ProductsComponent } from './components/products/products.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatAutocompleteModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -1,5 +1,5 @@
 $signin-background-color: #f2f4f7;
-$signin-right-card-background-color: #f7f6e6;
+$signin-register-card-background-color: #f7f6e6;
 $signin-text-main-color: #616159;
 $register-button-color: white;
 
@@ -17,7 +17,7 @@ $register-button-color: white;
     width: 900px;
     height: 500px;
 
-    .app-signin__card--left {
+    .app-signin__card--login {
       width: 450px;
       display: flex;
       flex-direction: column;
@@ -73,11 +73,11 @@ $register-button-color: white;
           font-size: 14px;
           cursor: pointer;
           transition: 0.5s ease-in-out;
-          background-color: $signin-right-card-background-color;
+          background-color: $signin-register-card-background-color;
           color: $signin-text-main-color;
 
           &:hover {
-            background-color: rgba($signin-right-card-background-color, 0.9);
+            background-color: rgba($signin-register-card-background-color, 0.9);
             transform: scale(1.01);
             -webkit-box-shadow: -4px 6px 18px -5px rgba(161, 165, 206, 1);
             -moz-box-shadow: -4px 6px 18px -5px rgba(161, 165, 206, 1);
@@ -87,14 +87,14 @@ $register-button-color: white;
       }
     }
 
-    .app-signin__card--right {
+    .app-signin__card--register {
       width: 450px;
       padding: 20px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      background-color: $signin-right-card-background-color;
+      background-color: $signin-register-card-background-color;
       margin-top: 0;
       color: $signin-text-main-color;
       text-align: center;
@@ -147,10 +147,10 @@ $register-button-color: white;
       height: 900px;
       margin-top: 90px;
       margin-bottom: 40px;
-      .app-signin__card--left {
+      .app-signin__card--login {
         width: 600px;
       }
-      .app-signin__card--right {
+      .app-signin__card--register {
         width: 600px;
       }
     }
@@ -162,10 +162,10 @@ $register-button-color: white;
     .app-signin__card {
       width: 500px;
       height: 900px;
-      .app-signin__card--left {
+      .app-signin__card--login {
         width: 500px;
       }
-      .app-signin__card--right {
+      .app-signin__card--register {
         width: 500px;
       }
     }
@@ -177,7 +177,7 @@ $register-button-color: white;
     .app-signin__card {
       width: 300px;
       height: 900px;
-      .app-signin__card--left {
+      .app-signin__card--login {
         width: 300px;
         .app-signin__card--input {
           width: 250px;
@@ -193,7 +193,7 @@ $register-button-color: white;
           }
         }
       }
-      .app-signin__card--right {
+      .app-signin__card--register {
         width: 300px;
         h1 {
           font-size: 20px;

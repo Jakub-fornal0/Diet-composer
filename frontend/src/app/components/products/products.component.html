@@ -1,1 +1,43 @@
-<p>products works!</p>
+<div class="app-products">
+  <mat-card class="app-products__card">
+    <div class="app-products__card--insert-products">
+      <h1>Wprowadz produkty</h1>
+      <p>na ich podstawie zostanął dobrane przepisy.</p>
+      <form [formGroup]="productForm">
+        <div>
+          <mat-form-field appearance="outline">
+            <mat-label>Produkt</mat-label>
+            <input
+              (focus)="checkProductExist()"
+              (keyup)="checkProductExist()"
+              matInput
+              [matAutocomplete]="auto"
+              formControlName="product"
+            />
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              [displayWith]="getProductName"
+            >
+              <mat-option
+                *ngFor="let product of filteredProducts | async"
+                [value]="product"
+              >
+                <span>{{ product.name }}</span>
+              </mat-option>
+            </mat-autocomplete>
+            <mat-icon matSuffix>search</mat-icon>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field appearance="outline" class="app-signin__card--input">
+            <mat-label>Ilość</mat-label>
+            <input matInput type="number" formControlName="quantity" />
+            <span matSuffix>{{ inputMeasureUnit }}</span>
+          </mat-form-field>
+        </div>
+      </form>
+      <button (click)="add()">dodaj</button>
+    </div>
+    <div class="app-products__card--products-list"></div>
+  </mat-card>
+</div>
