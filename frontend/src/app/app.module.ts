@@ -15,9 +15,10 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SigninComponent, SignupComponent],
+  declarations: [AppComponent, NavbarComponent, SigninComponent, SignupComponent, ProductsComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
