@@ -1,7 +1,10 @@
 import { Product } from './../../interfaces/product.model';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { map, Observable, startWith } from 'rxjs';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { map, Observable } from 'rxjs';
+import { LocalStorageService } from '../../services/local-storage.service';
+import { LocalStorageConsts } from '../../consts/localstorage-consts';
 
 @Component({
   selector: 'app-products',
@@ -11,9 +14,11 @@ import { map, Observable, startWith } from 'rxjs';
 export class ProductsComponent implements OnInit {
   productForm: FormGroup;
   filteredProducts?: Observable<Product[]>;
-  productId?: number;
   inputMeasureUnit: string = '';
   chosenProducts: Product[] = [];
+  chosenproductId?: number;
+  chosenProductDataAreCorrect: boolean = false;
+  productIsChosen: boolean = false;
 
   // mockup produktów DO USUNIECIA JAK BEDZIE POLĄCZENIE Z BAZA
   products: Product[] = [
@@ -75,15 +80,18 @@ export class ProductsComponent implements OnInit {
   ];
   // ---------------------------------------------------------//
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private localStorageService: LocalStorageService
+  ) {
     this.productForm = this.formBuilder.group({
       product: [''],
       quantity: [''],
     });
 
     this.filteredProducts = this.productForm.get('product')?.valueChanges.pipe(
-      map((value) => {
-        const name = typeof value === 'string' ? value : value?.name;
+      map((product) => {
+        const name = typeof product === 'string' ? product : product?.name;
         return name
           ? this.products.filter((product) =>
               product.name.toLowerCase().includes(name.toLowerCase())
@@ -91,46 +99,102 @@ export class ProductsComponent implements OnInit {
           : this.products.slice();
       })
     );
+
+    this.productForm?.valueChanges.subscribe(() => {
+      this.checkValidation();
+    });
   }
 
   ngOnInit(): void {
     this.productForm.get('quantity')?.disable();
+
+    const dataFromLocalStorage =
+      this.localStorageService.getItemFromLocalStorage<Product[]>(
+        LocalStorageConsts.PRODUCTS
+      );
+    if (dataFromLocalStorage) {
+      this.chosenProducts = dataFromLocalStorage;
+    }
   }
 
   checkProductExist() {
+    this.productForm.get('quantity')?.reset();
     this.productForm.get('quantity')?.disable();
     this.inputMeasureUnit = '';
+    this.productIsChosen = false;
+
     const productName =
       typeof this.productForm.get('product')?.value === 'string'
         ? this.productForm.get('product')?.value
         : this.productForm.get('product')?.value.name;
 
     this.products.forEach((product) => {
+      const productIdExistInChosenProducts = this.chosenProducts.find(
+        (product) => product.id === this.productForm.get('product')?.value.id
+      );
+
+      if (productIdExistInChosenProducts) {
+        this.productIsChosen = true;
+      }
+
       if (
         product.name.toLowerCase() === productName.toLowerCase() &&
-        product.id
+        product.id &&
+        !this.productIsChosen
       ) {
         this.inputMeasureUnit = product.measureUnit;
-        this.productId = product.id;
+        this.chosenproductId = product.id;
         this.productForm.get('quantity')?.enable();
       }
     });
   }
 
-  add() {
+  addProduct() {
     this.chosenProducts.push({
-      id: this.productId,
+      id: this.chosenproductId,
       name: this.productForm.get('product')?.value.name,
       measureUnit: this.inputMeasureUnit,
       quantity: this.productForm.get('quantity')?.value,
     });
-    console.log(this.chosenProducts);
+
+    this.localStorageService.setItemToLocalStorage(
+      LocalStorageConsts.PRODUCTS,
+      this.chosenProducts
+    );
+
     this.productForm.get('product')?.setValue('');
     this.productForm.get('quantity')?.reset();
     this.inputMeasureUnit = '';
   }
 
+  deleteProduct(index: number) {
+    this.chosenProducts.splice(index, 1);
+    this.localStorageService.setItemToLocalStorage(
+      LocalStorageConsts.PRODUCTS,
+      this.chosenProducts
+    );
+  }
+
+  checkValidation() {
+    if (
+      this.productForm.get('product')?.value &&
+      this.productForm.get('quantity')?.value
+    ) {
+      this.chosenProductDataAreCorrect = true;
+    } else {
+      this.chosenProductDataAreCorrect = false;
+    }
+  }
+
   getProductName(product: Product) {
     return product.name;
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(
+      this.chosenProducts,
+      event.previousIndex,
+      event.currentIndex
+    );
   }
 }

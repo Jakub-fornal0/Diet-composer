@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -40,6 +41,7 @@ import { ProductsComponent } from './components/products/products.component';
     MatInputModule,
     MatButtonModule,
     MatAutocompleteModule,
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
