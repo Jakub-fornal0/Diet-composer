@@ -9,15 +9,24 @@ import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { ProductsComponent } from './components/products/products.component';
 
 @NgModule({
-  declarations: [AppComponent, NavbarComponent, SigninComponent, SignupComponent],
+  declarations: [
+    AppComponent,
+    NavbarComponent,
+    SigninComponent,
+    SignupComponent,
+    ProductsComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,6 +40,8 @@ import { SignupComponent } from './components/signup/signup.component';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    MatAutocompleteModule,
+    DragDropModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

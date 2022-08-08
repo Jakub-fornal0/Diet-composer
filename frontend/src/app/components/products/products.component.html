@@ -1,0 +1,96 @@
+<div class="app-products">
+  <mat-card class="app-products__card row">
+    <div
+      class="app-products__card--insert-products col-lg-12 col-md-12 col-sm-12"
+    >
+      <h1>Wprowadź produkty</h1>
+      <p>na ich podstawie zostanął dobrane przepisy.</p>
+      <form [formGroup]="productForm">
+        <div>
+          <mat-form-field
+            appearance="outline"
+            class="app-products__card--input"
+          >
+            <mat-label>Produkt</mat-label>
+            <input
+              (focus)="checkProductExist()"
+              (keyup)="checkProductExist()"
+              matInput
+              [matAutocomplete]="auto"
+              formControlName="product"
+            />
+            <mat-autocomplete
+              #auto="matAutocomplete"
+              [displayWith]="getProductName"
+            >
+              <mat-option
+                *ngFor="let product of filteredProducts | async"
+                [value]="product"
+              >
+                <span>{{ product.name }}</span>
+              </mat-option>
+            </mat-autocomplete>
+            <mat-icon matSuffix>search</mat-icon>
+            <mat-hint *ngIf="productIsChosen"
+              ><span class="mat-error"
+                >Produkt został już wprowadzony!</span
+              ></mat-hint
+            >
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field
+            appearance="outline"
+            class="app-products__card--input"
+          >
+            <mat-label>Ilość</mat-label>
+            <input matInput type="number" formControlName="quantity" />
+            <span matSuffix>{{ inputMeasureUnit }}</span>
+          </mat-form-field>
+        </div>
+      </form>
+      <div>
+        <button
+          [disabled]="!chosenProductDataAreCorrect"
+          (click)="addProduct()"
+          color="primary"
+          mat-mini-fab
+        >
+          <mat-icon>add</mat-icon>
+        </button>
+      </div>
+    </div>
+    <div class="app-products__card--products col-lg-12 col-md-12 col-sm-12">
+      <div
+        class="app-products__card--empty-list"
+        *ngIf="!chosenProducts.length"
+      >
+        <h2>Nie wprowadzono produktów.</h2>
+      </div>
+      <div *ngIf="chosenProducts.length">
+        <h2>Twoje produkty:</h2>
+        <div
+          (cdkDropListDropped)="drop($event)"
+          cdkDropList
+          class="app-products__card--products-list-box"
+        >
+          <div
+            *ngFor="let product of chosenProducts; let i = index"
+            cdkDrag
+            class="app-products__card--products-list"
+          >
+            <span class="app-products__card--name-span">{{
+              product.name
+            }}</span>
+            <span class="app-products__card--quantity-span"
+              >{{ product.quantity }} {{ product.measureUnit }}</span
+            >
+            <button (click)="deleteProduct(i)" mat-button>
+              <mat-icon class="app-products__card--delete-icon">close</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card>
+</div>
