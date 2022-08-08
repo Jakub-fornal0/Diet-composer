@@ -1,6 +1,8 @@
 <div class="app-products">
-  <mat-card class="app-products__card">
-    <div class="app-products__card--insert-products">
+  <mat-card class="app-products__card row">
+    <div
+      class="app-products__card--insert-products col-lg-12 col-md-12 col-sm-12"
+    >
       <h1>Wprowadź produkty</h1>
       <p>na ich podstawie zostanął dobrane przepisy.</p>
       <form [formGroup]="productForm">
@@ -58,7 +60,7 @@
         </button>
       </div>
     </div>
-    <div class="app-products__card--products">
+    <div class="app-products__card--products col-lg-12 col-md-12 col-sm-12">
       <div
         class="app-products__card--empty-list"
         *ngIf="!chosenProducts.length"

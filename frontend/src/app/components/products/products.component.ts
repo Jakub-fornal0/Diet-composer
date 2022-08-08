@@ -90,10 +90,10 @@ export class ProductsComponent implements OnInit {
     });
 
     this.filteredProducts = this.productForm.get('product')?.valueChanges.pipe(
-      map((product) => {
+      map((product: Product) => {
         const name = typeof product === 'string' ? product : product?.name;
         return name
-          ? this.products.filter((product) =>
+          ? this.products.filter((product: Product) =>
               product.name.toLowerCase().includes(name.toLowerCase())
             )
           : this.products.slice();
@@ -128,7 +128,7 @@ export class ProductsComponent implements OnInit {
         ? this.productForm.get('product')?.value
         : this.productForm.get('product')?.value.name;
 
-    this.products.forEach((product) => {
+    this.products.forEach((product: Product) => {
       const productIdExistInChosenProducts = this.chosenProducts.find(
         (product) => product.id === this.productForm.get('product')?.value.id
       );
@@ -173,6 +173,11 @@ export class ProductsComponent implements OnInit {
       LocalStorageConsts.PRODUCTS,
       this.chosenProducts
     );
+    if (!this.chosenProducts.length) {
+      this.localStorageService.removeItemFromLocalStorage(
+        LocalStorageConsts.PRODUCTS
+      );
+    }
   }
 
   checkValidation() {
