@@ -18,6 +18,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { ProductsComponent } from './components/products/products.component';
+import { RecipesComponent } from './components/recipes/recipes.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { ProductsComponent } from './components/products/products.component';
     SigninComponent,
     SignupComponent,
     ProductsComponent,
+    RecipesComponent,
   ],
   imports: [
     BrowserModule,
