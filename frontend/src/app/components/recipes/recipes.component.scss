@@ -1,8 +1,142 @@
-$products-background-color: #f2f4f7;
+//$products-background-color: #f2f4f7;
+$products-background-color: #fafafa;
+$products-delete-icon-color: #ab1818;
+$font-color: #616159;
 
 .app-recipes {
   background-color: $products-background-color;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
   width: 100%;
   height: 100%;
   margin-top: 75px;
+
+  .row {
+    flex-wrap: nowrap;
+  }
+
+  .app-recipes__container {
+    justify-content: space-between;
+    width: 95%;
+    padding-top: 20px;
+
+    .app-recipes__container--products-expansion-panel {
+      width: 40%;
+
+      mat-panel-title {
+        text-transform: uppercase;
+        font-size: 13px;
+        font-weight: 500;
+      }
+
+      mat-expansion-panel-header {
+        &:hover {
+          background-color: white;
+        }
+      }
+
+      .app-recipes__container--product-length {
+        padding-left: 10px;
+      }
+
+      .app-recipes__container--products-list-box {
+        width: 100%;
+        max-height: 65vh;
+        min-height: 57px;
+        display: block;
+        overflow: auto;
+      }
+
+      .app-recipes__container--products-list {
+        padding: 10px;
+        border-bottom: solid 1px #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &:hover {
+          background-color: $products-background-color;
+        }
+
+        .app-recipes__container--name-span {
+          width: 40%;
+          font-size: 13px;
+          font-weight: 500;
+        }
+        .app-recipes__container--quantity-span {
+          width: 30%;
+          font-size: 13px;
+        }
+
+        .app-recipes__container--delete-icon {
+          color: $products-delete-icon-color;
+        }
+      }
+    }
+
+    .app-recipes__container--add-products {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 30%;
+      height: 48px;
+    }
+
+    .app-recipes__container--add-recipe {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 30%;
+      height: 48px;
+    }
+
+    .app-recipes__container--button {
+      width: 100%;
+      border-radius: 5px;
+      padding: 12px 23px;
+      background-color: $products-background-color;
+      border-color: #616159;
+      border-width: 1px;
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 500;
+      color: $font-color;
+      transition: all 0.7s ease-in-out;
+
+      &:hover {
+        transform: scale(1.02);
+      }
+    }
+
+    .app-recipes__container--filters {
+      width: 25%;
+
+      .app-recipes__container--filters-button {
+        border: none;
+        background: none;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+      }
+    }
+
+    .app-recipes__container--selected-filters {
+      width: 50%;
+      text-align: center;
+      vertical-align: middle;
+      line-height: 26px;
+    }
+
+    .app-recipes__container--number-of-recipes {
+      width: 25%;
+      text-align: right;
+      vertical-align: middle;
+      line-height: 26px;
+      font-weight: 500;
+    }
+  }
 }

@@ -1,3 +1,76 @@
 <div class="app-recipes">
-  <p>ddddddddddddddddddddddddddd</p>
+  <div class="app-recipes__container row">
+    <mat-expansion-panel
+      class="app-recipes__container--products-expansion-panel"
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Wprowadzone produkty:
+          <span class="app-recipes__container--product-length">
+            {{ products.length }}
+          </span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p *ngIf="!products.length">Nie wprowadzono produktów.</p>
+      <div
+        *ngIf="products.length"
+        class="app-recipes__container--products-list-box"
+      >
+        <div
+          *ngFor="let product of products; let i = index"
+          class="app-recipes__container--products-list"
+        >
+          <span class="app-recipes__container--name-span">{{
+            product.name
+          }}</span>
+          <span class="app-recipes__container--quantity-span"
+            >{{ product.quantity }} {{ product.measureUnit }}</span
+          >
+          <button (click)="deleteProduct(i)" mat-button>
+            <mat-icon class="app-recipes__container--delete-icon"
+              >close</mat-icon
+            >
+          </button>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <div class="app-recipes__container--add-products">
+      <button class="app-recipes__container--button" routerLink="/products">
+        Dodaj produkty
+      </button>
+    </div>
+    <div class="app-recipes__container--add-recipe">
+      <button class="app-recipes__container--button" routerLink="/add_recipe">
+        Dodaj przepis
+      </button>
+    </div>
+  </div>
+  <div class="app-recipes__container row">
+    <div class="app-recipes__container--filters">
+      <button
+        (click)="openFiltersDialog('0ms', '0ms')"
+        class="app-recipes__container--filters-button"
+      >
+        <mat-icon>list</mat-icon> Filtry
+      </button>
+    </div>
+    <div class="app-recipes__container--selected-filters">
+      Tu będą wypisane filtry... albo i nie
+    </div>
+    <div class="app-recipes__container--number-of-recipes">
+      Znaleziono przepisów: [tu bedzie jakas liczba]
+    </div>
+  </div>
+  <div class="app-recipes__container row">
+    <div class="app-recipes__container--recipe">przepis</div>
+  </div>
+  <div class="app-recipes__container">
+    <mat-paginator
+      class="app-recipes__container--paginator"
+      [length]="100"
+      [pageSize]="25"
+      [pageSizeOptions]="[5, 10, 15, 25]"
+      (page)="onChangedPage($event)"
+    ></mat-paginator>
+  </div>
 </div>

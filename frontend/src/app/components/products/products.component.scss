@@ -1,4 +1,4 @@
-$products-background-color: #f2f4f7;
+$products-background-color: #fafafa;
 $products-text-main-color: #616159;
 $products-delete-icon-color: #ab1818;
 
@@ -69,7 +69,6 @@ $products-delete-icon-color: #ab1818;
         min-height: 57px;
         border: solid 1px #ccc;
         display: block;
-        background: white;
         border-radius: 4px;
         overflow: auto;
       }
@@ -88,12 +87,12 @@ $products-delete-icon-color: #ab1818;
 
         .app-products__card--name-span {
           width: 40%;
-          font-size: 15px;
+          font-size: 13px;
           font-weight: 500;
         }
         .app-products__card--quantity-span {
           width: 30%;
-          font-size: 15px;
+          font-size: 13px;
         }
 
         .app-products__card--delete-icon {
