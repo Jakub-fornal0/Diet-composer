@@ -23,6 +23,7 @@ import { SignupComponent } from './components/signup/signup.component';
 import { ProductsComponent } from './components/products/products.component';
 import { RecipesComponent } from './components/recipes/recipes.component';
 import { RecipesFilterDialogComponent } from './components/recipes/recipes-filter-dialog/recipes-filter-dialog.component';
+import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe-detail.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { RecipesFilterDialogComponent } from './components/recipes/recipes-filte
     ProductsComponent,
     RecipesComponent,
     RecipesFilterDialogComponent,
+    RecipeDetailComponent,
   ],
   imports: [
     BrowserModule,
