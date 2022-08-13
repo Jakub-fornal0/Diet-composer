@@ -1,4 +1,4 @@
-$products-background-color: #f2f4f7;
+$products-background-color: #fafafa;
 $products-text-main-color: #616159;
 $products-delete-icon-color: #ab1818;
 
@@ -13,12 +13,12 @@ $products-delete-icon-color: #ab1818;
   .app-products__card {
     display: flex;
     padding: 0;
-    width: 1200px;
-    height: 600px;
+    width: 80%;
+    height: 85%;
     margin-top: 75px;
 
     .app-products__card--insert-products {
-      width: 500px;
+      width: 40%;
       padding: 20px;
       display: flex;
       flex-direction: column;
@@ -30,27 +30,27 @@ $products-delete-icon-color: #ab1818;
         font-size: 30px;
         text-transform: uppercase;
         font-weight: bold;
+        text-align: center;
       }
 
       p {
+        text-align: center;
         font-size: 15px;
         padding: 0 15px;
         padding-bottom: 30px;
       }
 
       .app-products__card--input {
-        width: 300px;
+        width: 28vw;
       }
     }
 
     .app-products__card--products {
-      width: 700px;
+      width: 60%;
       padding: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
 
       h2 {
+        text-align: center;
         color: $products-text-main-color;
         font-size: 25px;
       }
@@ -64,19 +64,17 @@ $products-delete-icon-color: #ab1818;
       }
 
       .app-products__card--products-list-box {
-        width: 600px;
-        max-width: 100%;
-        max-height: 460px;
+        width: 100%;
+        max-height: 65vh;
+        min-height: 57px;
         border: solid 1px #ccc;
-        min-height: 60px;
         display: block;
-        background: white;
         border-radius: 4px;
         overflow: auto;
       }
 
       .app-products__card--products-list {
-        padding: 20px 10px;
+        padding: 10px;
         border-bottom: solid 1px #ccc;
         display: flex;
         align-items: center;
@@ -88,13 +86,13 @@ $products-delete-icon-color: #ab1818;
         }
 
         .app-products__card--name-span {
-          width: 200px;
-          font-size: 15px;
+          width: 40%;
+          font-size: 13px;
           font-weight: 500;
         }
         .app-products__card--quantity-span {
-          width: 150px;
-          font-size: 15px;
+          width: 30%;
+          font-size: 13px;
         }
 
         .app-products__card--delete-icon {
@@ -116,23 +114,12 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
-@media (max-width: 1210px) {
+@media (max-width: 1200px) {
   .app-products {
-    width: 100%;
-    height: 100vh;
     .app-products__card {
-      width: 950px;
-      height: 600px;
-
       .app-products__card--insert-products {
-        width: 375px;
-      }
-
-      .app-products__card--products {
-        width: 575px;
-
-        .app-products__card--products-list-box {
-          width: 475px;
+        h1 {
+          font-size: 25px;
         }
       }
     }
@@ -144,53 +131,19 @@ input[type="number"] {
     width: auto;
     height: auto;
     .app-products__card {
-      width: 750px;
-      height: 100%;
       margin-top: 90px;
       margin-bottom: 20px;
 
       .app-products__card--insert-products {
-        width: 750px;
+        width: 100%;
 
         .app-products__card--input {
-          width: 450px;
+          width: 50vw;
         }
       }
 
       .app-products__card--products {
-        width: 750px;
-
-        h2 {
-          text-align: center;
-        }
-
-        .app-products__card--products-list-box {
-          width: 700px;
-        }
-      }
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .app-products {
-    .app-products__card {
-      width: 550px;
-
-      .app-products__card--insert-products {
-        width: 550px;
-
-        .app-products__card--input {
-          width: 400px;
-        }
-      }
-
-      .app-products__card--products {
-        width: 550px;
-
-        .app-products__card--products-list-box {
-          width: 500px;
-        }
+        width: 100%;
       }
     }
   }
@@ -199,15 +152,7 @@ input[type="number"] {
 @media (max-width: 576px) {
   .app-products {
     .app-products__card {
-      width: 300px;
-
       .app-products__card--insert-products {
-        width: 300px;
-
-        .app-products__card--input {
-          width: 200px;
-        }
-
         h1 {
           font-size: 22px;
         }
@@ -218,24 +163,16 @@ input[type="number"] {
       }
 
       .app-products__card--products {
-        width: 300px;
-
         h2 {
           font-size: 20px;
         }
 
-        .app-products__card--products-list-box {
-          width: 250px;
-        }
-
         .app-products__card--products-list {
           .app-products__card--name-span {
-            width: 100px;
             font-size: 12px;
           }
 
           .app-products__card--quantity-span {
-            width: 50px;
             font-size: 12px;
           }
         }
