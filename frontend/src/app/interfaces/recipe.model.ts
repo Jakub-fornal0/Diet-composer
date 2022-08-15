@@ -1,3 +1,5 @@
+import { Product } from './product.model';
+
 export interface Recipe {
   id?: number;
   image: string;
@@ -5,4 +7,20 @@ export interface Recipe {
   description: string;
   cookingTime: string;
   portions: number;
+}
+
+export interface RecipeDetail {
+  id?: number;
+  image: string;
+  name: string;
+  typeOfMeal: string;
+  cookingTime: string;
+  portions: number;
+  products: Product[];
+  recipe: string[];
+  author: string;
+  calories: number;
+  fats: number;
+  proteins: number;
+  carbohydrates: number;
 }

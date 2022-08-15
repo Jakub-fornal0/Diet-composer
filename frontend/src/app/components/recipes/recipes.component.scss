@@ -109,24 +109,6 @@ $font-color: #616159;
       height: 48px;
     }
 
-    .app-recipes__container--show-button {
-      width: 100%;
-      border-radius: 5px;
-      padding: 12px 23px;
-      background-color: white;
-      border-color: $font-color;
-      border-width: 1px;
-      text-transform: uppercase;
-      font-size: 13px;
-      font-weight: 500;
-      color: $font-color;
-      transition: all 0.7s ease-in-out;
-
-      &:hover {
-        transform: scale(1.02);
-      }
-    }
-
     .app-recipes__container--filters {
       width: 25%;
 
@@ -160,37 +142,6 @@ $font-color: #616159;
 
     .app-recipes__container--recipe {
       padding: 15px;
-
-      mat-card {
-        mat-card-title {
-          color: $font-color;
-        }
-        mat-card-subtitle {
-          color: $font-color;
-        }
-      }
-
-      .app-recipes__container--recipe-footer {
-        display: flex;
-
-        .app-recipes__container--recipe-summary {
-          width: 50%;
-          color: $font-color;
-          font-weight: 00;
-          display: flex;
-          .app-recipes__container--recipe-summary-description {
-            width: 30%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-          }
-        }
-
-        .app-recipes__container--recipe-show-button {
-          width: 50%;
-          text-align: center;
-        }
-      }
     }
 
     .app-recipes__container--paginator {

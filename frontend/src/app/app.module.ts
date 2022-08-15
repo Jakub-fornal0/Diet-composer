@@ -24,6 +24,7 @@ import { ProductsComponent } from './components/products/products.component';
 import { RecipesComponent } from './components/recipes/recipes.component';
 import { RecipesFilterDialogComponent } from './components/recipes/recipes-filter-dialog/recipes-filter-dialog.component';
 import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe-detail.component';
+import { RecipeCardComponent } from './components/recipes/recipe-card/recipe-card.component';
 
 @NgModule({
   declarations: [
@@ -35,6 +36,7 @@ import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe
     RecipesComponent,
     RecipesFilterDialogComponent,
     RecipeDetailComponent,
+    RecipeCardComponent,
   ],
   imports: [
     BrowserModule,
