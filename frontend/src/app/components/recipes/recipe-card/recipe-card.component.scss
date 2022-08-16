@@ -1,6 +1,10 @@
 $font-color: #616159;
 
 mat-card {
+  img {
+    height: 300px;
+    object-fit: cover;
+  }
   mat-card-title {
     color: $font-color;
   }
@@ -11,6 +15,8 @@ mat-card {
 
 .app-recipe-card__container--recipe-footer {
   display: flex;
+  border-top: solid 1px #ccc;
+  padding-top: 16px;
 
   .app-recipe-card__container--recipe-summary {
     width: 50%;
@@ -46,5 +52,21 @@ mat-card {
 
   &:hover {
     transform: scale(1.02);
+  }
+}
+
+@media (max-width: 768px) {
+  mat-card {
+    img {
+      height: 350px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  mat-card {
+    img {
+      height: 200px;
+    }
   }
 }

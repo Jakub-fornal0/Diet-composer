@@ -17,8 +17,8 @@ export class ProductsComponent implements OnInit {
   inputMeasureUnit: string = '';
   chosenProducts: Product[] = [];
   chosenproductId?: number;
-  chosenProductDataAreCorrect: boolean = false;
   productIsChosen: boolean = false;
+  productDoesntExist: boolean = false;
 
   // mockup produktów DO USUNIECIA JAK BEDZIE POLĄCZENIE Z BAZA
   products: Product[] = [
@@ -99,10 +99,6 @@ export class ProductsComponent implements OnInit {
           : this.products.slice();
       })
     );
-
-    this.productForm?.valueChanges.subscribe(() => {
-      this.checkValidation();
-    });
   }
 
   ngOnInit(): void {
@@ -118,10 +114,9 @@ export class ProductsComponent implements OnInit {
   }
 
   checkProductExist() {
-    this.productForm.get('quantity')?.reset();
-    this.productForm.get('quantity')?.disable();
-    this.inputMeasureUnit = '';
+    this.resetQuantityInput();
     this.productIsChosen = false;
+    this.productDoesntExist = false;
 
     const productName =
       typeof this.productForm.get('product')?.value === 'string'
@@ -142,9 +137,18 @@ export class ProductsComponent implements OnInit {
         product.id &&
         !this.productIsChosen
       ) {
+        this.productDoesntExist = false;
         this.inputMeasureUnit = product.measureUnit;
         this.chosenproductId = product.id;
         this.productForm.get('quantity')?.enable();
+      }
+
+      if (
+        product.name.toLowerCase() !== productName.toLowerCase() &&
+        this.productForm.get('product')?.value.length
+      ) {
+        this.productDoesntExist = true;
+        this.resetQuantityInput();
       }
     });
   }
@@ -163,8 +167,7 @@ export class ProductsComponent implements OnInit {
     );
 
     this.productForm.get('product')?.setValue('');
-    this.productForm.get('quantity')?.reset();
-    this.inputMeasureUnit = '';
+    this.resetQuantityInput();
   }
 
   deleteProduct(index: number) {
@@ -180,19 +183,24 @@ export class ProductsComponent implements OnInit {
     }
   }
 
-  checkValidation() {
+  checkValidation(): boolean {
     if (
-      this.productForm.get('product')?.value &&
-      this.productForm.get('quantity')?.value
+      this.productForm.get('quantity')?.value &&
+      this.productForm.get('product')?.value.name
     ) {
-      this.chosenProductDataAreCorrect = true;
-    } else {
-      this.chosenProductDataAreCorrect = false;
+      return true;
     }
+    return false;
   }
 
   getProductName(product: Product) {
     return product.name;
+  }
+
+  resetQuantityInput() {
+    this.productForm.get('quantity')?.reset();
+    this.productForm.get('quantity')?.disable();
+    this.inputMeasureUnit = '';
   }
 
   drop(event: CdkDragDrop<string[]>) {

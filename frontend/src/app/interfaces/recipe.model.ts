@@ -13,12 +13,12 @@ export interface RecipeDetail {
   id?: number;
   image: string;
   name: string;
-  typeOfMeal: string;
+  category: string;
   cookingTime: string;
   portions: number;
   products: Product[];
   recipe: string[];
-  author: string;
+  author?: string;
   calories: number;
   fats: number;
   proteins: number;

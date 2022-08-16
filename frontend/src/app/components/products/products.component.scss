@@ -87,12 +87,12 @@ $products-delete-icon-color: #ab1818;
 
         .app-products__card--name-span {
           width: 40%;
-          font-size: 13px;
+          font-size: 14px;
           font-weight: 500;
         }
         .app-products__card--quantity-span {
           width: 30%;
-          font-size: 13px;
+          font-size: 14px;
         }
 
         .app-products__card--delete-icon {
@@ -163,6 +163,8 @@ input[type="number"] {
       }
 
       .app-products__card--products {
+        padding: 10px;
+
         h2 {
           font-size: 20px;
         }
