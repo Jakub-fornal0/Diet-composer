@@ -8,6 +8,13 @@
         [src]="recipe.image"
         [alt]="recipe.name"
       />
+      <button
+        (click)="openAddtoScheduleDialog('0ms', '0ms')"
+        class="app-recipe-detail--image-button"
+        mat-button
+      >
+        Dodaj do harmonogramu
+      </button>
     </div>
     <div
       class="app-recipe-detail--products-container col-lg-5 col-md-12 col-sm-12"

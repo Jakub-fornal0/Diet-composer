@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { LocalStorageConsts } from '../../../consts/localstorage-consts';
 import { Product } from '../../../interfaces/product.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-recipe-to-schedule.component';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -48,7 +50,10 @@ export class RecipeDetailComponent implements OnInit {
   };
   // _________________________________________________//
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     const dataFromLocalStorage =
@@ -105,5 +110,17 @@ export class RecipeDetailComponent implements OnInit {
       this.recipeStep[i] = 'done';
       this.recipeStep[i + 1] = 'doing';
     }
+  }
+
+  openAddtoScheduleDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.dialog.open(AddRecipeToScheduleComponent, {
+      width: '500px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+      disableClose: true,
+    });
   }
 }
