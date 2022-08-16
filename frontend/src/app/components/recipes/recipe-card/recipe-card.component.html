@@ -1,0 +1,27 @@
+<mat-card>
+  <img mat-card-image [src]="recipe.image" [alt]="recipe.name" />
+  <mat-card-content>
+    <mat-card-title>{{ recipe.name }}</mat-card-title>
+    <mat-card-subtitle>{{ recipe.description }}</mat-card-subtitle>
+  </mat-card-content>
+  <div class="app-recipe-card__container--recipe-footer">
+    <div class="app-recipe-card__container--recipe-summary">
+      <div class="app-recipe-card__container--recipe-summary-description">
+        <mat-icon>access_time</mat-icon>
+        <span>{{ recipe.cookingTime }}</span>
+      </div>
+      <div class="app-recipe-card__container--recipe-summary-description">
+        <mat-icon>person_outline</mat-icon>
+        <span>{{ recipe.portions }}</span>
+      </div>
+    </div>
+    <div class="app-recipe-card__container--recipe-show-button">
+      <button
+        [routerLink]="['/detail', recipe.id]"
+        class="app-recipe-card__container--show-button"
+      >
+        Zobacz
+      </button>
+    </div>
+  </div>
+</mat-card>

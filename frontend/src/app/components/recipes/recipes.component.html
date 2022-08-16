@@ -73,33 +73,7 @@
       class="app-recipes__container--recipe col-12 col-md-6 col-lg-4"
       *ngFor="let recipe of recipes"
     >
-      <mat-card>
-        <img mat-card-image [src]="recipe.image" [alt]="recipe.name" />
-        <mat-card-content>
-          <mat-card-title>{{ recipe.name }}</mat-card-title>
-          <mat-card-subtitle>{{ recipe.description }}</mat-card-subtitle>
-        </mat-card-content>
-        <div class="app-recipes__container--recipe-footer">
-          <div class="app-recipes__container--recipe-summary">
-            <div class="app-recipes__container--recipe-summary-description">
-              <mat-icon>access_time</mat-icon>
-              <span>{{ recipe.cookingTime }}</span>
-            </div>
-            <div class="app-recipes__container--recipe-summary-description">
-              <mat-icon>person_outline</mat-icon>
-              <span>{{ recipe.portions }}</span>
-            </div>
-          </div>
-          <div class="app-recipes__container--recipe-show-button">
-            <button
-              [routerLink]="['/detail', recipe.id]"
-              class="app-recipes__container--show-button"
-            >
-              Zobacz
-            </button>
-          </div>
-        </div>
-      </mat-card>
+      <app-recipe-card [recipe]="recipe"></app-recipe-card>
     </div>
   </div>
   <div class="app-recipes__container">
