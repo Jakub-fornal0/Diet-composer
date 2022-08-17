@@ -111,7 +111,7 @@ export class RecipeDetailComponent implements OnInit {
     return true;
   }
 
-  makeAsDone(i: number) {
+  makeStepAsDone(i: number) {
     const doingIndex = this.recipeStep.indexOf(RecipeStepConsts.DOING);
     const doingIndexDifferenceI: number = doingIndex - i;
     let indexSmallerThanDoingIndex: boolean = false;

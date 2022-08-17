@@ -67,7 +67,7 @@
       >
         <mat-checkbox
           [disabled]="checkDisabled(i)"
-          (click)="makeAsDone(i)"
+          (click)="makeStepAsDone(i)"
         ></mat-checkbox>
         <span
           *ngIf="recipeStep[i] === 'doing'"
