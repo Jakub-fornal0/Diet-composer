@@ -3,7 +3,7 @@ $navbar-active-link-color: #858582;
 $navbar-main-link-color: #616159;
 
 .app-navbar {
-  background-color: $navbar-background-color;
+  background-color: rgba($color: $navbar-background-color, $alpha: 0.9);
   height: 75px;
   position: fixed;
   z-index: 20;

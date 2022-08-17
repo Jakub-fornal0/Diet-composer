@@ -15,6 +15,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -60,6 +61,7 @@ import { AddRecipeToScheduleComponent } from './components/recipes/add-recipe-to
     MatDialogModule,
     MatPaginatorModule,
     MatCheckboxModule,
+    MatButtonToggleModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
