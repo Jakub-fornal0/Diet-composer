@@ -2,9 +2,14 @@ import { RecipeDetail } from './../../../interfaces/recipe.model';
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { LocalStorageConsts } from '../../../consts/localstorage-consts';
+import {
+  RecipeStepConsts,
+  RecipeToScheduleConst,
+} from '../../../consts/recipe-step-consts';
 import { Product } from '../../../interfaces/product.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-recipe-to-schedule.component';
+import { MealData } from '../../../interfaces/schedule.model';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -14,6 +19,7 @@ import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-reci
 export class RecipeDetailComponent implements OnInit {
   products: Product[] = [];
   recipeStep: string[] = [];
+  recipeToSchedule: MealData = RecipeToScheduleConst;
 
   // _________________________MOCKUP _________________________//
   recipe: RecipeDetail = {
@@ -64,8 +70,18 @@ export class RecipeDetailComponent implements OnInit {
       this.products = dataFromLocalStorage;
     }
 
-    this.recipe.recipe.forEach(() => this.recipeStep.push('toDo'));
-    this.recipeStep[0] = 'doing';
+    this.recipe.recipe.forEach(() =>
+      this.recipeStep.push(RecipeStepConsts.TODO)
+    );
+    this.recipeStep[0] = RecipeStepConsts.DOING;
+
+    this.recipeToSchedule.recipeId = this.recipe.id;
+    this.recipeToSchedule.recipeName = this.recipe.name;
+    this.recipeToSchedule.recipeImage = this.recipe.image;
+    this.recipeToSchedule.calories = this.recipe.calories;
+    this.recipeToSchedule.fats = this.recipe.fats;
+    this.recipeToSchedule.carbohydrates = this.recipe.carbohydrates;
+    this.recipeToSchedule.proteins = this.recipe.portions;
   }
 
   checkUserHaveProduct(recipeProduct: Product): boolean {
@@ -84,11 +100,11 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   checkDisabled(i: number): boolean {
-    if (this.recipeStep[i + 1] === 'done') {
+    if (this.recipeStep[i + 1] === RecipeStepConsts.DONE) {
       return true;
     }
 
-    if (i === 0 || this.recipeStep[i - 1] === 'done') {
+    if (i === 0 || this.recipeStep[i - 1] === RecipeStepConsts.DONE) {
       return false;
     }
 
@@ -96,19 +112,22 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   makeAsDone(i: number) {
-    const doingIndex = this.recipeStep.indexOf('doing');
+    const doingIndex = this.recipeStep.indexOf(RecipeStepConsts.DOING);
     const doingIndexDifferenceI: number = doingIndex - i;
     let indexSmallerThanDoingIndex: boolean = false;
 
     if (doingIndexDifferenceI === 1) {
       indexSmallerThanDoingIndex = true;
-      this.recipeStep[i + 1] = 'toDo';
-      this.recipeStep[i] = 'doing';
+      this.recipeStep[i + 1] = RecipeStepConsts.TODO;
+      this.recipeStep[i] = RecipeStepConsts.DOING;
     }
 
-    if (!indexSmallerThanDoingIndex && this.recipeStep[i] === 'doing') {
-      this.recipeStep[i] = 'done';
-      this.recipeStep[i + 1] = 'doing';
+    if (
+      !indexSmallerThanDoingIndex &&
+      this.recipeStep[i] === RecipeStepConsts.DOING
+    ) {
+      this.recipeStep[i] = RecipeStepConsts.DONE;
+      this.recipeStep[i + 1] = RecipeStepConsts.DOING;
     }
   }
 
@@ -121,6 +140,7 @@ export class RecipeDetailComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
       disableClose: true,
+      data: this.recipeToSchedule,
     });
   }
 }

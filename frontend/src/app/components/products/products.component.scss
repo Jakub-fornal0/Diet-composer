@@ -26,6 +26,13 @@ $products-delete-icon-color: #ab1818;
       justify-content: center;
       color: $products-text-main-color;
 
+      .app-products__card--product-icon {
+        width: 35px;
+        height: 35px;
+        font-size: 35px;
+        margin-bottom: 16px;
+      }
+
       h1 {
         font-size: 30px;
         text-transform: uppercase;
