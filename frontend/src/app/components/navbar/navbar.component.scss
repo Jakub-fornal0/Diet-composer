@@ -4,7 +4,10 @@ $navbar-main-link-color: #616159;
 
 .app-navbar {
   background-color: rgba($color: $navbar-background-color, $alpha: 0.9);
-  height: 75px;
+  -webkit-box-shadow: 1px -6px 17px 17px rgba(247, 246, 230, 0.9);
+  -moz-box-shadow: 1px -6px 17px 17px rgba(247, 246, 230, 0.9);
+  box-shadow: 1px -6px 17px 17px rgba(247, 246, 230, 0.9);
+  height: 65px;
   position: fixed;
   z-index: 20;
   top: 0;
