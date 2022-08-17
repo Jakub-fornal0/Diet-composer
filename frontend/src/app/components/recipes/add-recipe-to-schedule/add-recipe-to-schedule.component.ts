@@ -15,6 +15,7 @@ export class AddRecipeToScheduleComponent implements OnInit {
   typeOfMeal = new FormControl('');
   recipe?: MealData;
   schedule: Schedule = ScheduleConsts;
+  typeOfMealIsChosen: boolean = false;
 
   constructor(
     private localStorageService: LocalStorageService,
@@ -31,6 +32,26 @@ export class AddRecipeToScheduleComponent implements OnInit {
     if (dataFromLocalStorage) {
       this.schedule = dataFromLocalStorage;
     }
+
+    this.typeOfMeal.valueChanges.subscribe(() => {
+      this.typeOfMealIsChosen = false;
+      const type = this.typeOfMeal.value;
+      if (type === 'breakfast' && this.schedule[type].recipeId) {
+        this.typeOfMealIsChosen = true;
+      }
+      if (type === 'secondBreakfast' && this.schedule[type].recipeId) {
+        this.typeOfMealIsChosen = true;
+      }
+      if (type === 'lunch' && this.schedule[type].recipeId) {
+        this.typeOfMealIsChosen = true;
+      }
+      if (type === 'tea' && this.schedule[type].recipeId) {
+        this.typeOfMealIsChosen = true;
+      }
+      if (type === 'dinner' && this.schedule[type].recipeId) {
+        this.typeOfMealIsChosen = true;
+      }
+    });
   }
 
   checkTypeIsSelected(): boolean {
