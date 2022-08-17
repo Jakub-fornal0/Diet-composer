@@ -1,0 +1,219 @@
+$signin-background-color: #f2f4f7;
+$signin-register-card-background-color: #f7f6e6;
+$signin-text-main-color: #616159;
+$register-button-color: white;
+
+.app-signin {
+  background-color: $signin-background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  .app-signin__card {
+    display: flex;
+    padding: 0;
+    width: 900px;
+    height: 500px;
+
+    .app-signin__card--login {
+      width: 450px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+
+      h1 {
+        text-align: center;
+        font-size: 40px;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: $signin-text-main-color;
+        padding-bottom: 50px;
+        margin-top: 0;
+        position: relative;
+      }
+
+      .app-signin__card--password-button {
+        outline: none;
+        background: transparent;
+        border: 1px solid transparent;
+      }
+
+      .app-signin__card--input {
+        width: 370px;
+        padding-bottom: 10px;
+      }
+
+      .app-signin__card--error-message {
+        width: 340px;
+        padding: 15px;
+        font-size: 14px;
+        background-color: #f34646;
+        color: white;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .app-signin__card--login-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+          border: none;
+          outline: none;
+          padding: 16px 0;
+          margin-top: 30px;
+          border-radius: 20px;
+          width: 180px;
+          font-weight: bold;
+          font-size: 14px;
+          cursor: pointer;
+          transition: 0.5s ease-in-out;
+          background-color: $signin-register-card-background-color;
+          color: $signin-text-main-color;
+
+          &:hover {
+            background-color: rgba($signin-register-card-background-color, 0.9);
+            transform: scale(1.01);
+            -webkit-box-shadow: -4px 6px 18px -5px rgba(161, 165, 206, 1);
+            -moz-box-shadow: -4px 6px 18px -5px rgba(161, 165, 206, 1);
+            box-shadow: -4px 6px 18px -5px rgba(161, 165, 206, 1);
+          }
+        }
+      }
+    }
+
+    .app-signin__card--register {
+      width: 450px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: $signin-register-card-background-color;
+      margin-top: 0;
+      color: $signin-text-main-color;
+      text-align: center;
+
+      h1 {
+        font-size: 25px;
+        text-transform: uppercase;
+        font-weight: bold;
+      }
+
+      p {
+        font-size: 15px;
+        padding: 0 15px;
+      }
+
+      h2 {
+        text-transform: uppercase;
+        font-size: 20px;
+        padding-top: 40px;
+      }
+
+      .app-signin__card--register-button {
+        border: none;
+        outline: none;
+        padding: 16px 0;
+        border-radius: 20px;
+        width: 180px;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+        transition: 0.5s ease-in-out;
+        background-color: $register-button-color;
+        color: $signin-text-main-color;
+        &:hover {
+          background-color: rgba($register-button-color, 0.7);
+          transform: scale(1.01);
+          -webkit-box-shadow: -4px 6px 18px -5px rgba(205, 205, 205, 1);
+          -moz-box-shadow: -4px 6px 18px -5px rgba(205, 205, 205, 1);
+          box-shadow: -4px 6px 18px -5px rgba(205, 205, 205, 1);
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .app-signin {
+    width: auto;
+    height: auto;
+    .app-signin__card {
+      width: 600px;
+      height: 900px;
+      margin-top: 90px;
+      margin-bottom: 40px;
+      .app-signin__card--login {
+        width: 600px;
+      }
+      .app-signin__card--register {
+        width: 600px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .app-signin {
+    .app-signin__card {
+      width: 500px;
+      height: 900px;
+      .app-signin__card--login {
+        width: 500px;
+      }
+      .app-signin__card--register {
+        width: 500px;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .app-signin {
+    .app-signin__card {
+      width: 300px;
+      height: 900px;
+      .app-signin__card--login {
+        width: 300px;
+        .app-signin__card--input {
+          width: 250px;
+        }
+        h1 {
+          font-size: 25px;
+        }
+        .app-signin__card--login-button {
+          button {
+            padding: 13px 0;
+            width: 150px;
+            font-size: 10px;
+          }
+        }
+      }
+      .app-signin__card--register {
+        width: 300px;
+        h1 {
+          font-size: 20px;
+        }
+
+        p {
+          font-size: 10px;
+        }
+
+        h2 {
+          font-size: 15px;
+        }
+        .app-signin__card--register-button {
+          padding: 13px 0;
+          width: 150px;
+          font-size: 10px;
+        }
+      }
+    }
+  }
+}

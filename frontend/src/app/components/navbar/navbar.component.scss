@@ -1,0 +1,77 @@
+$navbar-background-color: #f7f6e6;
+$navbar-active-link-color: #858582;
+$navbar-main-link-color: #616159;
+
+.app-navbar {
+  background-color: rgba($color: $navbar-background-color, $alpha: 0.9);
+  height: 75px;
+  position: fixed;
+  z-index: 20;
+  top: 0;
+
+  .app-navbar__logo {
+    text-decoration: none;
+    color: $navbar-main-link-color;
+    font-size: 25px;
+  }
+
+  .app-navbar__spacer {
+    flex: 1 1 auto;
+  }
+
+  .app-navbar__desktop {
+    list-style: none;
+    display: flex;
+    margin: 0;
+
+    li {
+      margin: 25px;
+      position: relative;
+    }
+
+    .app-navbar__desktop--link {
+      color: $navbar-main-link-color;
+      text-decoration: none;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 500;
+      padding: 0 6px;
+      cursor: pointer;
+      transition: 0.5s ease-in-out;
+      &::after {
+        content: "";
+        height: 3px;
+        width: 0;
+        background: $navbar-active-link-color;
+        position: absolute;
+        left: 0;
+        bottom: 0px;
+        transition: 0.5s ease-in-out;
+      }
+      &:hover::after {
+        width: 100%;
+      }
+      &:hover {
+        color: $navbar-active-link-color;
+      }
+    }
+
+    .app-navbar__desktop--active {
+      color: $navbar-active-link-color;
+      &::after {
+        content: "";
+        height: 3px;
+        width: 100%;
+        background: $navbar-active-link-color;
+        position: absolute;
+        left: 0;
+        bottom: 0px;
+      }
+    }
+
+    .app-navbar__desktop--icon {
+      display: flex;
+      align-items: center;
+    }
+  }
+}

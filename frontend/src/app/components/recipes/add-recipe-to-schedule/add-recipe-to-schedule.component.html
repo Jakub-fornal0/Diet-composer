@@ -1,0 +1,33 @@
+<div mat-dialog-content class="app-add-recipe-to-schedule__container">
+  <mat-icon>schedule</mat-icon>
+  <h1>Dodaj przepis do harmonogramu</h1>
+  <p>wskaż porę posiłku, na którą ma zostać dodany.</p>
+  <mat-button-toggle-group
+    [formControl]="typeOfMeal"
+    aria-label="Type of meal"
+    class="app-add-recipe-to-schedule__container--toggle-group"
+  >
+    <mat-button-toggle value="breakfast">Śniadanie</mat-button-toggle>
+    <mat-button-toggle value="secondBreakfast">II śniadanie</mat-button-toggle>
+    <mat-button-toggle value="lunch">Obiad</mat-button-toggle>
+    <mat-button-toggle value="tea">Podwieczorek</mat-button-toggle>
+    <mat-button-toggle value="dinner">Kolacja</mat-button-toggle>
+  </mat-button-toggle-group>
+</div>
+<div mat-dialog-actions class="app-add-recipe-to-schedule__buttons">
+  <button
+    mat-button
+    mat-dialog-close
+    class="app-add-recipe-to-schedule__buttons--cancel"
+  >
+    Anuluj
+  </button>
+  <button
+    mat-raised-button
+    mat-dialog-close
+    [disabled]="!checkTypeIsSelected()"
+    (click)="saveMealToSchedule()"
+  >
+    Dodaj
+  </button>
+</div>

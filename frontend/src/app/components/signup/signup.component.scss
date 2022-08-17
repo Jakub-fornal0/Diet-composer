@@ -1,0 +1,143 @@
+$signup-background-color: #f2f4f7;
+$signup-text-main-color: #616159;
+$signup-button-color: #f7f6e6;
+
+.app-signup {
+  background-color: $signup-background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+
+  .app-signup__card {
+    display: flex;
+    padding: 0;
+    width: 900px;
+    height: auto;
+    margin-top: 70px;
+
+    .app-signup__card--inside {
+      width: 900px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 60px 20px;
+
+      h1 {
+        text-align: center;
+        font-size: 40px;
+        text-transform: uppercase;
+        font-weight: bold;
+        color: $signup-text-main-color;
+        padding-bottom: 50px;
+        margin-top: 0;
+        position: relative;
+      }
+
+      .app-signup__card--password-button {
+        outline: none;
+        background: transparent;
+        border: 1px solid transparent;
+      }
+
+      .app-signup__card--input {
+        width: 450px;
+        padding-bottom: 10px;
+      }
+
+      .app-signup__card--error-message {
+        width: 450px;
+        padding: 15px;
+        font-size: 14px;
+        background-color: #f34646;
+        color: white;
+        border-radius: 5px;
+        text-align: center;
+      }
+
+      .app-signup__card--register-button {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        button {
+          border: none;
+          outline: none;
+          padding: 16px 0;
+          margin-top: 30px;
+          border-radius: 20px;
+          width: 180px;
+          font-weight: bold;
+          font-size: 14px;
+          cursor: pointer;
+          transition: 0.5s ease-in-out;
+          background-color: $signup-button-color;
+          color: $signup-text-main-color;
+
+          &:hover {
+            background-color: rgba($signup-button-color, 0.9);
+            transform: scale(1.01);
+            -webkit-box-shadow: -4px 6px 18px -5px rgba(161, 165, 206, 1);
+            -moz-box-shadow: -4px 6px 18px -5px rgba(161, 165, 206, 1);
+            box-shadow: -4px 6px 18px -5px rgba(161, 165, 206, 1);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .app-signup {
+    width: 100%;
+    height: 100vh;
+    .app-signup__card {
+      width: 750px;
+      height: auto;
+      .app-signup__card--inside {
+        width: 750px;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .app-signup {
+    width: 100%;
+    height: 100vh;
+    .app-signup__card {
+      width: 550px;
+      .app-signup__card--inside {
+        width: 550px;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .app-signup {
+    width: 100%;
+    height: 100vh;
+    .app-signup__card {
+      width: 300px;
+      .app-signup__card--inside {
+        width: 300px;
+        .app-signup__card--input {
+          width: 250px;
+        }
+        h1 {
+          font-size: 25px;
+        }
+        .app-signup__card--register-button {
+          button {
+            padding: 13px 0;
+            width: 150px;
+            font-size: 10px;
+          }
+        }
+      }
+    }
+  }
+}

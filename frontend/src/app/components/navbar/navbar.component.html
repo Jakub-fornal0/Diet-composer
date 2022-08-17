@@ -1,0 +1,54 @@
+<mat-toolbar class="app-navbar">
+  <span>
+    <a class="app-navbar__logo" routerLink="/">DietComposer</a>
+  </span>
+  <span class="app-navbar__spacer"></span>
+  <ul class="app-navbar__desktop">
+    <li>
+      <a
+        routerLink="/recipes"
+        routerLinkActive="app-navbar__desktop--active"
+        class="app-navbar__desktop--link"
+        >Przepisy</a
+      >
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a
+        routerLink="/products"
+        routerLinkActive="app-navbar__desktop--active"
+        class="app-navbar__desktop--link"
+        >Produkty</a
+      >
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a
+        routerLink="/schedule"
+        routerLinkActive="app-navbar__desktop--active"
+        class="app-navbar__desktop--link"
+        >Harmonogram</a
+      >
+    </li>
+    <li *ngIf="userIsAuthenticated">
+      <a
+        [matMenuTriggerFor]="account_menu"
+        class="app-navbar__desktop--link app-navbar__desktop--icon"
+      >
+        <mat-icon>perm_identity</mat-icon> Konto
+      </a>
+      <mat-menu #account_menu="matMenu">
+        <a routerLink="/settings" mat-menu-item
+          ><mat-icon>settings</mat-icon>Ustawienia konta</a
+        >
+        <a mat-menu-item><mat-icon>input</mat-icon>Wyloguj</a>
+      </mat-menu>
+    </li>
+    <li *ngIf="!userIsAuthenticated">
+      <a
+        routerLink="/login"
+        routerLinkActive="app-navbar__desktop--active"
+        class="app-navbar__desktop--link"
+        >Logowanie</a
+      >
+    </li>
+  </ul>
+</mat-toolbar>

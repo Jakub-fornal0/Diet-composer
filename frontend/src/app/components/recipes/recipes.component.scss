@@ -1,0 +1,258 @@
+//$recipes-background-color: #f2f4f7;
+$recipes-background-color: #fafafa;
+$recipes-delete-icon-color: #ab1818;
+$font-color: #616159;
+
+.app-recipes {
+  background-color: $recipes-background-color;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-top: 75px;
+
+  .app-recipes__container--add-button {
+    width: 100%;
+    padding: 14px 23px;
+    border-radius: 4px;
+    text-transform: uppercase;
+    color: $font-color;
+    background-color: white;
+    font-size: 13px;
+    font-weight: 500;
+    border: none;
+    background: none;
+    box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+      0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+  }
+  .app-recipes__container:nth-child(3) {
+    padding-top: 0;
+  }
+
+  .app-recipes__container {
+    justify-content: space-between;
+    width: 95%;
+    padding-top: 20px;
+
+    .app-recipes__container--products-expansion-panel {
+      width: 40%;
+
+      mat-panel-title {
+        text-transform: uppercase;
+        color: $font-color;
+        font-size: 13px;
+        font-weight: 500;
+
+        .app-recipes__container--product-length {
+          padding-left: 10px;
+        }
+      }
+
+      mat-expansion-panel-header {
+        &:hover {
+          background-color: white;
+        }
+      }
+
+      .app-recipes__container--products-list-box {
+        width: 100%;
+        max-height: 65vh;
+        min-height: 57px;
+        display: block;
+        overflow: auto;
+      }
+
+      .app-recipes__container--products-list {
+        padding: 10px;
+        border-bottom: solid 1px #ccc;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &:hover {
+          background-color: $recipes-background-color;
+        }
+
+        .app-recipes__container--name-span {
+          width: 40%;
+          font-size: 13px;
+          font-weight: 500;
+        }
+        .app-recipes__container--quantity-span {
+          width: 30%;
+          font-size: 13px;
+        }
+
+        .app-recipes__container--delete-icon {
+          color: $recipes-delete-icon-color;
+        }
+      }
+    }
+
+    .app-recipes__container--add-products {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 30%;
+      height: 48px;
+    }
+
+    .app-recipes__container--add-recipe {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 30%;
+      height: 48px;
+    }
+
+    .app-recipes__container--filters {
+      width: 25%;
+
+      .app-recipes__container--filters-button {
+        border: none;
+        background: none;
+        display: flex;
+        align-items: center;
+        font-weight: 500;
+        color: $font-color;
+      }
+    }
+
+    .app-recipes__container--selected-filters {
+      width: 50%;
+      text-align: center;
+      vertical-align: middle;
+      font-weight: 500;
+      line-height: 26px;
+      color: $font-color;
+    }
+
+    .app-recipes__container--number-of-recipes {
+      width: 25%;
+      text-align: right;
+      vertical-align: middle;
+      line-height: 26px;
+      font-weight: 500;
+      color: $font-color;
+    }
+
+    .app-recipes__container--recipe {
+      padding: 15px;
+    }
+
+    .app-recipes__container--paginator {
+      background-color: $recipes-background-color;
+      color: $font-color;
+      font-weight: 500;
+      font-size: 14px;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .row--without-wrap {
+    flex-wrap: nowrap;
+  }
+}
+
+@media (max-width: 992px) {
+  .app-recipes {
+    .app-recipes__container {
+      .app-recipes__container--products-expansion-panel {
+        width: 100%;
+        margin-bottom: 15px;
+        padding: 0;
+      }
+
+      .app-recipes__container--add-products {
+        width: 49%;
+        padding: 0;
+        margin-right: 5px;
+      }
+
+      .app-recipes__container--add-recipe {
+        width: 49%;
+        padding: 0;
+        margin-left: 5px;
+      }
+
+      .app-recipes__container--filters {
+        width: 25%;
+      }
+
+      .app-recipes__container--selected-filters {
+        width: 46%;
+      }
+
+      .app-recipes__container--number-of-recipes {
+        width: 29%;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .app-recipes {
+    .app-recipes__container {
+      .app-recipes__container--filters {
+        width: 15%;
+      }
+
+      .app-recipes__container--selected-filters {
+        width: 85%;
+        text-align: right;
+      }
+
+      .app-recipes__container--number-of-recipes {
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .app-recipes {
+    .app-recipes__container {
+      .app-recipes__container--add-products {
+        margin-right: 2px;
+      }
+
+      .app-recipes__container--add-recipe {
+        margin-left: 2px;
+      }
+    }
+  }
+}
+
+@media (max-width: 355px) {
+  .app-recipes {
+    .app-recipes__container--add-button {
+      height: 68px;
+    }
+    .app-recipes__container {
+      .app-recipes__container--recipe:nth-child(1) {
+        padding-top: 0;
+      }
+      .app-recipes__container--filters {
+        width: 100%;
+      }
+
+      .app-recipes__container--selected-filters {
+        width: 100%;
+        text-align: left;
+        margin-left: 7px;
+        padding-bottom: 10px;
+      }
+
+      .app-recipes__container--number-of-recipes {
+        width: 100%;
+        text-align: left;
+        margin-left: 7px;
+      }
+    }
+  }
+}
