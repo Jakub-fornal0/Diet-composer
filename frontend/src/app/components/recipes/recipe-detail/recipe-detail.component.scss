@@ -14,6 +14,11 @@ h2 {
   font-weight: 600;
 }
 
+mat-checkbox {
+  display: flex;
+  align-items: center;
+}
+
 .app-recipe-detail {
   background-color: $recipe-detail-background-color;
   display: flex;
@@ -157,10 +162,6 @@ h2 {
       }
     }
   }
-}
-
-::ng-deep .mat-checkbox .mat-checkbox-frame {
-  transform: scale(1.2);
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
