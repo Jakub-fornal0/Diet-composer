@@ -1,10 +1,11 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { MealData, Schedule } from '../../../interfaces/schedule.model';
+import { Schedule } from '../../../interfaces/schedule.model';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { LocalStorageConsts } from '../../../consts/localstorage-consts';
 import { FormControl } from '@angular/forms';
 import { ScheduleConsts } from '../../../consts/schedule-consts';
+import { RecipeDetail } from '../../../interfaces/recipe.model';
 
 @Component({
   selector: 'app-add-recipe-to-schedule',
@@ -13,13 +14,13 @@ import { ScheduleConsts } from '../../../consts/schedule-consts';
 })
 export class AddRecipeToScheduleComponent implements OnInit {
   typeOfMeal = new FormControl('');
-  recipe?: MealData;
+  recipe?: RecipeDetail;
   schedule: Schedule = ScheduleConsts;
   typeOfMealIsChosen: boolean = false;
 
   constructor(
     private localStorageService: LocalStorageService,
-    @Inject(MAT_DIALOG_DATA) public data: MealData
+    @Inject(MAT_DIALOG_DATA) public data: RecipeDetail
   ) {
     this.recipe = data;
   }
@@ -36,19 +37,14 @@ export class AddRecipeToScheduleComponent implements OnInit {
     this.typeOfMeal.valueChanges.subscribe(() => {
       this.typeOfMealIsChosen = false;
       const type = this.typeOfMeal.value;
-      if (type === 'breakfast' && this.schedule[type].recipeId) {
-        this.typeOfMealIsChosen = true;
-      }
-      if (type === 'secondBreakfast' && this.schedule[type].recipeId) {
-        this.typeOfMealIsChosen = true;
-      }
-      if (type === 'lunch' && this.schedule[type].recipeId) {
-        this.typeOfMealIsChosen = true;
-      }
-      if (type === 'tea' && this.schedule[type].recipeId) {
-        this.typeOfMealIsChosen = true;
-      }
-      if (type === 'dinner' && this.schedule[type].recipeId) {
+      if (
+        (type === 'breakfast' ||
+          type === 'secondBreakfast' ||
+          type === 'lunch' ||
+          type === 'tea' ||
+          type === 'dinner') &&
+        this.schedule[type].recipeId
+      ) {
         this.typeOfMealIsChosen = true;
       }
     });
@@ -63,20 +59,21 @@ export class AddRecipeToScheduleComponent implements OnInit {
 
   saveMealToSchedule() {
     const type = this.typeOfMeal.value;
-    if (type === 'breakfast' && this.recipe) {
-      this.schedule.breakfast = this.recipe;
-    }
-    if (type === 'secondBreakfast' && this.recipe) {
-      this.schedule.secondBreakfast = this.recipe;
-    }
-    if (type === 'lunch' && this.recipe) {
-      this.schedule.lunch = this.recipe;
-    }
-    if (type === 'tea' && this.recipe) {
-      this.schedule.tea = this.recipe;
-    }
-    if (type === 'dinner' && this.recipe) {
-      this.schedule.dinner = this.recipe;
+    if (
+      (type === 'breakfast' ||
+        type === 'secondBreakfast' ||
+        type === 'lunch' ||
+        type === 'tea' ||
+        type === 'dinner') &&
+      this.recipe
+    ) {
+      this.schedule[type].recipeId = this.recipe.id;
+      this.schedule[type].recipeName = this.recipe.name;
+      this.schedule[type].recipeImage = this.recipe.image;
+      this.schedule[type].calories = this.recipe.calories;
+      this.schedule[type].fats = this.recipe.fats;
+      this.schedule[type].proteins = this.recipe.proteins;
+      this.schedule[type].carbohydrates = this.recipe.carbohydrates;
     }
 
     this.localStorageService.setItemToLocalStorage(

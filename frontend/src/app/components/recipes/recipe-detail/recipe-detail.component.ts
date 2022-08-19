@@ -2,10 +2,7 @@ import { RecipeDetail } from './../../../interfaces/recipe.model';
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { LocalStorageConsts } from '../../../consts/localstorage-consts';
-import {
-  RecipeStepConsts,
-  RecipeToScheduleConst,
-} from '../../../consts/recipe-step-consts';
+import { RecipeStepConsts } from '../../../consts/recipe-step-consts';
 import { Product } from '../../../interfaces/product.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-recipe-to-schedule.component';
@@ -19,7 +16,6 @@ import { MealData } from '../../../interfaces/schedule.model';
 export class RecipeDetailComponent implements OnInit {
   products: Product[] = [];
   recipeStep: string[] = [];
-  recipeToSchedule: MealData = RecipeToScheduleConst;
 
   // _________________________MOCKUP _________________________//
   recipe: RecipeDetail = {
@@ -74,14 +70,6 @@ export class RecipeDetailComponent implements OnInit {
       this.recipeStep.push(RecipeStepConsts.TODO)
     );
     this.recipeStep[0] = RecipeStepConsts.DOING;
-
-    this.recipeToSchedule.recipeId = this.recipe.id;
-    this.recipeToSchedule.recipeName = this.recipe.name;
-    this.recipeToSchedule.recipeImage = this.recipe.image;
-    this.recipeToSchedule.calories = this.recipe.calories;
-    this.recipeToSchedule.fats = this.recipe.fats;
-    this.recipeToSchedule.carbohydrates = this.recipe.carbohydrates;
-    this.recipeToSchedule.proteins = this.recipe.portions;
   }
 
   checkUserHaveProduct(recipeProduct: Product): boolean {
@@ -140,7 +128,7 @@ export class RecipeDetailComponent implements OnInit {
       enterAnimationDuration,
       exitAnimationDuration,
       disableClose: true,
-      data: this.recipeToSchedule,
+      data: this.recipe,
     });
   }
 }
