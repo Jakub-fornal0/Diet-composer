@@ -1,1 +1,104 @@
-<p>schedule works!</p>
+<div class="app-schedule">
+  <mat-card class="app-schedule__card row">
+    <div
+      class="app-schedule__card--meals-container col-lg-8 col-md-12 col-sm-12"
+    >
+      <div
+        class="app-schedule__card--meals-details"
+        *ngFor="let mealType of typesOfMealENG; let i = index"
+      >
+        <p class="app-schedule__card--meal-type-header">
+          {{ typesOfMealPL[i] }}:
+        </p>
+        <div
+          class="app-schedule__card--meal-details row"
+          *ngIf="
+            (mealType === 'breakfast' ||
+              mealType === 'secondBreakfast' ||
+              mealType === 'lunch' ||
+              mealType === 'tea' ||
+              mealType === 'dinner') &&
+              schedule[mealType].recipeId;
+            else noRecipeSelected
+          "
+        >
+          <mat-checkbox
+            class="app-schedule__card--checkbox col-lg-1 col-md-1 col-sm-1 col-12"
+            (change)="setMealAsEaten(mealType)"
+            [checked]="schedule[mealType].eaten"
+          ></mat-checkbox>
+          <img
+            class="app-schedule__card--recipe-image col-lg-4 col-md-4 col-sm-4 col-12"
+            [routerLink]="['/recipes/detail', schedule[mealType].recipeId]"
+            [src]="schedule[mealType].recipeImage"
+            [alt]="schedule[mealType].recipeName"
+          />
+          <p
+            class="app-schedule__card--recipe-name col-lg-6 col-md-6 col-sm-6 col-12"
+            [routerLink]="['/recipes/detail', schedule[mealType].recipeId]"
+          >
+            {{ schedule[mealType].recipeName }}
+          </p>
+          <mat-icon
+            (click)="deleteMealFromSchedule(mealType)"
+            class="app-schedule__card--delete-icon col-lg-1 col-md-1 col-sm-1 col-12"
+            >delete_outline</mat-icon
+          >
+        </div>
+        <ng-template #noRecipeSelected
+          ><p>Nie wybrano przepisu.</p>
+        </ng-template>
+      </div>
+    </div>
+    <div
+      class="app-schedule__card--details-container col-lg-4 col-md-12 col-sm-12"
+    >
+      <div class="app-schedule__card--details-header">
+        <h1>Statystyki dnia</h1>
+      </div>
+      <div class="app-schedule__card--detail">
+        <p>Data:</p>
+        <p class="app-schedule__card--dotted"></p>
+        <p class="app-schedule__card--detail-to-right">{{ date }}</p>
+      </div>
+      <div class="app-schedule__card--detail">
+        <p>Godzina:</p>
+        <p class="app-schedule__card--dotted"></p>
+        <p class="app-schedule__card--detail-to-right">
+          {{ time | date: "H:mm:ss" }}
+        </p>
+      </div>
+      <div class="app-schedule__card--detail">
+        <p>Kalorie:</p>
+        <p class="app-schedule__card--dotted"></p>
+        <p class="app-schedule__card--detail-to-right">
+          {{ scheduleDetails.eatenCalories }} /
+          {{ scheduleDetails.totalCalories }}
+        </p>
+      </div>
+      <div class="app-schedule__card--detail">
+        <p>Węglowodany:</p>
+        <p class="app-schedule__card--dotted"></p>
+        <p class="app-schedule__card--detail-to-right">
+          {{ scheduleDetails.eatenCarbohydrates }} /
+          {{ scheduleDetails.totalCarbohydrates }}
+        </p>
+      </div>
+      <div class="app-schedule__card--detail">
+        <p>Tłuszcze:</p>
+        <p class="app-schedule__card--dotted"></p>
+        <p class="app-schedule__card--detail-to-right">
+          {{ scheduleDetails.eatenFats }} / {{ scheduleDetails.totalFats }}
+        </p>
+      </div>
+      <div class="app-schedule__card--detail">
+        <p>Białka:</p>
+        <p class="app-schedule__card--dotted"></p>
+        <p class="app-schedule__card--detail-to-right">
+          {{ scheduleDetails.eatenProteins }} /
+          {{ scheduleDetails.totalProteins }}
+        </p>
+      </div>
+    </div>
+  </mat-card>
+</div>

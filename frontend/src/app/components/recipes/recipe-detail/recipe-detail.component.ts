@@ -45,9 +45,9 @@ export class RecipeDetailComponent implements OnInit {
     ],
     author: 'Pędzimąż Andrzej',
     calories: 500,
-    fats: 123,
-    proteins: 123,
-    carbohydrates: 123,
+    fats: 1,
+    proteins: 2,
+    carbohydrates: 3,
   };
   // _________________________________________________//
 
