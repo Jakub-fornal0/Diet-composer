@@ -6,7 +6,6 @@ import { RecipeStepConsts } from '../../../consts/recipe-step-consts';
 import { Product } from '../../../interfaces/product.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-recipe-to-schedule.component';
-import { MealData } from '../../../interfaces/schedule.model';
 
 @Component({
   selector: 'app-recipe-detail',
