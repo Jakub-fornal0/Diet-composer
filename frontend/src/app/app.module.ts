@@ -28,6 +28,7 @@ import { RecipesFilterDialogComponent } from './components/recipes/recipes-filte
 import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe-detail.component';
 import { RecipeCardComponent } from './components/recipes/recipe-card/recipe-card.component';
 import { AddRecipeToScheduleComponent } from './components/recipes/add-recipe-to-schedule/add-recipe-to-schedule.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { AddRecipeToScheduleComponent } from './components/recipes/add-recipe-to
     RecipeDetailComponent,
     RecipeCardComponent,
     AddRecipeToScheduleComponent,
+    ScheduleComponent,
   ],
   imports: [
     BrowserModule,

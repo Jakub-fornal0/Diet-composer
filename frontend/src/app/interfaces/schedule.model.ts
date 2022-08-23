@@ -6,6 +6,7 @@ export interface MealData {
   fats: number;
   proteins: number;
   carbohydrates: number;
+  eaten: boolean;
 }
 
 export interface Schedule {
@@ -14,4 +15,15 @@ export interface Schedule {
   lunch: MealData;
   tea: MealData;
   dinner: MealData;
+}
+
+export interface ScheduleDetails {
+  totalCalories: number;
+  eatenCalories: number;
+  totalCarbohydrates: number;
+  eatenCarbohydrates: number;
+  totalProteins: number;
+  eatenProteins: number;
+  totalFats: number;
+  eatenFats: number;
 }
