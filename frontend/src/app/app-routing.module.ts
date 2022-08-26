@@ -14,6 +14,7 @@ const routes: Routes = [
   { path: 'recipes', component: RecipesComponent },
   { path: 'recipes/detail/:recipeId', component: RecipeDetailComponent },
   { path: 'schedule', component: ScheduleComponent },
+  { path: 'account/settings', component: ScheduleComponent },
 ];
 
 @NgModule({
