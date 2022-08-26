@@ -36,7 +36,6 @@ mat-checkbox {
     margin-bottom: 25px;
 
     .app-recipe-detail--image-container {
-      height: 50%;
       padding: 15px;
       position: relative;
 
@@ -72,7 +71,6 @@ mat-checkbox {
     }
 
     .app-recipe-detail--products-container {
-      height: 50%;
       padding: 15px 60px;
 
       .app-recipe-detail--recipe-name {
@@ -113,21 +111,23 @@ mat-checkbox {
     }
 
     .app-recipe-detail--nutrients-container {
-      height: 50%;
       padding: 25px 60px;
 
       .app-recipe-detail--nutrient-container {
         margin-bottom: 10px;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        align-items: baseline;
 
         .app-recipe-detail--nutrient-name {
-          width: 50%;
           font-weight: 500;
         }
+        .app-recipe-detail--nutrient-dotted {
+          border-bottom: 1px dotted #aaa;
+          flex-grow: 1;
+          margin: 0 10px;
+        }
         .app-recipe-detail--nutrient-value {
-          width: 50%;
+          margin-left: auto;
         }
       }
     }
@@ -208,22 +208,6 @@ mat-checkbox {
           .app-recipe-detail--center-icon {
             width: auto;
             padding-right: 5px;
-          }
-        }
-      }
-      .app-recipe-detail--nutrients-container {
-        .app-recipe-detail--nutrient-container {
-          margin-bottom: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          .app-recipe-detail--nutrient-name {
-            width: 50%;
-            font-weight: 500;
-          }
-          .app-recipe-detail--nutrient-value {
-            width: 50%;
           }
         }
       }

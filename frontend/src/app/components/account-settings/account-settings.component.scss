@@ -1,0 +1,28 @@
+$account-settings-background-color: #fafafa;
+$font-color: #616159;
+
+p,
+h1,
+h2 {
+  margin: 0;
+  padding: 0;
+  color: $font-color;
+}
+
+.app-account-settings {
+  background-color: $account-settings-background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  .app-account-settings__card {
+    display: flex;
+    padding: 0;
+    width: 95%;
+    height: auto;
+    margin-top: 90px;
+    min-height: 85vh;
+  }
+}
