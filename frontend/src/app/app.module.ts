@@ -29,6 +29,7 @@ import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe
 import { RecipeCardComponent } from './components/recipes/recipe-card/recipe-card.component';
 import { AddRecipeToScheduleComponent } from './components/recipes/add-recipe-to-schedule/add-recipe-to-schedule.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
+import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
     RecipeCardComponent,
     AddRecipeToScheduleComponent,
     ScheduleComponent,
+    AccountSettingsComponent,
   ],
   imports: [
     BrowserModule,
