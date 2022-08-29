@@ -1,3 +1,142 @@
 <div class="app-account-settings">
-  <mat-card class="app-account-settings__card row">ddddd</mat-card>
+  <mat-card class="app-account-settings__card row">
+    <div
+      class="app-account-settings__card--image-login-data-container col-lg-4 col-md-6 col-sm-12"
+    >
+      <img
+        class="app-account-settings__card--image"
+        [src]="userData.userImage"
+        [alt]="userData.userName"
+      />
+      <button class="app-account-settings__card--change-button">
+        Zmień zdjęcie
+      </button>
+      <span class="app-account-settings__card--user-name">{{
+        userData.userName
+      }}</span>
+      <span class="app-account-settings__card--user-email">{{
+        userData.email
+      }}</span>
+    </div>
+    <div
+      class="app-account-settings__card--user-data-container col-lg-4 col-md-6 col-sm-12"
+    >
+      <mat-icon class="app-account-settings__card--icon"
+        >accessibility</mat-icon
+      >
+      <h2>Podstawowe dane:</h2>
+      <div class="app-account-settings__card--data-line">
+        <span>Wiek: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right">{{
+          userData.age
+        }}</span>
+      </div>
+      <div class="app-account-settings__card--data-line">
+        <span>Płeć: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right">{{
+          userData.gender
+        }}</span>
+      </div>
+      <div class="app-account-settings__card--data-line">
+        <span>Waga: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right"
+          >{{ userData.weight }} kg</span
+        >
+      </div>
+      <div class="app-account-settings__card--data-line">
+        <span>Wzrost: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right"
+          >{{ userData.height }} cm</span
+        >
+      </div>
+      <div class="app-account-settings__card--data-line">
+        <span>Rodzaj diety: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right">{{
+          userData.dietType
+        }}</span>
+      </div>
+      <button class="app-account-settings__card--change-button">Zmień</button>
+      <mat-icon class="app-account-settings__card--icon"
+        >restaurant_menu</mat-icon
+      >
+      <h2>Twoje zapotrzebowanie:</h2>
+      <div class="app-account-settings__card--data-line">
+        <span>BMI: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right">{{
+          userData.BMI
+        }}</span>
+      </div>
+      <div class="app-account-settings__card--data-line">
+        <span>Kaloryczne: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right"
+          >{{ userData.caloricDemand }} kcal</span
+        >
+      </div>
+      <div class="app-account-settings__card--data-line">
+        <span>Białkowe: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right"
+          >{{ userData.proteinsDemand }} g</span
+        >
+      </div>
+      <div class="app-account-settings__card--data-line">
+        <span>Tłuszczowe: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right"
+          >{{ userData.fatsDemand }} g</span
+        >
+      </div>
+      <div class="app-account-settings__card--data-line">
+        <span>Węglowodanowe: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-t0-right"
+          >{{ userData.carbohydratesDemand }} g</span
+        >
+      </div>
+    </div>
+    <div
+      class="app-account-settings__card--user-recipes-container col-lg-4 col-md-12 col-sm-12"
+    >
+      <h2>Twoje przepisy:</h2>
+      <div
+        *ngIf="userData.recipes.length"
+        class="app-account-settings__card--recipe-list"
+      >
+        <div
+          class="app-account-settings__card--recipe"
+          *ngFor="let recipe of userData.recipes"
+        >
+          <div class="app-account-settings__card--inline">
+            <img
+              [routerLink]="['/recipes/detail', recipe.id]"
+              [src]="recipe.recipeImage"
+              [alt]="recipe.recipeName"
+            />
+            <p [routerLink]="['/recipes/detail', recipe.id]">
+              {{ recipe.recipeName }}
+            </p>
+          </div>
+          <div
+            class="app-account-settings__card--inline app-account-settings__card--to-right"
+          >
+            <mat-icon>edit</mat-icon>
+            <mat-icon>delete_outline</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div
+        *ngIf="!userData.recipes.length"
+        class="app-account-settings__card--recipe-list"
+      >
+        <p>Nie dodano przepisów.</p>
+      </div>
+    </div>
+  </mat-card>
 </div>
