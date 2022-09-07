@@ -186,6 +186,7 @@ export class ProductsComponent implements OnInit {
   checkValidation(): boolean {
     if (
       this.productForm.get('quantity')?.value &&
+      this.productForm.get('quantity')?.value > 0 &&
       this.productForm.get('product')?.value.name
     ) {
       return true;

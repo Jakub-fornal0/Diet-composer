@@ -28,39 +28,44 @@
       <div class="app-account-settings__card--data-line">
         <span>Wiek: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right">{{
+        <span class="app-account-settings__card--data-to-right">{{
           userData.age
         }}</span>
       </div>
       <div class="app-account-settings__card--data-line">
         <span>Płeć: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right">{{
+        <span class="app-account-settings__card--data-to-right">{{
           userData.gender
         }}</span>
       </div>
       <div class="app-account-settings__card--data-line">
         <span>Waga: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right"
+        <span class="app-account-settings__card--data-to-right"
           >{{ userData.weight }} kg</span
         >
       </div>
       <div class="app-account-settings__card--data-line">
         <span>Wzrost: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right"
+        <span class="app-account-settings__card--data-to-right"
           >{{ userData.height }} cm</span
         >
       </div>
       <div class="app-account-settings__card--data-line">
         <span>Rodzaj diety: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right">{{
+        <span class="app-account-settings__card--data-to-right">{{
           userData.dietType
         }}</span>
       </div>
-      <button class="app-account-settings__card--change-button">Zmień</button>
+      <button
+        (click)="openSetBodyParametersDialog('0ms', '0ms')"
+        class="app-account-settings__card--change-button"
+      >
+        Zmień
+      </button>
       <mat-icon class="app-account-settings__card--icon"
         >restaurant_menu</mat-icon
       >
@@ -68,35 +73,35 @@
       <div class="app-account-settings__card--data-line">
         <span>BMI: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right">{{
+        <span class="app-account-settings__card--data-to-right">{{
           userData.BMI
         }}</span>
       </div>
       <div class="app-account-settings__card--data-line">
         <span>Kaloryczne: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right"
+        <span class="app-account-settings__card--data-to-right"
           >{{ userData.caloricDemand }} kcal</span
         >
       </div>
       <div class="app-account-settings__card--data-line">
         <span>Białkowe: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right"
+        <span class="app-account-settings__card--data-to-right"
           >{{ userData.proteinsDemand }} g</span
         >
       </div>
       <div class="app-account-settings__card--data-line">
         <span>Tłuszczowe: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right"
+        <span class="app-account-settings__card--data-to-right"
           >{{ userData.fatsDemand }} g</span
         >
       </div>
       <div class="app-account-settings__card--data-line">
         <span>Węglowodanowe: </span>
         <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-t0-right"
+        <span class="app-account-settings__card--data-to-right"
           >{{ userData.carbohydratesDemand }} g</span
         >
       </div>

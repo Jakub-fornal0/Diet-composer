@@ -16,6 +16,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,6 +31,7 @@ import { RecipeCardComponent } from './components/recipes/recipe-card/recipe-car
 import { AddRecipeToScheduleComponent } from './components/recipes/add-recipe-to-schedule/add-recipe-to-schedule.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
+import { SetBodyParametersDialogComponent } from './components/account-settings/set-body-parameters-dialog/set-body-parameters-dialog.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import { AccountSettingsComponent } from './components/account-settings/account-
     AddRecipeToScheduleComponent,
     ScheduleComponent,
     AccountSettingsComponent,
+    SetBodyParametersDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -66,6 +69,7 @@ import { AccountSettingsComponent } from './components/account-settings/account-
     MatPaginatorModule,
     MatCheckboxModule,
     MatButtonToggleModule,
+    MatSelectModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
