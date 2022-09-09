@@ -65,11 +65,14 @@ export class AccountSettingsComponent implements OnInit {
       })
       .afterClosed()
       .subscribe((data) => {
-        this.userData.age = data.age;
-        this.userData.gender = data.gender;
-        this.userData.weight = data.weight;
-        this.userData.height = data.height;
-        this.userData.dietType = data.dietType;
+        if (data) {
+          this.userData.age = data.age;
+          this.userData.gender = data.gender;
+          this.userData.weight = data.weight;
+          this.userData.height = data.height;
+          this.userData.dietType = data.dietType;
+        }
+
         //TUTAJ WYWOLAC HTTP ZAPISAC DANE I ODEBRAC PARAMETRY ZAPOTREBOWANIA KTORE PRZYPISAC
       });
   }
