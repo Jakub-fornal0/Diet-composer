@@ -1,0 +1,201 @@
+$account-settings-background-color: #fafafa;
+$font-color: #616159;
+
+p,
+h1,
+h2,
+span {
+  margin: 0;
+  padding: 0;
+  color: $font-color;
+}
+
+.app-account-settings__card--change-button {
+  width: 75%;
+  border-radius: 5px;
+  padding: 11px 23px;
+  background-color: white;
+  border-color: $font-color;
+  border-width: 1px;
+  text-transform: uppercase;
+  font-size: 13px;
+  font-weight: 500;
+  color: $font-color;
+  transition: all 0.7s ease-in-out;
+  margin-bottom: 25px;
+
+  &:hover {
+    transform: scale(1.02);
+  }
+}
+
+.app-account-settings__card--data-line {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+
+  span {
+    font-weight: 500;
+  }
+
+  .app-account-settings__card--dotted-space {
+    border-bottom: 1px dotted #aaa;
+    flex-grow: 1;
+    margin: 0 10px;
+  }
+
+  .app-account-settings__card--data-to-right {
+    margin-left: auto;
+    font-weight: 400;
+  }
+}
+
+.app-account-settings {
+  background-color: $account-settings-background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  .app-account-settings__card {
+    display: flex;
+    padding: 0;
+    width: 95%;
+    height: auto;
+    margin-top: 90px;
+    min-height: 85vh;
+
+    .app-account-settings__card--image-login-data-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      .app-account-settings__card--image {
+        width: 300px;
+        height: 300px;
+        border-radius: 50%;
+        margin-bottom: 25px;
+      }
+
+      .app-account-settings__card--user-name {
+        font-weight: 600;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+
+      .app-account-settings__card--user-email {
+        font-weight: 500;
+        font-size: 16px;
+        margin-bottom: 10px;
+      }
+    }
+
+    .app-account-settings__card--user-data-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-left: dotted 1px #ccc;
+      border-right: dotted 1px #ccc;
+      padding: 25px;
+
+      .app-account-settings__card--icon {
+        width: 35px;
+        height: 35px;
+        font-size: 35px;
+        color: $font-color;
+      }
+
+      h2 {
+        font-weight: 500;
+        font-size: 20px;
+        margin-bottom: 15px;
+      }
+
+      .app-account-settings__card--change-button {
+        margin-top: 25px;
+        margin-bottom: 80px;
+      }
+    }
+
+    .app-account-settings__card--user-recipes-container {
+      padding: 25px;
+      .app-account-settings__card--recipe-list {
+        max-height: 75vh;
+        overflow: auto;
+
+        .app-account-settings__card--recipe {
+          display: flex;
+          border-bottom: solid 1px #ccc;
+
+          .app-account-settings__card--inline {
+            display: flex;
+            align-items: center;
+
+            img {
+              width: 100px;
+              height: 50px;
+              margin: 15px 0;
+              cursor: pointer;
+            }
+
+            p {
+              margin: 15px 0;
+              margin-left: 10px;
+              cursor: pointer;
+
+              &:hover {
+                text-decoration: underline;
+              }
+            }
+          }
+
+          .app-account-settings__card--to-right {
+            margin-left: auto;
+            margin-right: 5px;
+
+            mat-icon {
+              cursor: pointer;
+            }
+
+            mat-icon:nth-child(2) {
+              color: #ab1827;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .app-account-settings {
+    .app-account-settings__card {
+      .app-account-settings__card--image-login-data-container {
+        padding: 25px;
+      }
+
+      .app-account-settings__card--user-data-container {
+        .app-account-settings__card--change-button {
+          margin-top: 25px;
+          margin-bottom: 60px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 355px) {
+  .app-account-settings {
+    .app-account-settings__card {
+      .app-account-settings__card--image-login-data-container {
+        .app-account-settings__card--image {
+          width: 200px;
+          height: 200px;
+        }
+      }
+    }
+  }
+}

@@ -30,6 +30,10 @@ $navbar-main-link-color: #616159;
     li {
       margin: 25px;
       position: relative;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .app-navbar__desktop--link {
@@ -69,6 +73,19 @@ $navbar-main-link-color: #616159;
         position: absolute;
         left: 0;
         bottom: 0px;
+      }
+    }
+
+    .app-navbar__desktop--logout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: $navbar-main-link-color;
+      transition: 0.5s ease-in-out;
+
+      &:hover {
+        color: #ab1818;
       }
     }
 

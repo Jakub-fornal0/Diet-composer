@@ -30,18 +30,17 @@
     </li>
     <li *ngIf="userIsAuthenticated">
       <a
-        [matMenuTriggerFor]="account_menu"
         class="app-navbar__desktop--link app-navbar__desktop--icon"
+        routerLink="/account/settings"
+        routerLinkActive="app-navbar__desktop--active"
       >
         <mat-icon>perm_identity</mat-icon> Konto
       </a>
-      <mat-menu #account_menu="matMenu">
-        <a routerLink="/settings" mat-menu-item
-          ><mat-icon>settings</mat-icon>Ustawienia konta</a
-        >
-        <a mat-menu-item><mat-icon>input</mat-icon>Wyloguj</a>
-      </mat-menu>
     </li>
+    <li *ngIf="userIsAuthenticated">
+      <a class="app-navbar__desktop--logout"><mat-icon>input</mat-icon> </a>
+    </li>
+
     <li *ngIf="!userIsAuthenticated">
       <a
         routerLink="/login"

@@ -1,0 +1,101 @@
+<div mat-dialog-content class="app-set-body-parameters-dialog__container">
+  <form [formGroup]="bodyParametersForm">
+    <h1>Podaj parametry</h1>
+    <div>
+      <mat-form-field
+        appearance="outline"
+        class="app-set-body-parameters-dialog__container--input"
+      >
+        <mat-label>Wiek</mat-label>
+        <input
+          matInput
+          type="number"
+          max="150"
+          min="0"
+          formControlName="age"
+          required
+        />
+        <mat-error>To pole jest wymagane.</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field
+        appearance="outline"
+        class="app-set-body-parameters-dialog__container--input"
+      >
+        <mat-label>Płeć</mat-label>
+        <mat-select formControlName="gender" required>
+          <mat-option>--</mat-option>
+          <mat-option value="mężczyzna">mężczyzna</mat-option>
+          <mat-option value="kobieta">kobieta</mat-option>
+        </mat-select>
+        <mat-error>To pole jest wymagane.</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field
+        appearance="outline"
+        class="app-set-body-parameters-dialog__container--input"
+      >
+        <mat-label>Waga (kg)</mat-label>
+        <input
+          type="number"
+          max="600"
+          min="0"
+          matInput
+          formControlName="weight"
+          required
+        />
+        <mat-error>To pole jest wymagane.</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field
+        appearance="outline"
+        class="app-set-body-parameters-dialog__container--input"
+      >
+        <mat-label>Wzrost (cm)</mat-label>
+        <input
+          type="number"
+          max="600"
+          min="0"
+          matInput
+          formControlName="height"
+          required
+        />
+        <mat-error>To pole jest wymagane.</mat-error>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field
+        appearance="outline"
+        class="app-set-body-parameters-dialog__container--input"
+      >
+        <mat-label>Rodzaj diety</mat-label>
+        <mat-select formControlName="dietType" required>
+          <mat-option>--</mat-option>
+          <mat-option value="przyrost wagi">przyrost wagi</mat-option>
+          <mat-option value="utrzymanie wagi">utrzymanie wagi</mat-option>
+          <mat-option value="spadek wagi">spadek wagi</mat-option>
+        </mat-select>
+        <mat-error>To pole jest wymagane.</mat-error>
+      </mat-form-field>
+    </div>
+  </form>
+</div>
+<div mat-dialog-actions class="app-set-body-parameters-dialog__buttons">
+  <button
+    mat-button
+    mat-dialog-close
+    class="app-set-body-parameters-dialog__buttons--cancel"
+  >
+    Anuluj
+  </button>
+  <button
+    mat-raised-button
+    [disabled]="bodyParametersForm.invalid"
+    (click)="saveBodyParameters()"
+  >
+    Zapisz
+  </button>
+</div>
