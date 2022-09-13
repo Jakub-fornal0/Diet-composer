@@ -32,6 +32,7 @@ import { AddRecipeToScheduleComponent } from './components/recipes/add-recipe-to
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
 import { SetBodyParametersDialogComponent } from './components/account-settings/set-body-parameters-dialog/set-body-parameters-dialog.component';
+import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-new-recipe.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { SetBodyParametersDialogComponent } from './components/account-settings/
     ScheduleComponent,
     AccountSettingsComponent,
     SetBodyParametersDialogComponent,
+    AddNewRecipeComponent,
   ],
   imports: [
     BrowserModule,
