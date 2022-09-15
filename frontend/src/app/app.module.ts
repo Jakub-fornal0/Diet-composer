@@ -17,6 +17,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatRadioModule } from '@angular/material/radio';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -33,6 +37,7 @@ import { ScheduleComponent } from './components/schedule/schedule.component';
 import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
 import { SetBodyParametersDialogComponent } from './components/account-settings/set-body-parameters-dialog/set-body-parameters-dialog.component';
 import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-new-recipe.component';
+import { AddProductToRecipeComponent } from './components/recipes/add-new-recipe/add-product-to-recipe/add-product-to-recipe.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +55,7 @@ import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-n
     AccountSettingsComponent,
     SetBodyParametersDialogComponent,
     AddNewRecipeComponent,
+    AddProductToRecipeComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +78,10 @@ import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-n
     MatCheckboxModule,
     MatButtonToggleModule,
     MatSelectModule,
+    MatStepperModule,
+    MatSliderModule,
+    MatChipsModule,
+    MatRadioModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

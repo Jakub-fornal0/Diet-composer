@@ -121,6 +121,10 @@ input[type="number"] {
   -moz-appearance: textfield;
 }
 
+::ng-deep .mat-mini-fab.mat-accent {
+  background-color: rgba($color: #91997f, $alpha: 0.7);
+}
+
 @media (max-width: 1200px) {
   .app-products {
     .app-products__card {

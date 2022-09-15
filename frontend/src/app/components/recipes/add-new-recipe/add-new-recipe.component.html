@@ -1,1 +1,280 @@
-<p>add-new-recipe works!</p>
+<div class="app-add-new-recipe">
+  <mat-card class="card">
+    <mat-stepper linear #stepper>
+      <mat-step [stepControl]="mainRecipeDataFormGroup">
+        <form [formGroup]="mainRecipeDataFormGroup">
+          <ng-template matStepLabel>Podstawowe dane</ng-template>
+          <div
+            class="card__input-container card__input-container--padding-bottom"
+          >
+            <div class="card__input-container--image-preview">
+              <label>
+                <mat-icon
+                  class="card__input-container--image-icon"
+                  *ngIf="!imagePreview"
+                  >add_photo_alternate</mat-icon
+                >
+                <p *ngIf="!imagePreview">wybierz zdjęcie</p>
+                <img
+                  class="card__input-container--image"
+                  *ngIf="imagePreview"
+                  [src]="imagePreview"
+                />
+
+                <!-- formControlName="recipeImage" -->
+                <input
+                  #imageInput
+                  type="file"
+                  accept="image/*"
+                  (change)="processFile(imageInput)"
+                />
+              </label>
+            </div>
+          </div>
+          <div class="card__input-container">
+            <mat-form-field
+              appearance="outline"
+              class="card__input-container--input"
+            >
+              <mat-label>Nazwa</mat-label>
+              <input matInput formControlName="recipeName" maxlength="65" />
+              <mat-error>To pole jest wymagane.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="card__input-container">
+            <mat-form-field
+              appearance="outline"
+              class="card__input-container--input"
+            >
+              <mat-label>Opis</mat-label>
+              <textarea
+                matInput
+                class="card__input-container--input-description"
+                formControlName="recipeDescription"
+                maxlength="350"
+              ></textarea>
+              <mat-hint align="end"
+                >{{
+                  mainRecipeDataFormGroup.get("recipeDescription")?.value
+                    ?.length
+                }}
+                / 350</mat-hint
+              >
+              <mat-error>To pole jest wymagane.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="card__input-container">
+            <mat-form-field
+              class="card__input-container--input"
+              appearance="outline"
+            >
+              <mat-label>Czas (min)</mat-label>
+              <input
+                matInput
+                formControlName="recipeTime"
+                type="number"
+                max="6000"
+                min="1"
+                required
+              />
+              <mat-error>To pole jest wymagane.</mat-error>
+            </mat-form-field>
+          </div>
+          <p>Ilość osób</p>
+          <div
+            class="card__input-container card__input-container--padding-bottom"
+          >
+            <button mat-mini-fab (click)="decreasePersonCount()">
+              <mat-icon>remove</mat-icon>
+            </button>
+            <input
+              class="card__input-container--person-count-input"
+              formControlName="recipePersonCount"
+            />
+            <button mat-mini-fab (click)="increasePersonCount()">
+              <mat-icon>add</mat-icon>
+            </button>
+          </div>
+          <p>Poziom zaawansowania</p>
+          <div
+            class="card__input-container card__input-container--padding-bottom"
+          >
+            <mat-radio-group formControlName="recipeLevel">
+              <mat-radio-button
+                class="card__input-container--radio-button"
+                value="Łatwy"
+                >Łatwy</mat-radio-button
+              >
+              <mat-radio-button
+                class="card__input-container--radio-button"
+                value="Średni"
+                >Średni</mat-radio-button
+              >
+              <mat-radio-button
+                class="card__input-container--radio-button"
+                value="Trudny"
+                >Trudny</mat-radio-button
+              >
+            </mat-radio-group>
+          </div>
+          <div>
+            <button
+              mat-raised-button
+              [disabled]="mainRecipeDataFormGroup.invalid"
+              matStepperNext
+              class="card__next-button"
+            >
+              Dalej
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="nutrientsFormGroup">
+        <form [formGroup]="nutrientsFormGroup">
+          <ng-template matStepLabel>Wartości odżywcze</ng-template>
+          <div class="card__input-container">
+            <mat-form-field
+              class="card__input-container--input"
+              appearance="outline"
+            >
+              <mat-label>Kaloryczność (kcal)</mat-label>
+              <input
+                formControlName="calories"
+                matInput
+                type="number"
+                max="500000"
+                min="0"
+                required
+              />
+              <mat-error>To pole jest wymagane.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="card__input-container">
+            <mat-form-field
+              class="card__input-container--input"
+              appearance="outline"
+            >
+              <mat-label>Węglowodany (g)</mat-label>
+              <input
+                formControlName="carbohydrates"
+                matInput
+                type="number"
+                max="50000"
+                min="0"
+                required
+              />
+              <mat-error>To pole jest wymagane.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="card__input-container">
+            <mat-form-field
+              class="card__input-container--input"
+              appearance="outline"
+            >
+              <mat-label>Tłuszcze (g)</mat-label>
+              <input
+                formControlName="fats"
+                matInput
+                type="number"
+                max="50000"
+                min="0"
+                required
+              />
+              <mat-error>To pole jest wymagane.</mat-error>
+            </mat-form-field>
+          </div>
+          <div class="card__input-container">
+            <mat-form-field
+              class="card__input-container--input"
+              appearance="outline"
+            >
+              <mat-label>Białka (g)</mat-label>
+              <input
+                formControlName="proteins"
+                matInput
+                type="number"
+                max="50000"
+                min="0"
+                required
+              />
+              <mat-error>To pole jest wymagane.</mat-error>
+            </mat-form-field>
+          </div>
+          <div>
+            <button mat-button matStepperPrevious>Powrót</button>
+            <button
+              mat-raised-button
+              matStepperNext
+              class="card__next-button"
+              [disabled]="nutrientsFormGroup.invalid"
+            >
+              Dalej
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <form>
+          <ng-template matStepLabel>Składniki</ng-template>
+          <div
+            class="card__input-container"
+            *ngFor="let product of recipeProducts; let i = index"
+          >
+            <app-add-product-to-recipe
+              (returnProductData)="saveProductData($event, i)"
+              (productToDelete)="deleteProduct(i)"
+            ></app-add-product-to-recipe>
+          </div>
+          <button
+            [disabled]="!recipeProductsAreValid"
+            class="card__input-container--margin-bottom"
+            (click)="addAnotherProduct()"
+            mat-mini-fab
+          >
+            <mat-icon>add</mat-icon>
+          </button>
+          <div>
+            <button mat-button matStepperPrevious>Powrót</button>
+            <button
+              [disabled]="!recipeProductsAreValid || !recipeProducts.length"
+              mat-button
+              matStepperNext
+              class="card__next-button"
+            >
+              Dalej
+            </button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step [stepControl]="thirdFormGroup">
+        <form [formGroup]="thirdFormGroup">
+          <ng-template matStepLabel>Przepis</ng-template>
+          <mat-form-field appearance="fill">
+            <mat-label>Address</mat-label>
+            <input
+              matInput
+              formControlName="thirdCtrl"
+              placeholder="Ex. 1 Main St, New York, NY"
+              required
+            />
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Gotowe!</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </mat-card>
+</div>

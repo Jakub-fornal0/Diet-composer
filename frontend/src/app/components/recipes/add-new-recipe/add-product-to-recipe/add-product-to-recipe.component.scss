@@ -1,0 +1,26 @@
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* disable for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .form__input {
+    width: 30%;
+    padding: 0 10px;
+  }
+
+  .form__delete-icon {
+    cursor: pointer;
+    margin-bottom: 19px;
+  }
+}
