@@ -40,6 +40,9 @@ export class AddNewRecipeComponent implements OnInit {
   ];
   recipeProductsAreValid: boolean = false;
 
+  recipeSteps: String[] = [''];
+  recipeStepsAreValid: boolean = false;
+
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {
@@ -104,10 +107,27 @@ export class AddNewRecipeComponent implements OnInit {
         !product.name ||
         !product.quantity ||
         !product.measureUnit ||
-        product.quantity <= 0
+        product.quantity <= 0 ||
+        product.quantity > 10000
       ) {
         this.recipeProductsAreValid = false;
       }
     });
   }
+
+  addAnotherRecipeStep() {
+    this.recipeSteps.push('');
+    console.log(this.recipeSteps);
+  }
+
+  saveRecipeStepData(data: any, index: number) {
+    console.log(data);
+    this.recipeSteps[index] = data.stepName;
+  }
+
+  deleteRecipeStep(index: number) {
+    this.recipeSteps.splice(index, 1);
+  }
+
+  checkRecipeStep() {}
 }

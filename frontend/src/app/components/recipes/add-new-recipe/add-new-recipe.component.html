@@ -214,7 +214,7 @@
           </div>
         </form>
       </mat-step>
-
+      <!-- [completed]="recipeProductsAreValid && recipeProducts.length > 0" -->
       <mat-step>
         <form>
           <ng-template matStepLabel>Składniki</ng-template>
@@ -249,21 +249,31 @@
         </form>
       </mat-step>
 
-      <mat-step [stepControl]="thirdFormGroup">
-        <form [formGroup]="thirdFormGroup">
+      <mat-step>
+        <form>
           <ng-template matStepLabel>Przepis</ng-template>
-          <mat-form-field appearance="fill">
-            <mat-label>Address</mat-label>
-            <input
-              matInput
-              formControlName="thirdCtrl"
-              placeholder="Ex. 1 Main St, New York, NY"
-              required
-            />
-          </mat-form-field>
+          <div
+            class="card__input-container"
+            *ngFor="let recipeStep of recipeSteps; let i = index"
+          >
+            <app-add-another-step-to-recipe
+              [index]="i"
+              (returnRecipeStepData)="saveRecipeStepData($event, i)"
+              (recipeStepToDelete)="deleteRecipeStep(i)"
+            ></app-add-another-step-to-recipe>
+          </div>
+          <button
+            class="card__input-container--margin-bottom"
+            (click)="addAnotherRecipeStep()"
+            mat-mini-fab
+          >
+            <mat-icon>add</mat-icon>
+          </button>
           <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperPrevious>Powrót</button>
+            <button mat-button matStepperNext class="card__next-button">
+              Dalej
+            </button>
           </div>
         </form>
       </mat-step>
