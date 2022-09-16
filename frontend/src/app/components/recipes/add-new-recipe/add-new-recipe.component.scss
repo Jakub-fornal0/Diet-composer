@@ -110,7 +110,9 @@ input[type="number"] {
       }
 
       .card__input-container--input-description {
-        height: 65px;
+        word-wrap: break-word;
+        word-break: break-all;
+        height: 80px;
       }
 
       .card__input-container--radio-button {

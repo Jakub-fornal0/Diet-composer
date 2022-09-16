@@ -24,3 +24,8 @@ export interface RecipeDetail {
   proteins: number;
   carbohydrates: number;
 }
+
+export interface RecipeStep {
+  id?: number;
+  stepName: String;
+}

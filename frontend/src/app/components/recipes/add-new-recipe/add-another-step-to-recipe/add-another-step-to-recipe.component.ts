@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { RecipeStep } from '../../../../interfaces/recipe.model';
 
 @Component({
   selector: 'app-add-another-step-to-recipe',
@@ -10,7 +11,7 @@ export class AddAnotherStepToRecipeComponent implements OnInit {
   recipeStepForm: FormGroup;
 
   @Input() index: number = 0;
-  @Output() returnRecipeStepData = new EventEmitter<String>();
+  @Output() returnRecipeStepData = new EventEmitter<RecipeStep>();
   @Output() recipeStepToDelete = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder) {
@@ -18,7 +19,7 @@ export class AddAnotherStepToRecipeComponent implements OnInit {
       stepName: ['', Validators.required],
     });
 
-    this.recipeStepForm.get('stepName')?.valueChanges.subscribe(() => {
+    this.recipeStepForm.valueChanges.subscribe(() => {
       this.returnRecipeStepData.emit(this.recipeStepForm.value);
     });
   }

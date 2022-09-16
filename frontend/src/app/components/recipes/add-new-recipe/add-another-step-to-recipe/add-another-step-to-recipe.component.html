@@ -1,7 +1,12 @@
 <form class="form" [formGroup]="recipeStepForm">
   <mat-form-field class="form__input" appearance="outline">
     <mat-label>Krok {{ index + 1 }}</mat-label>
-    <input matInput formControlName="stepName" required />
+    <textarea
+      matInput
+      formControlName="stepName"
+      maxlength="100"
+      required
+    ></textarea>
   </mat-form-field>
   <mat-icon (click)="deleteRecipeStep()" class="form__delete-icon"
     >close</mat-icon

@@ -1,3 +1,8 @@
+textarea {
+  resize: none;
+  height: 20px;
+}
+
 .form {
   display: flex;
   justify-content: center;
@@ -6,6 +11,7 @@
   .form__input {
     width: 60%;
     padding: 0 10px;
+    word-wrap: break-word;
   }
 
   .form__delete-icon {

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { RecipeStep } from '../../../interfaces/recipe.model';
 import { Product } from '../../../interfaces/product.model';
 
 class ImageSnippet {
@@ -40,7 +41,7 @@ export class AddNewRecipeComponent implements OnInit {
   ];
   recipeProductsAreValid: boolean = false;
 
-  recipeSteps: String[] = [''];
+  recipeSteps: RecipeStep[] = [{ id: 0, stepName: '' }];
   recipeStepsAreValid: boolean = false;
 
   constructor(private _formBuilder: FormBuilder) {}
@@ -116,18 +117,27 @@ export class AddNewRecipeComponent implements OnInit {
   }
 
   addAnotherRecipeStep() {
-    this.recipeSteps.push('');
-    console.log(this.recipeSteps);
+    this.recipeSteps.push({ id: 0, stepName: '' });
+    this.checkRecipeStep();
   }
 
   saveRecipeStepData(data: any, index: number) {
-    console.log(data);
-    this.recipeSteps[index] = data.stepName;
+    this.recipeSteps[index].id = index;
+    this.recipeSteps[index].stepName = data.stepName;
+    this.checkRecipeStep();
   }
 
   deleteRecipeStep(index: number) {
     this.recipeSteps.splice(index, 1);
+    this.checkRecipeStep();
   }
 
-  checkRecipeStep() {}
+  checkRecipeStep() {
+    this.recipeStepsAreValid = true;
+    this.recipeSteps.forEach((recipeStep) => {
+      if (!recipeStep.stepName) {
+        this.recipeStepsAreValid = false;
+      }
+    });
+  }
 }
