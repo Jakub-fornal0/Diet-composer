@@ -14,15 +14,15 @@ import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-reci
 })
 export class RecipeDetailComponent implements OnInit {
   products: Product[] = [];
-  recipeStep: string[] = [];
+  recipeSteps: string[] = [];
 
   // _________________________MOCKUP _________________________//
   recipe: RecipeDetail = {
     id: 1,
     image: 'assets/zdj.jpg',
     name: 'Zapiekanka makaronowa',
-    category: 'obiad',
-    cookingTime: '45 min',
+
+    cookingTime: 45,
     portions: 4,
     products: [
       { id: 6, name: 'makaron pióra', quantity: 200, measureUnit: 'g' },
@@ -34,14 +34,33 @@ export class RecipeDetailComponent implements OnInit {
       { id: 10, name: 'olej rzepakowy', quantity: 0.25, measureUnit: 'l' },
       { id: 18, name: 'woda', quantity: 250, measureUnit: 'ml' },
     ],
-    recipe: [
-      'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
-      'Podsmaż je na oleju.',
-      'Ugotuj makaron na sposób al dente.',
-      'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
-      'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
-      'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
-      'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
+    recipeStep: [
+      {
+        id: 1,
+        stepName: 'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
+      },
+      { id: 1, stepName: 'Podsmaż je na oleju.' },
+      { id: 1, stepName: 'Ugotuj makaron na sposób al dente.' },
+      {
+        id: 1,
+        stepName:
+          'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
+      },
+      {
+        id: 1,
+        stepName:
+          'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
+      },
+      {
+        id: 1,
+        stepName:
+          'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
+      },
+      {
+        id: 1,
+        stepName:
+          'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
+      },
     ],
     author: 'Pędzimąż Andrzej',
     calories: 500,
@@ -65,10 +84,10 @@ export class RecipeDetailComponent implements OnInit {
       this.products = dataFromLocalStorage;
     }
 
-    this.recipe.recipe.forEach(() =>
-      this.recipeStep.push(RecipeStepConsts.TODO)
+    this.recipe.recipeStep.forEach(() =>
+      this.recipeSteps.push(RecipeStepConsts.TODO)
     );
-    this.recipeStep[0] = RecipeStepConsts.DOING;
+    this.recipeSteps[0] = RecipeStepConsts.DOING;
   }
 
   checkUserHaveProduct(recipeProduct: Product): boolean {
@@ -87,11 +106,11 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   checkDisabled(i: number): boolean {
-    if (this.recipeStep[i + 1] === RecipeStepConsts.DONE) {
+    if (this.recipeSteps[i + 1] === RecipeStepConsts.DONE) {
       return true;
     }
 
-    if (i === 0 || this.recipeStep[i - 1] === RecipeStepConsts.DONE) {
+    if (i === 0 || this.recipeSteps[i - 1] === RecipeStepConsts.DONE) {
       return false;
     }
 
@@ -99,22 +118,22 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   makeStepAsDone(i: number) {
-    const doingIndex = this.recipeStep.indexOf(RecipeStepConsts.DOING);
+    const doingIndex = this.recipeSteps.indexOf(RecipeStepConsts.DOING);
     const doingIndexDifferenceI: number = doingIndex - i;
     let indexSmallerThanDoingIndex: boolean = false;
 
     if (doingIndexDifferenceI === 1) {
       indexSmallerThanDoingIndex = true;
-      this.recipeStep[i + 1] = RecipeStepConsts.TODO;
-      this.recipeStep[i] = RecipeStepConsts.DOING;
+      this.recipeSteps[i + 1] = RecipeStepConsts.TODO;
+      this.recipeSteps[i] = RecipeStepConsts.DOING;
     }
 
     if (
       !indexSmallerThanDoingIndex &&
-      this.recipeStep[i] === RecipeStepConsts.DOING
+      this.recipeSteps[i] === RecipeStepConsts.DOING
     ) {
-      this.recipeStep[i] = RecipeStepConsts.DONE;
-      this.recipeStep[i + 1] = RecipeStepConsts.DOING;
+      this.recipeSteps[i] = RecipeStepConsts.DONE;
+      this.recipeSteps[i + 1] = RecipeStepConsts.DOING;
     }
   }
 

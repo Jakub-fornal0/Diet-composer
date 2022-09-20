@@ -67,13 +67,14 @@ export class AddProductToRecipeComponent implements OnInit {
     },
   ];
 
+  @Output() returnProductData = new EventEmitter<Product>();
+  @Output() productToDelete = new EventEmitter();
+  @Input() product?: Product;
+
   addProductForm: FormGroup;
   filteredProducts?: Observable<Product[]>;
   inputMeasureUnit: string = '';
   productDoesntExist: boolean = false;
-
-  @Output() returnProductData = new EventEmitter<Product>();
-  @Output() productToDelete = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder) {
     this.addProductForm = this.formBuilder.group({

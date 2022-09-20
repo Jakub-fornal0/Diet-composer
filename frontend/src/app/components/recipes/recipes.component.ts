@@ -15,7 +15,7 @@ import { RecipesFilterDialogComponent } from './recipes-filter-dialog/recipes-fi
 export class RecipesComponent implements OnInit {
   products: Product[] = [];
 
-  // MOCKUP USUNAC POTEM //
+  // MOCKUP USUNAC POTEM//
   recipes: Recipe[] = [
     {
       id: 1,
@@ -23,8 +23,9 @@ export class RecipesComponent implements OnInit {
       name: '1 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 2,
@@ -32,8 +33,9 @@ export class RecipesComponent implements OnInit {
       name: '2 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 3,
@@ -41,8 +43,9 @@ export class RecipesComponent implements OnInit {
       name: '3 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 4,
@@ -50,8 +53,9 @@ export class RecipesComponent implements OnInit {
       name: '4 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 5,
@@ -59,8 +63,9 @@ export class RecipesComponent implements OnInit {
       name: '5 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 6,
@@ -68,8 +73,9 @@ export class RecipesComponent implements OnInit {
       name: '6 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 7,
@@ -77,8 +83,9 @@ export class RecipesComponent implements OnInit {
       name: '7 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 8,
@@ -86,8 +93,9 @@ export class RecipesComponent implements OnInit {
       name: '8 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 9,
@@ -95,8 +103,9 @@ export class RecipesComponent implements OnInit {
       name: '9 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 10,
@@ -104,8 +113,9 @@ export class RecipesComponent implements OnInit {
       name: '10 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4,
+      category: 'obiad',
     },
     {
       id: 11,
@@ -113,8 +123,9 @@ export class RecipesComponent implements OnInit {
       name: '11 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 4444,
+      category: 'obiad',
     },
     {
       id: 12,
@@ -122,8 +133,9 @@ export class RecipesComponent implements OnInit {
       name: '12 Przepis Przepis Przepis',
       description:
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: '45min',
+      cookingTime: 45,
       portions: 111,
+      category: 'obiad',
     },
   ];
   // ___________________ //

@@ -27,7 +27,7 @@
       <div class="app-recipe-detail--inline-icon">
         <div class="app-recipe-detail--center-icon">
           <mat-icon>access_time</mat-icon>
-          <span>{{ recipe.cookingTime }}</span>
+          <span>{{ recipe.cookingTime }} min</span>
         </div>
         <div class="app-recipe-detail--center-icon">
           <mat-icon>person_outline</mat-icon>
@@ -63,30 +63,30 @@
       <h2>Przepis:</h2>
       <div
         class="app-recipe-detail--recipe-step"
-        *ngFor="let recipe of recipe.recipe; let i = index"
+        *ngFor="let recipe of recipe.recipeStep; let i = index"
       >
         <mat-checkbox
           [disabled]="checkDisabled(i)"
           (click)="makeStepAsDone(i)"
         ></mat-checkbox>
         <span
-          *ngIf="recipeStep[i] === 'doing'"
+          *ngIf="recipeSteps[i] === 'doing'"
           class="app-recipe-detail--recipe-step-doing"
         >
-          {{ i + 1 }}. {{ recipe }}</span
+          {{ i + 1 }}. {{ recipe.stepName }}</span
         >
 
         <span
-          *ngIf="recipeStep[i] === 'toDo'"
+          *ngIf="recipeSteps[i] === 'toDo'"
           class="app-recipe-detail--recipe-step-todo"
         >
-          {{ i + 1 }}. {{ recipe }}</span
+          {{ i + 1 }}. {{ recipe.stepName }}</span
         >
         <span
-          *ngIf="recipeStep[i] === 'done'"
+          *ngIf="recipeSteps[i] === 'done'"
           class="app-recipe-detail--recipe-step-done"
         >
-          {{ i + 1 }}. {{ recipe }}</span
+          {{ i + 1 }}. {{ recipe.stepName }}</span
         >
         <br />
       </div>

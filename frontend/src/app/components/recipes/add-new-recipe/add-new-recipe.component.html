@@ -11,18 +11,17 @@
               <label>
                 <mat-icon
                   class="card__input-container--image-icon"
-                  *ngIf="!imagePreview"
+                  *ngIf="!selectedFile"
                   >add_photo_alternate</mat-icon
                 >
-                <p *ngIf="!imagePreview">wybierz zdjęcie</p>
+                <p *ngIf="!selectedFile">wybierz zdjęcie</p>
                 <img
                   class="card__input-container--image"
-                  *ngIf="imagePreview"
-                  [src]="imagePreview"
+                  *ngIf="selectedFile"
+                  [src]="selectedFile.src"
                 />
-
-                <!-- formControlName="recipeImage" -->
                 <input
+                  formControlName="recipeImage"
                   #imageInput
                   type="file"
                   accept="image/*"
@@ -118,6 +117,38 @@
               >
             </mat-radio-group>
           </div>
+          <p>Kategoria</p>
+          <div
+            class="card__input-container card__input-container--padding-bottom"
+          >
+            <mat-radio-group formControlName="recipeCategory">
+              <mat-radio-button
+                class="card__input-container--radio-button"
+                value="Śniadanie"
+                >Śniadanie</mat-radio-button
+              >
+              <mat-radio-button
+                class="card__input-container--radio-button"
+                value="II śniadanie"
+                >II śniadanie</mat-radio-button
+              >
+              <mat-radio-button
+                class="card__input-container--radio-button"
+                value="Obiad"
+                >Obiad</mat-radio-button
+              >
+              <mat-radio-button
+                class="card__input-container--radio-button"
+                value="Podwieczorek"
+                >Podwieczorek</mat-radio-button
+              >
+              <mat-radio-button
+                class="card__input-container--radio-button"
+                value="Kolacja"
+                >Kolacja</mat-radio-button
+              >
+            </mat-radio-group>
+          </div>
           <div>
             <button
               mat-raised-button
@@ -145,7 +176,7 @@
                 matInput
                 type="number"
                 max="500000"
-                min="0"
+                min="1"
                 required
               />
               <span matSuffix>kcal</span>
@@ -163,7 +194,7 @@
                 matInput
                 type="number"
                 max="50000"
-                min="0"
+                min="1"
                 required
               />
               <span matSuffix>g</span>
@@ -181,7 +212,7 @@
                 matInput
                 type="number"
                 max="50000"
-                min="0"
+                min="1"
                 required
               />
               <span matSuffix>g</span>
@@ -199,7 +230,7 @@
                 matInput
                 type="number"
                 max="50000"
-                min="0"
+                min="1"
                 required
               />
               <span matSuffix>g</span>
@@ -219,8 +250,9 @@
           </div>
         </form>
       </mat-step>
-      <!-- [completed]="recipeProductsAreValid && recipeProducts.length > 0" -->
-      <mat-step>
+      <mat-step
+        [completed]="recipeProductsAreValid && recipeProducts.length > 0"
+      >
         <form>
           <ng-template matStepLabel>Składniki</ng-template>
           <div
@@ -228,6 +260,7 @@
             *ngFor="let product of recipeProducts; let i = index"
           >
             <app-add-product-to-recipe
+              [product]="product"
               (returnProductData)="saveProductData($event, i)"
               (productToDelete)="deleteProduct(i)"
             ></app-add-product-to-recipe>
@@ -254,7 +287,7 @@
         </form>
       </mat-step>
 
-      <mat-step>
+      <mat-step [completed]="recipeStepsAreValid && recipeSteps.length > 0">
         <form>
           <ng-template matStepLabel>Przepis</ng-template>
           <div
@@ -263,6 +296,7 @@
           >
             <app-add-another-step-to-recipe
               [index]="i"
+              [recipeStep]="recipeStep"
               (returnRecipeStepData)="saveRecipeStepData($event, i)"
               (recipeStepToDelete)="deleteRecipeStep(i)"
             ></app-add-another-step-to-recipe>
@@ -289,12 +323,28 @@
         </form>
       </mat-step>
       <mat-step>
-        <ng-template matStepLabel>Gotowe!</ng-template>
-        <p>You are now done.</p>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="stepper.reset()">Reset</button>
-        </div>
+        <form>
+          <ng-template matStepLabel>Gotowe!</ng-template>
+          <h2>Wszystko gotowe!</h2>
+          <p class="card__end-text">Możesz teraz opublikować swój przepis</p>
+          <button
+            *ngIf="mode === 'create'"
+            class="card__share-button"
+            (click)="addNewRecipe()"
+          >
+            Opublikuj
+          </button>
+          <button
+            *ngIf="mode === 'edit'"
+            class="card__share-button"
+            (click)="addNewRecipe()"
+          >
+            Edytuj
+          </button>
+          <div>
+            <button mat-button matStepperPrevious>Powrót</button>
+          </div>
+        </form>
       </mat-step>
     </mat-stepper>
   </mat-card>
