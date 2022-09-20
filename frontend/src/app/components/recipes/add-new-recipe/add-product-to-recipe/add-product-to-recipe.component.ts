@@ -67,9 +67,9 @@ export class AddProductToRecipeComponent implements OnInit {
     },
   ];
 
+  @Input() product?: Product;
   @Output() returnProductData = new EventEmitter<Product>();
   @Output() productToDelete = new EventEmitter();
-  @Input() product?: Product;
 
   addProductForm: FormGroup;
   filteredProducts?: Observable<Product[]>;
@@ -79,8 +79,10 @@ export class AddProductToRecipeComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {
     this.addProductForm = this.formBuilder.group({
       productName: ['', Validators.required],
-      productQuantity: ['', Validators.required],
+      productQuantity: [0, Validators.required],
     });
+
+    this.addProductForm.get('productQuantity')?.reset();
 
     this.filteredProducts = this.addProductForm
       .get('productName')
@@ -94,14 +96,32 @@ export class AddProductToRecipeComponent implements OnInit {
             : this.products.slice();
         })
       );
-
-    this.addProductForm.valueChanges.subscribe(() => {
-      this.returnProductData.emit(this.addProductForm.value);
-    });
   }
 
   ngOnInit(): void {
-    this.addProductForm.get('productQuantity')?.disable();
+    if (this.product) {
+      const productName = {
+        id: this.product?.id,
+        name: this.product?.name,
+        measureUnit: this.product?.measureUnit,
+      };
+      this.addProductForm.get('productName')?.setValue(productName);
+      this.addProductForm
+        .get('productQuantity')
+        ?.setValue(this.product?.quantity);
+      this.inputMeasureUnit = this.product?.measureUnit;
+    } else {
+      this.addProductForm.get('productQuantity')?.disable();
+    }
+
+    this.addProductForm.valueChanges.subscribe(() => {
+      this.returnProductData.emit({
+        id: this.addProductForm.get('productName')?.value.id,
+        name: this.addProductForm.get('productName')?.value.name,
+        measureUnit: this.addProductForm.get('productName')?.value.measureUnit,
+        quantity: this.addProductForm.get('productQuantity')?.value,
+      });
+    });
   }
 
   getProductName(product: Product) {

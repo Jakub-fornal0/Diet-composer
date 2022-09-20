@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AllRecipeData, RecipeStep } from '../../../interfaces/recipe.model';
 import { Product } from '../../../interfaces/product.model';
@@ -18,52 +18,43 @@ export class AddNewRecipeComponent implements OnInit {
   mode: String = 'create';
   recipeId?: string;
 
-  recipe: AllRecipeData = {
-    image: '',
-    name: '',
-    description: '',
-    cookingTime: 0,
-    portions: 1,
-    level: '',
-    category: '',
-    calories: 0,
-    fats: 0,
-    proteins: 0,
-    carbohydrates: 0,
-    products: [{ id: 0, name: '', quantity: 0, measureUnit: '' }],
-    recipeStep: [{ id: 0, stepName: '' }],
-  };
-
   mainRecipeDataFormGroup = this.formBuilder.group({
-    recipeName: [this.recipe.name, Validators.required],
-    recipeDescription: [this.recipe.description, Validators.required],
-    recipeImage: [this.recipe.image, Validators.required],
-    recipePersonCount: [this.recipe.portions, Validators.required],
-    recipeTime: [this.recipe.cookingTime, Validators.required],
-    recipeLevel: [this.recipe.level, Validators.required],
-    recipeCategory: [this.recipe.category, Validators.required],
+    recipeName: ['', Validators.required],
+    recipeDescription: ['', Validators.required],
+    recipeImage: ['', Validators.required],
+    recipePersonCount: [1, Validators.required],
+    recipeTime: [0, Validators.required],
+    recipeLevel: ['', Validators.required],
+    recipeCategory: ['', Validators.required],
   });
 
   nutrientsFormGroup = this.formBuilder.group({
-    calories: [this.recipe.calories, Validators.required],
-    carbohydrates: [this.recipe.carbohydrates, Validators.required],
-    fats: [this.recipe.fats, Validators.required],
-    proteins: [this.recipe.proteins, Validators.required],
+    calories: [0, Validators.required],
+    carbohydrates: [0, Validators.required],
+    fats: [0, Validators.required],
+    proteins: [0, Validators.required],
   });
 
-  recipeProducts: Product[] = this.recipe.products;
+  recipeProducts: Product[] = [];
+  recipeProductsEdit: Product[] = [];
   recipeProductsAreValid: boolean = false;
 
-  recipeSteps: RecipeStep[] = this.recipe.recipeStep;
+  recipeSteps: RecipeStep[] = [];
   recipeStepsAreValid: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
     this.mainRecipeDataFormGroup.get('recipePersonCount')?.disable();
+    this.mainRecipeDataFormGroup.get('recipeTime')?.reset();
+    this.nutrientsFormGroup.get('calories')?.reset();
+    this.nutrientsFormGroup.get('carbohydrates')?.reset();
+    this.nutrientsFormGroup.get('fats')?.reset();
+    this.nutrientsFormGroup.get('proteins')?.reset();
 
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('recipeId')) {
@@ -71,6 +62,8 @@ export class AddNewRecipeComponent implements OnInit {
         this.recipeId = paramMap.get('recipeId') || '';
 
         // TU BEDZIE WYWOLANIE SERWISU KTORY POBIERZE DANE PRZEPISU PO ID I PRZYPISZE DO ZMIENNEJ
+        // ZROBIC SPRAWDZENIE JESLI ID USERA JEST ROZNE OD ID TWORCY PRZEPISU ZROBIC NAWIGACJE NA PRZEPISY
+        // JESLI ID SIE ZGADZAJA ZROBIC TO CO PONIZEJ
         this.mainRecipeDataFormGroup.get('recipeName')?.setValue('Makaron');
         this.mainRecipeDataFormGroup
           .get('recipeDescription')
@@ -86,16 +79,23 @@ export class AddNewRecipeComponent implements OnInit {
         this.nutrientsFormGroup.get('fats')?.setValue(150);
         this.nutrientsFormGroup.get('proteins')?.setValue(150);
 
-        this.recipeProducts = [
-          { id: 6, name: 'makaron pióra', quantity: 200, measureUnit: 'g' },
-          { id: 5, name: 'pierś z kurczaka', quantity: 2, measureUnit: 'kg' },
-          { id: 12, name: 'cebula', quantity: 1, measureUnit: 'szt' },
-          { id: 13, name: 'przecier', quantity: 150, measureUnit: 'ml' },
-          { id: 7, name: 'pomidor', quantity: 150, measureUnit: 'g' },
-          { id: 15, name: 'ser zółty', quantity: 300, measureUnit: 'g' },
-          { id: 10, name: 'olej rzepakowy', quantity: 132, measureUnit: 'l' },
-          { id: 18, name: 'woda', quantity: 250, measureUnit: 'ml' },
+        this.recipeProductsEdit = [
+          { id: 11, name: 'mleko 1,5%', measureUnit: 'l', quantity: 100 },
+          { id: 1, name: 'mleko 2%', measureUnit: 'l', quantity: 4 },
+          { id: 2, name: 'śmietana 12%', measureUnit: 'g', quantity: 400 },
+          { id: 3, name: 'mąka', measureUnit: 'kg', quantity: 23 },
+          { id: 4, name: 'jaja rozmiar M', measureUnit: 'szt', quantity: 10 },
+          { id: 5, name: 'pierś z kurczaka', measureUnit: 'kg', quantity: 2 },
+          { id: 6, name: 'makaron pióra', measureUnit: 'g', quantity: 450 },
+          { id: 7, name: 'pomidor', measureUnit: 'g', quantity: 200 },
+          { id: 8, name: 'ryż', measureUnit: 'g', quantity: 200 },
         ];
+
+        this.recipeProducts = [];
+        this.recipeProductsEdit.forEach((product) => {
+          this.recipeProducts.push(product);
+        });
+        this.checkProducts();
 
         this.recipeSteps = [
           {
@@ -126,10 +126,14 @@ export class AddNewRecipeComponent implements OnInit {
               'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
           },
         ];
-
+        this.changeDetectorRef.detectChanges();
         ////////////////////////////////////////////////////////////////////////////////////////
       } else {
         this.mode = 'create';
+        this.recipeProducts = [
+          { id: 0, name: '', quantity: 0, measureUnit: '' },
+        ];
+        this.recipeSteps = [{ id: 0, stepName: '' }];
         this.recipeId = '';
       }
     });
@@ -178,10 +182,10 @@ export class AddNewRecipeComponent implements OnInit {
   }
 
   saveProductData(data: any, index: number) {
-    this.recipeProducts[index].id = data.productName.id;
-    this.recipeProducts[index].name = data.productName.name;
-    this.recipeProducts[index].quantity = data.productQuantity;
-    this.recipeProducts[index].measureUnit = data.productName.measureUnit;
+    this.recipeProducts[index].id = data.id;
+    this.recipeProducts[index].name = data.name;
+    this.recipeProducts[index].quantity = data.quantity;
+    this.recipeProducts[index].measureUnit = data.measureUnit;
     this.checkProducts();
   }
 
