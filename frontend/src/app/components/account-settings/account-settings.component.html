@@ -131,8 +131,14 @@
           <div
             class="app-account-settings__card--inline app-account-settings__card--to-right"
           >
-            <mat-icon>edit</mat-icon>
-            <mat-icon>delete_outline</mat-icon>
+            <mat-icon
+              class="app-account-settings__card--icon"
+              [routerLink]="['/recipes/edit', recipe.id]"
+              >edit</mat-icon
+            >
+            <mat-icon class="app-account-settings__card--icon"
+              >delete_outline</mat-icon
+            >
           </div>
         </div>
       </div>

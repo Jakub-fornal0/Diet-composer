@@ -1,0 +1,41 @@
+<form class="form" [formGroup]="addProductForm">
+  <mat-form-field
+    class="form__input form__input--product-name"
+    appearance="outline"
+  >
+    <mat-label>Produkt</mat-label>
+    <input
+      (focus)="checkProductExist()"
+      (keyup)="checkProductExist()"
+      matInput
+      [matAutocomplete]="auto"
+      formControlName="productName"
+      required
+    />
+    <mat-autocomplete #auto="matAutocomplete" [displayWith]="getProductName">
+      <mat-option
+        *ngFor="let product of filteredProducts | async"
+        [value]="product"
+      >
+        <span>{{ product.name }}</span>
+      </mat-option>
+    </mat-autocomplete>
+    <mat-hint *ngIf="productDoesntExist"
+      ><span class="mat-error">Wybierz produkt z listy!</span></mat-hint
+    >
+  </mat-form-field>
+
+  <mat-form-field class="form__input" appearance="outline">
+    <mat-label>Ilość</mat-label>
+    <input
+      matInput
+      type="number"
+      min="0"
+      max="10000"
+      formControlName="productQuantity"
+      required
+    />
+    <span matSuffix>{{ inputMeasureUnit }}</span>
+  </mat-form-field>
+  <mat-icon (click)="deleteProduct()" class="form__delete-icon">close</mat-icon>
+</form>
