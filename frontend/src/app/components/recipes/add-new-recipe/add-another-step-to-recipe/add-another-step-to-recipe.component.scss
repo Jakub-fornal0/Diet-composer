@@ -9,7 +9,7 @@ textarea {
   align-items: center;
 
   .form__input {
-    width: 60%;
+    width: 75%;
     padding: 0 10px;
     word-wrap: break-word;
   }
@@ -17,5 +17,37 @@ textarea {
   .form__delete-icon {
     cursor: pointer;
     margin-bottom: 19px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .form {
+    .form__input {
+      width: 90%;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  textarea {
+    height: 35px;
+  }
+
+  .form {
+    .form__input {
+      width: 90%;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  textarea {
+    height: 50px;
+  }
+}
+
+@media (max-width: 360px) {
+  textarea {
+    height: 70px;
   }
 }

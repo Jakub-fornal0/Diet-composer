@@ -19,8 +19,50 @@ input[type="number"] {
     padding: 0 10px;
   }
 
+  .form__input--product-name {
+    width: 40%;
+  }
+
   .form__delete-icon {
     cursor: pointer;
     margin-bottom: 19px;
+  }
+}
+
+@media (max-width: 1150px) {
+  .form {
+    .form__input {
+      width: 30%;
+    }
+
+    .form__input--product-name {
+      width: 50%;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .form {
+    .form__input {
+      width: 30%;
+    }
+
+    .form__input--product-name {
+      width: 60%;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .form {
+    flex-direction: column;
+    border-bottom: solid 1px #ccc;
+    .form__input {
+      width: 90%;
+    }
+
+    .form__input--product-name {
+      width: 90%;
+    }
   }
 }

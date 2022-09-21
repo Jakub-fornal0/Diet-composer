@@ -1,5 +1,8 @@
 <form class="form" [formGroup]="addProductForm">
-  <mat-form-field class="form__input" appearance="outline">
+  <mat-form-field
+    class="form__input form__input--product-name"
+    appearance="outline"
+  >
     <mat-label>Produkt</mat-label>
     <input
       (focus)="checkProductExist()"
