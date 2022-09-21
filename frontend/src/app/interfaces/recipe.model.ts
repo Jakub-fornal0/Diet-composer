@@ -1,22 +1,5 @@
 import { Product } from './product.model';
 
-export interface AllRecipeData {
-  id?: number;
-  image: string;
-  name: string;
-  description: string;
-  cookingTime: number;
-  portions: number;
-  level: string;
-  category: string;
-  calories: number;
-  fats: number;
-  proteins: number;
-  carbohydrates: number;
-  products: Product[];
-  recipeStep: RecipeStep[];
-}
-
 export interface Recipe {
   id?: number;
   image: string;

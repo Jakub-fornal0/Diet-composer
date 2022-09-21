@@ -11,21 +11,20 @@
               <label>
                 <mat-icon
                   class="card__input-container--image-icon"
-                  *ngIf="!selectedFile"
+                  *ngIf="!imagePreview"
                   >add_photo_alternate</mat-icon
                 >
-                <p *ngIf="!selectedFile">wybierz zdjęcie</p>
+                <p *ngIf="!imagePreview">wybierz zdjęcie</p>
                 <img
                   class="card__input-container--image"
-                  *ngIf="selectedFile"
-                  [src]="selectedFile.src"
+                  *ngIf="imagePreview"
+                  [src]="imagePreview"
                 />
                 <input
-                  formControlName="recipeImage"
                   #imageInput
                   type="file"
                   accept="image/*"
-                  (change)="processFile(imageInput)"
+                  (change)="processFile($event)"
                 />
               </label>
             </div>
