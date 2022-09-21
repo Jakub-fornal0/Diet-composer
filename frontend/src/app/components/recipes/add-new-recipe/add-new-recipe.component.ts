@@ -42,6 +42,22 @@ export class AddNewRecipeComponent implements OnInit {
   recipeSteps: RecipeStep[] = [];
   recipeStepsAreValid: boolean = false;
 
+  recipeAllData: AllRecipeData = {
+    image: '',
+    name: '',
+    description: '',
+    cookingTime: 0,
+    portions: 0,
+    level: '',
+    category: '',
+    calories: 0,
+    fats: 0,
+    proteins: 0,
+    carbohydrates: 0,
+    products: [{ id: 0, name: '', quantity: 0, measureUnit: '' }],
+    recipeStep: [{ id: 0, stepName: '' }],
+  };
+
   constructor(
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
@@ -234,5 +250,37 @@ export class AddNewRecipeComponent implements OnInit {
     });
   }
 
-  addNewRecipe() {}
+  addNewRecipe() {
+    this.recipeAllData.name =
+      this.mainRecipeDataFormGroup.get('recipeName')?.value || '';
+    this.recipeAllData.description =
+      this.mainRecipeDataFormGroup.get('recipeDescription')?.value || '';
+    this.recipeAllData.image =
+      this.mainRecipeDataFormGroup.get('recipeImage')?.value || '';
+    this.recipeAllData.portions =
+      this.mainRecipeDataFormGroup.get('recipePersonCount')?.value || 0;
+    this.recipeAllData.cookingTime =
+      this.mainRecipeDataFormGroup.get('recipeTime')?.value || 0;
+    this.recipeAllData.level =
+      this.mainRecipeDataFormGroup.get('recipeLevel')?.value || '';
+    this.recipeAllData.category =
+      this.mainRecipeDataFormGroup.get('recipeCategory')?.value || '';
+
+    this.recipeAllData.calories =
+      this.nutrientsFormGroup.get('calories')?.value || 0;
+    this.recipeAllData.carbohydrates =
+      this.nutrientsFormGroup.get('carbohydrates')?.value || 0;
+    this.recipeAllData.fats = this.nutrientsFormGroup.get('fats')?.value || 0;
+    this.recipeAllData.proteins =
+      this.nutrientsFormGroup.get('proteins')?.value || 0;
+
+    this.recipeAllData.products = this.recipeProducts;
+    this.recipeAllData.recipeStep = this.recipeSteps;
+
+    if (this.mode === 'edit') {
+      //WYWOLAC ENDPOINT Z EDIT
+    } else {
+      //WYWOLAC ENDPOINT Z CREATE
+    }
+  }
 }
