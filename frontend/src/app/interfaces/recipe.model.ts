@@ -7,6 +7,7 @@ export interface Recipe {
   description: string;
   cookingTime: number;
   portions: number;
+  level: String;
   category: string;
 }
 
@@ -16,6 +17,7 @@ export interface RecipeDetail {
   name: string;
   cookingTime: number;
   portions: number;
+  level: String;
   products: Product[];
   recipeStep: RecipeStep[];
   author?: string;

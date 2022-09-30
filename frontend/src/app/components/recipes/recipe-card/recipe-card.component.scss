@@ -28,6 +28,10 @@ mat-card {
       display: flex;
       flex-direction: column;
       align-items: center;
+
+      span {
+        text-align: center;
+      }
     }
   }
 
@@ -38,7 +42,7 @@ mat-card {
 }
 
 .app-recipe-card__container--show-button {
-  width: 100%;
+  width: 80%;
   border-radius: 5px;
   padding: 12px 23px;
   background-color: white;

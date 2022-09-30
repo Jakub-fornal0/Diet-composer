@@ -24,6 +24,7 @@ export class RecipeDetailComponent implements OnInit {
 
     cookingTime: 45,
     portions: 4,
+    level: 'Łatwy',
     products: [
       { id: 6, name: 'makaron pióra', quantity: 200, measureUnit: 'g' },
       { id: 5, name: 'pierś z kurczaka', quantity: 0.2, measureUnit: 'kg' },
