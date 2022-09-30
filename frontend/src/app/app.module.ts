@@ -21,6 +21,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -84,6 +85,7 @@ import { AddAnotherStepToRecipeComponent } from './components/recipes/add-new-re
     MatSliderModule,
     MatChipsModule,
     MatRadioModule,
+    MatSidenavModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

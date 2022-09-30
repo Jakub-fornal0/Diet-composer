@@ -50,4 +50,65 @@
       >
     </li>
   </ul>
+  <mat-icon
+    *ngIf="!mobileMenuIsOpen"
+    class="app-navbar__mobile--button"
+    (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+    >dehaze</mat-icon
+  >
+  <mat-icon
+    *ngIf="mobileMenuIsOpen"
+    class="app-navbar__mobile--button"
+    (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+    >close</mat-icon
+  >
 </mat-toolbar>
+
+<mat-sidenav-container class="app-navbar__mobile">
+  <mat-sidenav
+    class="app-navbar__mobile--context"
+    #sidenav
+    mode="side"
+    [fixedInViewport]="true"
+    ><div class="app-navbar__mobile--links">
+      <a
+        (click)="sidenav.toggle()"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/recipes"
+        >Przepisy</a
+      >
+      <a
+        *ngIf="userIsAuthenticated"
+        (click)="sidenav.toggle()"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/products"
+        >Produkty</a
+      >
+      <a
+        *ngIf="userIsAuthenticated"
+        (click)="sidenav.toggle()"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/schedule"
+        >Harmonogram</a
+      >
+      <a
+        *ngIf="userIsAuthenticated"
+        (click)="sidenav.toggle()"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/account/settings"
+      >
+        Konto
+      </a>
+      <a
+        *ngIf="!userIsAuthenticated"
+        (click)="sidenav.toggle()"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/login"
+        >Logowanie</a
+      >
+      <a (click)="sidenav.toggle()" class="app-navbar__desktop--mobile-link"
+        >Wyloguj się</a
+      >
+    </div>
+  </mat-sidenav>
+</mat-sidenav-container>
