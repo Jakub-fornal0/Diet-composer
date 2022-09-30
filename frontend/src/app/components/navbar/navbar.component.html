@@ -72,28 +72,28 @@
     [fixedInViewport]="true"
     ><div class="app-navbar__mobile--links">
       <a
-        (click)="sidenav.toggle()"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
         class="app-navbar__desktop--mobile-link"
         routerLink="/recipes"
         >Przepisy</a
       >
       <a
         *ngIf="userIsAuthenticated"
-        (click)="sidenav.toggle()"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
         class="app-navbar__desktop--mobile-link"
         routerLink="/products"
         >Produkty</a
       >
       <a
         *ngIf="userIsAuthenticated"
-        (click)="sidenav.toggle()"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
         class="app-navbar__desktop--mobile-link"
         routerLink="/schedule"
         >Harmonogram</a
       >
       <a
         *ngIf="userIsAuthenticated"
-        (click)="sidenav.toggle()"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
         class="app-navbar__desktop--mobile-link"
         routerLink="/account/settings"
       >
@@ -101,7 +101,7 @@
       </a>
       <a
         *ngIf="!userIsAuthenticated"
-        (click)="sidenav.toggle()"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
         class="app-navbar__desktop--mobile-link"
         routerLink="/login"
         >Logowanie</a
