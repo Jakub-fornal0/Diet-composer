@@ -5,6 +5,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { map, Observable } from 'rxjs';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { LocalStorageConsts } from '../../consts/localstorage-consts';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-products',
@@ -82,7 +83,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private snackBar: MatSnackBar
   ) {
     this.productForm = this.formBuilder.group({
       product: [''],
@@ -166,6 +168,7 @@ export class ProductsComponent implements OnInit {
       this.chosenProducts
     );
 
+    this.snackBar.open('Dodano produkt.', '', { duration: 1500 });
     this.productForm.get('product')?.setValue('');
     this.resetQuantityInput();
   }
@@ -181,6 +184,8 @@ export class ProductsComponent implements OnInit {
         LocalStorageConsts.PRODUCTS
       );
     }
+
+    this.snackBar.open('Usunięto produkt.', '', { duration: 1500 });
   }
 
   checkValidation(): boolean {
