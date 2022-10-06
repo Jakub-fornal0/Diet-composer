@@ -1,13 +1,13 @@
 export interface User {
-  id?: number;
-  userImage: String;
-  userName: String;
-  email: String;
+  id?: string;
+  userImage: string;
+  userName: string;
+  email: string;
   age: number;
-  gender: String;
+  gender: string;
   weight: number;
   height: number;
-  dietType: String;
+  dietType: string;
   BMI: number;
   caloricDemand: number;
   proteinsDemand: number;
@@ -17,7 +17,7 @@ export interface User {
 }
 
 export interface UserRecipe {
-  id?: number;
-  recipeImage: String;
-  recipeName: String;
+  id?: string;
+  recipeImage: string;
+  recipeName: string;
 }

@@ -1,5 +1,5 @@
 export interface registerData {
-  userName: String;
-  email: String;
-  password: String;
+  userName: string;
+  email: string;
+  password: string;
 }

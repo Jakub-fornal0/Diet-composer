@@ -11,7 +11,7 @@ export class AddAnotherStepToRecipeComponent implements OnInit {
   recipeStepForm: FormGroup;
 
   @Input() index: number = 0;
-  @Input() recipeStep: RecipeStep = { id: 0, stepName: '' };
+  @Input() recipeStep: RecipeStep = { id: '0', stepName: '' };
   @Output() returnRecipeStepData = new EventEmitter<RecipeStep>();
   @Output() recipeStepToDelete = new EventEmitter();
 

@@ -1,5 +1,5 @@
 export const UserConsts = {
-  id: 0,
+  id: '',
   userImage: 'assets/user-default-image.png',
   userName: '',
   email: '',

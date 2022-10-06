@@ -1,5 +1,5 @@
 export interface MealData {
-  recipeId?: number;
+  recipeId?: string;
   recipeName: string;
   recipeImage: string;
   calories: number;

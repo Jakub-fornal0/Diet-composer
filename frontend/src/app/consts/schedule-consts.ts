@@ -1,6 +1,6 @@
 export const ScheduleConsts = {
   breakfast: {
-    recipeId: 0,
+    recipeId: '',
     recipeName: '',
     recipeImage: '',
     calories: 0,
@@ -10,7 +10,7 @@ export const ScheduleConsts = {
     eaten: false,
   },
   secondBreakfast: {
-    recipeId: 0,
+    recipeId: '',
     recipeName: '',
     recipeImage: '',
     calories: 0,
@@ -20,7 +20,7 @@ export const ScheduleConsts = {
     eaten: false,
   },
   lunch: {
-    recipeId: 0,
+    recipeId: '',
     recipeName: '',
     recipeImage: '',
     calories: 0,
@@ -30,7 +30,7 @@ export const ScheduleConsts = {
     eaten: false,
   },
   tea: {
-    recipeId: 0,
+    recipeId: '',
     recipeName: '',
     recipeImage: '',
     calories: 0,
@@ -40,7 +40,7 @@ export const ScheduleConsts = {
     eaten: false,
   },
   dinner: {
-    recipeId: 0,
+    recipeId: '',
     recipeName: '',
     recipeImage: '',
     calories: 0,

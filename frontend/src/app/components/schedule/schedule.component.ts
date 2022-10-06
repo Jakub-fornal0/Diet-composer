@@ -131,7 +131,7 @@ export class ScheduleComponent implements OnInit {
       this.scheduleDetails.totalProteins -= this.schedule[mealType].proteins;
       this.scheduleDetails.totalFats -= this.schedule[mealType].fats;
 
-      this.schedule[mealType].recipeId = 0;
+      this.schedule[mealType].recipeId = '';
       this.schedule[mealType].recipeName = '';
       this.schedule[mealType].recipeImage = '';
       this.schedule[mealType].proteins = 0;

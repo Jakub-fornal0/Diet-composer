@@ -1,23 +1,23 @@
 import { Product } from './product.model';
 
 export interface Recipe {
-  id?: number;
+  id?: string;
   image: string;
   name: string;
   description: string;
   cookingTime: number;
   portions: number;
-  level: String;
+  level: string;
   category: string;
 }
 
 export interface RecipeDetail {
-  id?: number;
+  id?: string;
   image: string;
   name: string;
   cookingTime: number;
   portions: number;
-  level: String;
+  level: string;
   products: Product[];
   recipeStep: RecipeStep[];
   author?: string;
@@ -28,6 +28,6 @@ export interface RecipeDetail {
 }
 
 export interface RecipeStep {
-  id?: number;
-  stepName: String;
+  id?: string;
+  stepName: string;
 }

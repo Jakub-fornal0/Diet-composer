@@ -10,7 +10,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
   styleUrls: ['./add-new-recipe.component.scss'],
 })
 export class AddNewRecipeComponent implements OnInit {
-  mode: String = 'create';
+  mode: string = 'create';
   recipeId?: string;
   imagePreview!: string;
 
@@ -80,15 +80,15 @@ export class AddNewRecipeComponent implements OnInit {
         this.nutrientsFormGroup.get('proteins')?.setValue(150);
 
         this.recipeProductsEdit = [
-          { id: 11, name: 'mleko 1,5%', measureUnit: 'l', quantity: 100 },
-          { id: 1, name: 'mleko 2%', measureUnit: 'l', quantity: 4 },
-          { id: 2, name: 'śmietana 12%', measureUnit: 'g', quantity: 400 },
-          { id: 3, name: 'mąka', measureUnit: 'kg', quantity: 23 },
-          { id: 4, name: 'jaja rozmiar M', measureUnit: 'szt', quantity: 10 },
-          { id: 5, name: 'pierś z kurczaka', measureUnit: 'kg', quantity: 2 },
-          { id: 6, name: 'makaron pióra', measureUnit: 'g', quantity: 450 },
-          { id: 7, name: 'pomidor', measureUnit: 'g', quantity: 200 },
-          { id: 8, name: 'ryż', measureUnit: 'g', quantity: 200 },
+          { id: '11', name: 'mleko 1,5%', measureUnit: 'l', quantity: 100 },
+          { id: '1', name: 'mleko 2%', measureUnit: 'l', quantity: 4 },
+          { id: '2', name: 'śmietana 12%', measureUnit: 'g', quantity: 400 },
+          { id: '3', name: 'mąka', measureUnit: 'kg', quantity: 23 },
+          { id: '4', name: 'jaja rozmiar M', measureUnit: 'szt', quantity: 10 },
+          { id: '5', name: 'pierś z kurczaka', measureUnit: 'kg', quantity: 2 },
+          { id: '6', name: 'makaron pióra', measureUnit: 'g', quantity: 450 },
+          { id: '7', name: 'pomidor', measureUnit: 'g', quantity: 200 },
+          { id: '8', name: 'ryż', measureUnit: 'g', quantity: 200 },
         ];
 
         this.recipeProducts = [];
@@ -99,29 +99,29 @@ export class AddNewRecipeComponent implements OnInit {
 
         this.recipeSteps = [
           {
-            id: 1,
+            id: '1',
             stepName:
               'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
           },
-          { id: 2, stepName: 'Podsmaż je na oleju.' },
-          { id: 3, stepName: 'Ugotuj makaron na sposób al dente.' },
+          { id: '2', stepName: 'Podsmaż je na oleju.' },
+          { id: '3', stepName: 'Ugotuj makaron na sposób al dente.' },
           {
-            id: 4,
+            id: '4',
             stepName:
               'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
           },
           {
-            id: 5,
+            id: '5',
             stepName:
               'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
           },
           {
-            id: 6,
+            id: '6',
             stepName:
               'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
           },
           {
-            id: 7,
+            id: '7',
             stepName:
               'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
           },
@@ -131,9 +131,9 @@ export class AddNewRecipeComponent implements OnInit {
       } else {
         this.mode = 'create';
         this.recipeProducts = [
-          { id: 0, name: '', quantity: 0, measureUnit: '' },
+          { id: '0', name: '', quantity: 0, measureUnit: '' },
         ];
-        this.recipeSteps = [{ id: 0, stepName: '' }];
+        this.recipeSteps = [{ id: '0', stepName: '' }];
         this.recipeId = '';
       }
     });
@@ -172,7 +172,7 @@ export class AddNewRecipeComponent implements OnInit {
 
   addAnotherProduct() {
     this.recipeProducts.push({
-      id: 0,
+      id: '0',
       name: '',
       measureUnit: '',
       quantity: 0,
@@ -209,12 +209,12 @@ export class AddNewRecipeComponent implements OnInit {
   }
 
   addAnotherRecipeStep() {
-    this.recipeSteps.push({ id: 0, stepName: '' });
+    this.recipeSteps.push({ id: '0', stepName: '' });
     this.checkRecipeStep();
   }
 
   saveRecipeStepData(data: any, index: number) {
-    this.recipeSteps[index].id = index;
+    this.recipeSteps[index].id = index.toString();
     this.recipeSteps[index].stepName = data.stepName;
     this.checkRecipeStep();
   }

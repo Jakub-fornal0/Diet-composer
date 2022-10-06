@@ -12,7 +12,7 @@ export class SigninComponent implements OnInit {
   passwordIsHide: boolean = true;
   loginDataAreCorrect: boolean = true;
   loginData: loginData = { email: '', password: '' };
-  error: String = '';
+  error: string = '';
 
   constructor(private formBuilder: FormBuilder) {
     this.loginForm = this.formBuilder.group({

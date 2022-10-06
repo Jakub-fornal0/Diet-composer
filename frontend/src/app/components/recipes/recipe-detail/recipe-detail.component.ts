@@ -18,7 +18,7 @@ export class RecipeDetailComponent implements OnInit {
 
   // _________________________MOCKUP _________________________//
   recipe: RecipeDetail = {
-    id: 1,
+    id: '1',
     image: 'assets/zdj.jpg',
     name: 'Zapiekanka makaronowa',
 
@@ -26,39 +26,44 @@ export class RecipeDetailComponent implements OnInit {
     portions: 4,
     level: 'Łatwy',
     products: [
-      { id: 6, name: 'makaron pióra', quantity: 200, measureUnit: 'g' },
-      { id: 5, name: 'pierś z kurczaka', quantity: 0.2, measureUnit: 'kg' },
-      { id: 12, name: 'cebula', quantity: 1, measureUnit: 'szt' },
-      { id: 13, name: 'przecier pomidorowy', quantity: 150, measureUnit: 'ml' },
-      { id: 7, name: 'pomidor', quantity: 150, measureUnit: 'g' },
-      { id: 15, name: 'ser zółty', quantity: 300, measureUnit: 'g' },
-      { id: 10, name: 'olej rzepakowy', quantity: 0.25, measureUnit: 'l' },
-      { id: 18, name: 'woda', quantity: 250, measureUnit: 'ml' },
+      { id: '6', name: 'makaron pióra', quantity: 200, measureUnit: 'g' },
+      { id: '5', name: 'pierś z kurczaka', quantity: 0.2, measureUnit: 'kg' },
+      { id: '12', name: 'cebula', quantity: 1, measureUnit: 'szt' },
+      {
+        id: '13',
+        name: 'przecier pomidorowy',
+        quantity: 150,
+        measureUnit: 'ml',
+      },
+      { id: '7', name: 'pomidor', quantity: 150, measureUnit: 'g' },
+      { id: '15', name: 'ser zółty', quantity: 300, measureUnit: 'g' },
+      { id: '10', name: 'olej rzepakowy', quantity: 0.25, measureUnit: 'l' },
+      { id: '18', name: 'woda', quantity: 250, measureUnit: 'ml' },
     ],
     recipeStep: [
       {
-        id: 1,
+        id: '1',
         stepName: 'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
       },
-      { id: 1, stepName: 'Podsmaż je na oleju.' },
-      { id: 1, stepName: 'Ugotuj makaron na sposób al dente.' },
+      { id: '1', stepName: 'Podsmaż je na oleju.' },
+      { id: '1', stepName: 'Ugotuj makaron na sposób al dente.' },
       {
-        id: 1,
+        id: '1',
         stepName:
           'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
       },
       {
-        id: 1,
+        id: '1',
         stepName:
           'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
       },
       {
-        id: 1,
+        id: '1',
         stepName:
           'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
       },
       {
-        id: 1,
+        id: '1',
         stepName:
           'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
       },
