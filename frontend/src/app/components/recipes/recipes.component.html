@@ -76,6 +76,7 @@
       <app-recipe-card [recipe]="recipe"></app-recipe-card>
     </div>
   </div>
+
   <div class="app-recipes__paginator">
     <button
       class="app-recipes__paginator--button"
@@ -85,11 +86,65 @@
     >
       <mat-icon>chevron_left</mat-icon>
     </button>
+    <span
+      *ngIf="currentPage >= 3 && countOfPages > 3"
+      class="app-recipes__paginator--page"
+      (click)="setAsCurrentPage(1)"
+      >1</span
+    >
+    <span
+      *ngIf="currentPage >= 3 && countOfPages > 3"
+      class="app-recipes__paginator--dotted"
+      >...</span
+    >
+    <span
+      *ngIf="currentPage === countOfPages && countOfPages >= 3"
+      class="app-recipes__paginator--page"
+      (click)="setAsCurrentPage(currentPage - 2)"
+      >{{ currentPage - 2 }}</span
+    >
+    <span
+      *ngIf="currentPage !== 1 && countOfPages > 1"
+      class="app-recipes__paginator--page"
+      (click)="setAsCurrentPage(currentPage - 1)"
+      >{{ currentPage - 1 }}</span
+    >
     <span class="app-recipes__paginator--current-page">{{ currentPage }}</span>
+    <span
+      *ngIf="currentPage !== countOfPages && countOfPages > 1"
+      class="app-recipes__paginator--page"
+      (click)="setAsCurrentPage(currentPage + 1)"
+      >{{ currentPage + 1 }}</span
+    >
+    <span
+      *ngIf="currentPage === 1 && countOfPages >= 3"
+      class="app-recipes__paginator--page"
+      (click)="setAsCurrentPage(currentPage + 2)"
+      >{{ currentPage + 2 }}</span
+    >
+    <span
+      *ngIf="
+        currentPage + 1 !== countOfPages &&
+        currentPage !== countOfPages &&
+        countOfPages > 3
+      "
+      class="app-recipes__paginator--dotted"
+      >...</span
+    >
+    <span
+      *ngIf="
+        currentPage + 1 !== countOfPages &&
+        currentPage !== countOfPages &&
+        countOfPages > 3
+      "
+      class="app-recipes__paginator--page"
+      (click)="setAsCurrentPage(countOfPages)"
+      >{{ countOfPages }}</span
+    >
     <button
       class="app-recipes__paginator--button"
       mat-mini-fab
-      [disabled]="currentPage * 12 > countOfRecipes"
+      [disabled]="currentPage === countOfPages"
       (click)="getRecipes('next')"
     >
       <mat-icon>chevron_right</mat-icon>

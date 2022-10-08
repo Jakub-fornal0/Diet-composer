@@ -39,13 +39,33 @@ $font-color: #616159;
     padding-bottom: 15px;
 
     .app-recipes__paginator--button {
-      margin: 0 45px;
+      margin: 0 35px;
     }
 
     .app-recipes__paginator--current-page {
       color: $font-color;
+      background-color: #f7f2f2;
+      border-radius: 25%;
+      padding: 10px 14px;
       font-weight: 500;
-      font-size: 16px;
+      font-size: 18px;
+      margin: 0 14px;
+      cursor: pointer;
+    }
+
+    .app-recipes__paginator--page {
+      color: $font-color;
+      font-weight: 400;
+      font-size: 17px;
+      margin: 0 14px;
+      cursor: pointer;
+    }
+
+    .app-recipes__paginator--dotted {
+      color: $font-color;
+      font-weight: 400;
+      font-size: 17px;
+      margin: 0 14px;
     }
   }
 
@@ -243,6 +263,28 @@ $font-color: #616159;
         margin-left: 2px;
       }
     }
+
+    .app-recipes__paginator {
+      .app-recipes__paginator--button {
+        margin: 0 5px;
+      }
+
+      .app-recipes__paginator--current-page {
+        padding: 10px 5px;
+        font-size: 16px;
+        margin: 0 6px;
+      }
+
+      .app-recipes__paginator--page {
+        font-size: 15px;
+        margin: 0 5px;
+      }
+
+      .app-recipes__paginator--dotted {
+        font-size: 15px;
+        margin: 0 5px;
+      }
+    }
   }
 }
 
@@ -270,6 +312,25 @@ $font-color: #616159;
         width: 100%;
         text-align: left;
         margin-left: 7px;
+      }
+    }
+
+    .app-recipes__paginator {
+      .app-recipes__paginator--button {
+        margin: 2px;
+      }
+
+      .app-recipes__paginator--current-page {
+        padding: 8px 2px;
+        margin: 2px;
+      }
+
+      .app-recipes__paginator--page {
+        margin: 2px;
+      }
+
+      .app-recipes__paginator--dotted {
+        margin: 2px;
       }
     }
   }

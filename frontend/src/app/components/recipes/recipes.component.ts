@@ -15,6 +15,7 @@ export class RecipesComponent implements OnInit {
   products: Product[] = [];
   currentPage: number = 1;
   countOfRecipes: number = 0;
+  countOfPages: number = 0;
 
   // MOCKUP USUNAC POTEM//
   recipes: Recipe[] = [
@@ -168,7 +169,8 @@ export class RecipesComponent implements OnInit {
     }
 
     //WYWOLAC ENDPOINT KTORY ZWRACA LICZBE PASUJACYCH PRZEPISOW
-    this.countOfRecipes = 80;
+    this.countOfRecipes = 5000;
+    this.countOfPages = Math.ceil(this.countOfRecipes / 12);
     //JAK BEDZIE BACKEND TO WYWOLAC ENDPOINT PO PRZEPISY Z CURRENTPAGE
   }
 
@@ -203,6 +205,11 @@ export class RecipesComponent implements OnInit {
     } else {
       this.currentPage--;
     }
+    //TU WYWOLAC ENDPOINT DLA POBRANIA PRZEPISOW NA PAGE
+  }
+
+  setAsCurrentPage(numberOfPages: number) {
+    this.currentPage = numberOfPages;
     //TU WYWOLAC ENDPOINT DLA POBRANIA PRZEPISOW NA PAGE
   }
 }
