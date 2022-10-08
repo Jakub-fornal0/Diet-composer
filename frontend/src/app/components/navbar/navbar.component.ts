@@ -6,7 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  userIsAuthenticated = true;
+  userIsAuthenticated: boolean = true;
+  mobileMenuIsOpen: boolean = false;
 
   constructor() {}
 

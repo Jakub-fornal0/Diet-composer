@@ -16,6 +16,13 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatSelectModule } from '@angular/material/select';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,6 +35,12 @@ import { RecipesFilterDialogComponent } from './components/recipes/recipes-filte
 import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe-detail.component';
 import { RecipeCardComponent } from './components/recipes/recipe-card/recipe-card.component';
 import { AddRecipeToScheduleComponent } from './components/recipes/add-recipe-to-schedule/add-recipe-to-schedule.component';
+import { ScheduleComponent } from './components/schedule/schedule.component';
+import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
+import { SetBodyParametersDialogComponent } from './components/account-settings/set-body-parameters-dialog/set-body-parameters-dialog.component';
+import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-new-recipe.component';
+import { AddProductToRecipeComponent } from './components/recipes/add-new-recipe/add-product-to-recipe/add-product-to-recipe.component';
+import { AddAnotherStepToRecipeComponent } from './components/recipes/add-new-recipe/add-another-step-to-recipe/add-another-step-to-recipe.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +54,12 @@ import { AddRecipeToScheduleComponent } from './components/recipes/add-recipe-to
     RecipeDetailComponent,
     RecipeCardComponent,
     AddRecipeToScheduleComponent,
+    ScheduleComponent,
+    AccountSettingsComponent,
+    SetBodyParametersDialogComponent,
+    AddNewRecipeComponent,
+    AddProductToRecipeComponent,
+    AddAnotherStepToRecipeComponent,
   ],
   imports: [
     BrowserModule,
@@ -62,6 +81,13 @@ import { AddRecipeToScheduleComponent } from './components/recipes/add-recipe-to
     MatPaginatorModule,
     MatCheckboxModule,
     MatButtonToggleModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatSliderModule,
+    MatChipsModule,
+    MatRadioModule,
+    MatSidenavModule,
+    MatSnackBarModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

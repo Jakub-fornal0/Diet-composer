@@ -6,7 +6,7 @@
         <div>
           <mat-form-field appearance="outline" class="app-signin__card--input">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="email" required />
+            <input matInput formControlName="email" maxlength="50" required />
             <mat-error
               *ngIf="
                 loginForm.get('email')?.invalid &&
@@ -22,6 +22,7 @@
             <input
               matInput
               formControlName="password"
+              maxlength="50"
               [type]="passwordIsHide ? 'password' : 'text'"
             />
             <button

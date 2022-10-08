@@ -1,0 +1,17 @@
+export const UserConsts = {
+  id: '',
+  userImage: 'assets/user-default-image.png',
+  userName: '',
+  email: '',
+  age: 0,
+  gender: '',
+  weight: 0,
+  height: 0,
+  dietType: '',
+  BMI: 0,
+  caloricDemand: 0,
+  proteinsDemand: 0,
+  fatsDemand: 0,
+  carbohydratesDemand: 0,
+  recipes: [],
+};

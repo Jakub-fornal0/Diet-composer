@@ -4,7 +4,10 @@ $navbar-main-link-color: #616159;
 
 .app-navbar {
   background-color: rgba($color: $navbar-background-color, $alpha: 0.9);
-  height: 75px;
+  -webkit-box-shadow: 1px -6px 17px 17px rgba(247, 246, 230, 0.9);
+  -moz-box-shadow: 1px -6px 17px 17px rgba(247, 246, 230, 0.9);
+  box-shadow: 1px -6px 17px 17px rgba(247, 246, 230, 0.9);
+  height: 65px;
   position: fixed;
   z-index: 20;
   top: 0;
@@ -27,6 +30,10 @@ $navbar-main-link-color: #616159;
     li {
       margin: 25px;
       position: relative;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .app-navbar__desktop--link {
@@ -69,9 +76,99 @@ $navbar-main-link-color: #616159;
       }
     }
 
+    .app-navbar__desktop--logout {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: $navbar-main-link-color;
+      transition: 0.5s ease-in-out;
+
+      &:hover {
+        color: #ab1818;
+      }
+    }
+
     .app-navbar__desktop--icon {
       display: flex;
       align-items: center;
+    }
+  }
+
+  .app-navbar__mobile--button {
+    margin-right: 20px;
+    margin-top: 20px;
+    width: 35px;
+    height: 35px;
+    font-size: 35px;
+    cursor: pointer;
+  }
+}
+
+.app-navbar__mobile--context {
+  width: 100%;
+  background-color: $navbar-background-color;
+}
+
+.app-navbar__mobile--links {
+  margin-top: 75px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  .app-navbar__desktop--mobile-link {
+    color: $navbar-main-link-color;
+    text-decoration: none;
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 7vh 0;
+    width: 100%;
+    border-bottom: solid 1px #ccc;
+    border-top: solid 1px #ccc;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+    &:hover {
+      color: $navbar-active-link-color;
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .app-navbar {
+    .app-navbar__desktop {
+      display: none;
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .app-navbar {
+    .app-navbar__mobile {
+      display: none;
+    }
+  }
+  .app-navbar__mobile--button {
+    display: none;
+  }
+
+  .app-navbar__mobile--context {
+    display: none;
+  }
+}
+
+@media (max-width: 576px) {
+  .app-navbar {
+    .app-navbar__logo {
+      font-size: 20px;
+    }
+
+    .app-navbar__mobile--button {
+      width: 35px;
+      height: 35px;
+      font-size: 30px;
     }
   }
 }

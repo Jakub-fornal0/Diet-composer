@@ -12,7 +12,7 @@ export class SignupComponent implements OnInit {
   passwordIsHide: boolean = true;
   registerDataAreCorrect: boolean = true;
   registerData: registerData = { userName: '', email: '', password: '' };
-  error: String = '';
+  error: string = '';
 
   constructor(private formBuilder: FormBuilder) {
     this.registerForm = this.formBuilder.group({

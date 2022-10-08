@@ -50,6 +50,13 @@ $products-delete-icon-color: #ab1818;
       .app-products__card--input {
         width: 28vw;
       }
+
+      .app-products__card--search-recipes {
+        font-weight: 500;
+        color: $products-text-main-color;
+        padding-top: 15px;
+        font-size: 15px;
+      }
     }
 
     .app-products__card--products {
@@ -112,13 +119,17 @@ $products-delete-icon-color: #ab1818;
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
 /* disable for Firefox */
 input[type="number"] {
-  -moz-appearance: textfield;
+  appearance: textfield;
+}
+
+::ng-deep .mat-mini-fab.mat-accent {
+  background-color: rgba($color: #91997f, $alpha: 0.7);
 }
 
 @media (max-width: 1200px) {
@@ -162,10 +173,6 @@ input[type="number"] {
       .app-products__card--insert-products {
         h1 {
           font-size: 22px;
-        }
-
-        p {
-          font-size: 10px;
         }
       }
 

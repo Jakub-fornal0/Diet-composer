@@ -6,8 +6,15 @@ $font-color: #616159;
   align-items: center;
   justify-content: center;
 
+  .app-add-recipe-to-schedule__container--error {
+    text-align: center;
+    color: #f44336;
+    font-size: 90%;
+  }
+
   .app-add-recipe-to-schedule__container--toggle-group {
-    margin: 25px 0;
+    margin-top: 25px;
+    margin-bottom: 15px;
   }
 
   mat-button-toggle-group {
@@ -51,6 +58,6 @@ $font-color: #616159;
   justify-content: center;
 
   .app-add-recipe-to-schedule__buttons--cancel {
-    color: #ab1827;
+    color: #961c14;
   }
 }

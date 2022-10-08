@@ -5,6 +5,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { map, Observable } from 'rxjs';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { LocalStorageConsts } from '../../consts/localstorage-consts';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-products',
@@ -16,64 +17,64 @@ export class ProductsComponent implements OnInit {
   filteredProducts?: Observable<Product[]>;
   inputMeasureUnit: string = '';
   chosenProducts: Product[] = [];
-  chosenproductId?: number;
+  chosenproductId?: string;
   productIsChosen: boolean = false;
   productDoesntExist: boolean = false;
 
   // mockup produktów DO USUNIECIA JAK BEDZIE POLĄCZENIE Z BAZA
   products: Product[] = [
     {
-      id: 11,
+      id: '11',
       name: 'mleko 1,5%',
       measureUnit: 'l',
     },
     {
-      id: 1,
+      id: '1',
       name: 'mleko 2%',
       measureUnit: 'l',
     },
     {
-      id: 2,
+      id: '2',
       name: 'śmietana 12%',
       measureUnit: 'g',
     },
     {
-      id: 3,
+      id: '3',
       name: 'mąka',
       measureUnit: 'kg',
     },
     {
-      id: 4,
+      id: '4',
       name: 'jaja rozmiar M',
       measureUnit: 'szt',
     },
     {
-      id: 5,
+      id: '5',
       name: 'pierś z kurczaka',
       measureUnit: 'kg',
     },
     {
-      id: 6,
+      id: '6',
       name: 'makaron pióra',
       measureUnit: 'g',
     },
     {
-      id: 7,
+      id: '7',
       name: 'pomidor',
       measureUnit: 'g',
     },
     {
-      id: 8,
+      id: '8',
       name: 'ryż',
       measureUnit: 'g',
     },
     {
-      id: 9,
+      id: '9',
       name: 'mięso mielone',
       measureUnit: 'g',
     },
     {
-      id: 10,
+      id: '10',
       name: 'olej rzepakowy',
       measureUnit: 'l',
     },
@@ -82,7 +83,8 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private localStorageService: LocalStorageService
+    private localStorageService: LocalStorageService,
+    private snackBar: MatSnackBar
   ) {
     this.productForm = this.formBuilder.group({
       product: [''],
@@ -166,6 +168,7 @@ export class ProductsComponent implements OnInit {
       this.chosenProducts
     );
 
+    this.snackBar.open('Dodano produkt.', '', { duration: 1500 });
     this.productForm.get('product')?.setValue('');
     this.resetQuantityInput();
   }
@@ -181,11 +184,14 @@ export class ProductsComponent implements OnInit {
         LocalStorageConsts.PRODUCTS
       );
     }
+
+    this.snackBar.open('Usunięto produkt.', '', { duration: 1500 });
   }
 
   checkValidation(): boolean {
     if (
       this.productForm.get('quantity')?.value &&
+      this.productForm.get('quantity')?.value > 0 &&
       this.productForm.get('product')?.value.name
     ) {
       return true;

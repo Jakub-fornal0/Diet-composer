@@ -6,7 +6,7 @@
         <div>
           <mat-form-field appearance="outline" class="app-signup__card--input">
             <mat-label>Nazwa użytkownika</mat-label>
-            <input matInput formControlName="name" required />
+            <input matInput formControlName="name" maxlength="50" required />
             <mat-error
               *ngIf="
                 registerForm.get('name')?.invalid &&
@@ -19,7 +19,7 @@
         <div>
           <mat-form-field appearance="outline" class="app-signup__card--input">
             <mat-label>Email</mat-label>
-            <input matInput formControlName="email" required />
+            <input matInput formControlName="email" maxlength="50" required />
             <mat-error
               *ngIf="
                 registerForm.get('email')?.hasError('required') &&
@@ -42,6 +42,7 @@
             <input
               matInput
               formControlName="password"
+              maxlength="50"
               [type]="passwordIsHide ? 'password' : 'text'"
             />
             <button

@@ -1,0 +1,354 @@
+$add-recipe-background-color: #fafafa;
+
+mat-stepper {
+  width: 100%;
+}
+
+input[type="file"] {
+  visibility: hidden;
+}
+
+p,
+h1,
+h2 {
+  padding: 0;
+  margin: 0;
+  color: #616159;
+}
+
+p {
+  font-weight: 500;
+  font-size: 15px;
+  padding-bottom: 3px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-top: 15px;
+}
+
+app-add-product-to-recipe,
+app-add-another-step-to-recipe {
+  width: 90%;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* disable for Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+::ng-deep .mat-horizontal-content-container {
+  padding: 0 !important;
+  padding-bottom: 5px;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-ripple .mat-ripple-element {
+  opacity: 0 !important;
+  background-color: #616159 !important;
+}
+
+::ng-deep .mat-radio-button.mat-accent .mat-radio-inner-circle {
+  background-color: #616159 !important;
+}
+
+::ng-deep
+  .mat-radio-button.mat-accent.mat-radio-checked
+  .mat-radio-outer-circle {
+  border-color: #616159 !important;
+}
+
+::ng-deep .mat-mini-fab.mat-accent {
+  background-color: rgba($color: #91997f, $alpha: 0.7);
+}
+
+::ng-deep .mat-step-header .mat-step-icon-selected,
+.mat-step-header .mat-step-icon-state-done,
+.mat-step-header .mat-step-icon-state-edit {
+  background-color: rgba($color: #91997f, $alpha: 0.7);
+}
+
+::ng-deep .mat-step-header .mat-step-icon-state-edit {
+  background-color: rgba($color: #91997f, $alpha: 0.7);
+}
+
+.app-add-new-recipe {
+  background-color: $add-recipe-background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+
+  .card {
+    display: flex;
+    padding: 0;
+    width: 90%;
+    height: auto;
+    margin-top: 85px;
+    margin-bottom: 15px;
+    min-height: 85vh;
+
+    .card__input-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 5px;
+
+      .card__input-container--input {
+        width: 50%;
+        color: #616159;
+      }
+
+      .card__input-container--input-description {
+        word-wrap: break-word;
+        word-break: break-all;
+        height: 105px;
+      }
+
+      .card__input-container--radio-button {
+        padding: 5px 30px;
+        color: #616159;
+      }
+
+      .card__input-container--person-count-input {
+        border: none;
+        text-align: center;
+        background-color: white;
+        font-weight: 500;
+        font-size: 15px;
+      }
+
+      .card__input-container--file-input {
+        text-align-last: center;
+        margin: auto;
+      }
+
+      .card__input-container-image-pick-button {
+        cursor: pointer;
+        text-align-last: center;
+      }
+
+      .card__input-container--image-preview {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 450px;
+        height: 300px;
+        border: 1px solid rgba($color: #616159, $alpha: 0.2);
+        border-radius: 25px;
+
+        label {
+          padding-top: 25px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        .card__input-container--image-icon {
+          width: 40px;
+          height: 40px;
+          font-size: 40px;
+          cursor: pointer;
+          color: rgba($color: #616159, $alpha: 0.8);
+        }
+
+        p {
+          cursor: pointer;
+          font-weight: 400;
+        }
+
+        .card__input-container--image {
+          cursor: pointer;
+          width: 450px;
+          height: 300px;
+          border-radius: 25px;
+        }
+      }
+    }
+
+    .card__input-container--padding-bottom {
+      padding-bottom: 15px;
+    }
+
+    .card__input-container--margin-bottom {
+      margin-bottom: 15px;
+    }
+
+    .card__next-button {
+      margin-bottom: 10px;
+    }
+
+    .card__end-text {
+      font-weight: 400;
+    }
+
+    .card__share-button {
+      width: 50%;
+      padding: 14px 23px;
+      margin: 40px 0;
+      border-radius: 4px;
+      text-transform: uppercase;
+      color: #616159;
+      background-color: white;
+      font-size: 13px;
+      font-weight: 500;
+      border: none;
+      background: none;
+      box-shadow: 0px 3px 1px -2px rgb(0 0 0 / 20%),
+        0px 2px 2px 0px rgb(0 0 0 / 14%), 0px 1px 5px 0px rgb(0 0 0 / 12%);
+    }
+  }
+}
+
+@media (max-width: 992px) {
+  .app-add-new-recipe {
+    .card {
+      .card__input-container {
+        .card__input-container--input {
+          width: 60%;
+        }
+
+        .card__input-container--input-description {
+          height: 130px;
+        }
+
+        .card__input-container--radio-button {
+          padding: 5px 20px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  ::ng-deep .mat-step-text-label {
+    font-size: 11px;
+  }
+
+  .app-add-new-recipe {
+    .card {
+      .card__input-container {
+        .card__input-container--input {
+          width: 70%;
+        }
+
+        .card__input-container--input-description {
+          height: 150px;
+        }
+
+        .card__input-container--image-preview {
+          width: 400px;
+          height: 250px;
+
+          .card__input-container--image-icon {
+            width: 35px;
+            height: 35px;
+            font-size: 35px;
+          }
+
+          .card__input-container--image {
+            width: 400px;
+            height: 250px;
+          }
+
+          p {
+            font-size: 12px;
+          }
+        }
+
+        .card__input-container--radio-button {
+          padding: 5px 5px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  ::ng-deep .mat-step-text-label {
+    visibility: hidden;
+  }
+
+  mat-radio-group {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .app-add-new-recipe {
+    .card {
+      p {
+        font-size: 14px;
+      }
+
+      .card__input-container {
+        .card__input-container--input {
+          width: 70%;
+        }
+
+        .card__input-container--input-description {
+          height: 150px;
+        }
+
+        .card__input-container--image-preview {
+          width: 300px;
+          height: 200px;
+
+          .card__input-container--image-icon {
+            width: 35px;
+            height: 35px;
+            font-size: 35px;
+          }
+
+          .card__input-container--image {
+            width: 300px;
+            height: 200px;
+          }
+
+          p {
+            font-size: 12px;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .app-add-new-recipe {
+    .card {
+      .card__input-container {
+        .card__input-container--input {
+          width: 80%;
+        }
+
+        .card__input-container--input-description {
+          height: 150px;
+        }
+
+        .card__input-container--image-preview {
+          width: 250px;
+          height: 175px;
+
+          .card__input-container--image {
+            width: 250px;
+            height: 175px;
+          }
+        }
+
+        .card__input-container--person-count-input {
+          width: 35%;
+        }
+      }
+    }
+  }
+}

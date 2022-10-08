@@ -8,11 +8,15 @@
     <div class="app-recipe-card__container--recipe-summary">
       <div class="app-recipe-card__container--recipe-summary-description">
         <mat-icon>access_time</mat-icon>
-        <span>{{ recipe.cookingTime }}</span>
+        <span>{{ recipe.cookingTime }} min</span>
       </div>
       <div class="app-recipe-card__container--recipe-summary-description">
         <mat-icon>person_outline</mat-icon>
         <span>{{ recipe.portions }}</span>
+      </div>
+      <div class="app-recipe-card__container--recipe-summary-description">
+        <mat-icon>signal_cellular_alt</mat-icon>
+        <span>{{ recipe.level }}</span>
       </div>
     </div>
     <div class="app-recipe-card__container--recipe-show-button">

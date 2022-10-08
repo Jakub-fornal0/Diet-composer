@@ -48,7 +48,7 @@
             class="app-products__card--input"
           >
             <mat-label>Ilość</mat-label>
-            <input matInput type="number" formControlName="quantity" />
+            <input matInput type="number" min="0" formControlName="quantity" />
             <span matSuffix>{{ inputMeasureUnit }}</span>
           </mat-form-field>
         </div>
@@ -57,12 +57,17 @@
         <button
           [disabled]="!checkValidation()"
           (click)="addProduct()"
-          color="primary"
           mat-mini-fab
         >
           <mat-icon>add</mat-icon>
         </button>
       </div>
+      <a
+        class="app-products__card--search-recipes"
+        routerLink="/recipes"
+        *ngIf="chosenProducts.length"
+        >Wyszukaj przepisy!</a
+      >
     </div>
     <div class="app-products__card--products col-lg-12 col-md-12 col-sm-12">
       <div

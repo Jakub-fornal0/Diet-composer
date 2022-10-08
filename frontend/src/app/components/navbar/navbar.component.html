@@ -30,18 +30,17 @@
     </li>
     <li *ngIf="userIsAuthenticated">
       <a
-        [matMenuTriggerFor]="account_menu"
         class="app-navbar__desktop--link app-navbar__desktop--icon"
+        routerLink="/account/settings"
+        routerLinkActive="app-navbar__desktop--active"
       >
         <mat-icon>perm_identity</mat-icon> Konto
       </a>
-      <mat-menu #account_menu="matMenu">
-        <a routerLink="/settings" mat-menu-item
-          ><mat-icon>settings</mat-icon>Ustawienia konta</a
-        >
-        <a mat-menu-item><mat-icon>input</mat-icon>Wyloguj</a>
-      </mat-menu>
     </li>
+    <li *ngIf="userIsAuthenticated">
+      <a class="app-navbar__desktop--logout"><mat-icon>input</mat-icon> </a>
+    </li>
+
     <li *ngIf="!userIsAuthenticated">
       <a
         routerLink="/login"
@@ -51,4 +50,65 @@
       >
     </li>
   </ul>
+  <mat-icon
+    *ngIf="!mobileMenuIsOpen"
+    class="app-navbar__mobile--button"
+    (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+    >dehaze</mat-icon
+  >
+  <mat-icon
+    *ngIf="mobileMenuIsOpen"
+    class="app-navbar__mobile--button"
+    (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+    >close</mat-icon
+  >
 </mat-toolbar>
+
+<mat-sidenav-container class="app-navbar__mobile">
+  <mat-sidenav
+    class="app-navbar__mobile--context"
+    #sidenav
+    mode="side"
+    [fixedInViewport]="true"
+    ><div class="app-navbar__mobile--links">
+      <a
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/recipes"
+        >Przepisy</a
+      >
+      <a
+        *ngIf="userIsAuthenticated"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/products"
+        >Produkty</a
+      >
+      <a
+        *ngIf="userIsAuthenticated"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/schedule"
+        >Harmonogram</a
+      >
+      <a
+        *ngIf="userIsAuthenticated"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/account/settings"
+      >
+        Konto
+      </a>
+      <a
+        *ngIf="!userIsAuthenticated"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+        class="app-navbar__desktop--mobile-link"
+        routerLink="/login"
+        >Logowanie</a
+      >
+      <a (click)="sidenav.toggle()" class="app-navbar__desktop--mobile-link"
+        >Wyloguj się</a
+      >
+    </div>
+  </mat-sidenav>
+</mat-sidenav-container>

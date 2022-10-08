@@ -4,7 +4,8 @@ $add-to-schedule-button-color: #f7f6e6;
 
 h2,
 h1,
-p {
+p,
+span {
   color: $font-color;
 }
 
@@ -36,7 +37,6 @@ mat-checkbox {
     margin-bottom: 25px;
 
     .app-recipe-detail--image-container {
-      height: 50%;
       padding: 15px;
       position: relative;
 
@@ -58,7 +58,7 @@ mat-checkbox {
         border-radius: 20px;
         width: 35%;
         font-weight: 500;
-        font-size: 1vw;
+        font-size: 16px;
         cursor: pointer;
         transition: 0.5s ease-in-out;
         background-color: $add-to-schedule-button-color;
@@ -72,7 +72,6 @@ mat-checkbox {
     }
 
     .app-recipe-detail--products-container {
-      height: 50%;
       padding: 15px 60px;
 
       .app-recipe-detail--recipe-name {
@@ -113,21 +112,23 @@ mat-checkbox {
     }
 
     .app-recipe-detail--nutrients-container {
-      height: 50%;
       padding: 25px 60px;
 
       .app-recipe-detail--nutrient-container {
         margin-bottom: 10px;
         display: flex;
-        align-items: center;
-        justify-content: space-between;
+        align-items: baseline;
 
         .app-recipe-detail--nutrient-name {
-          width: 50%;
           font-weight: 500;
         }
+        .app-recipe-detail--nutrient-dotted {
+          border-bottom: 1px dotted #aaa;
+          flex-grow: 1;
+          margin: 0 10px;
+        }
         .app-recipe-detail--nutrient-value {
-          width: 50%;
+          margin-left: auto;
         }
       }
     }
@@ -208,22 +209,6 @@ mat-checkbox {
           .app-recipe-detail--center-icon {
             width: auto;
             padding-right: 5px;
-          }
-        }
-      }
-      .app-recipe-detail--nutrients-container {
-        .app-recipe-detail--nutrient-container {
-          margin-bottom: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-
-          .app-recipe-detail--nutrient-name {
-            width: 50%;
-            font-weight: 500;
-          }
-          .app-recipe-detail--nutrient-value {
-            width: 50%;
           }
         }
       }

@@ -13,6 +13,12 @@
     <mat-button-toggle value="tea">Podwieczorek</mat-button-toggle>
     <mat-button-toggle value="dinner">Kolacja</mat-button-toggle>
   </mat-button-toggle-group>
+  <span
+    *ngIf="typeOfMealIsChosen"
+    class="app-add-recipe-to-schedule__container--error"
+    >Do wybranej pory posiłku jest już przypisany przepis, czy chcesz go
+    nadpisać?</span
+  >
 </div>
 <div mat-dialog-actions class="app-add-recipe-to-schedule__buttons">
   <button
