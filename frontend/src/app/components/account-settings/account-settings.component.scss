@@ -8,6 +8,7 @@ span {
   margin: 0;
   padding: 0;
   color: $font-color;
+  text-align: center;
 }
 
 .app-account-settings__card--change-button {
@@ -177,11 +178,17 @@ span {
 @media (max-width: 992px) {
   .app-account-settings {
     .app-account-settings__card {
+      .app-account-settings__card--user-recipes-container {
+        padding: 10px;
+      }
+
       .app-account-settings__card--image-login-data-container {
-        padding: 25px;
+        padding: 10px;
       }
 
       .app-account-settings__card--user-data-container {
+        padding: 10px;
+
         .app-account-settings__card--change-button {
           margin-top: 25px;
           margin-bottom: 60px;

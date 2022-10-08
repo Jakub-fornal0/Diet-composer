@@ -10,13 +10,13 @@ p {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  appearance: none;
   margin: 0;
 }
 
 /* disable for Firefox */
 input[type="number"] {
-  -moz-appearance: textfield;
+  appearance: textfield;
 }
 
 .app-set-body-parameters-dialog__container {
@@ -26,12 +26,13 @@ input[type="number"] {
   justify-content: center;
 
   h1 {
-    padding-bottom: 10px;
+    margin-top: 22px;
+    padding-bottom: 5px;
   }
 
   .app-set-body-parameters-dialog__container--input {
     width: 100%;
-    padding: 3px 0;
+    padding: 2px 0;
   }
 }
 
