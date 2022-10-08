@@ -3,6 +3,10 @@ $recipes-background-color: #fafafa;
 $recipes-delete-icon-color: #ab1818;
 $font-color: #616159;
 
+::ng-deep .mat-mini-fab.mat-accent {
+  background-color: rgba($color: #91997f, $alpha: 0.7);
+}
+
 .app-recipes {
   background-color: $recipes-background-color;
   display: flex;
@@ -29,6 +33,20 @@ $font-color: #616159;
   }
   .app-recipes__container:nth-child(3) {
     padding-top: 0;
+  }
+
+  .app-recipes__paginator {
+    padding-bottom: 15px;
+
+    .app-recipes__paginator--button {
+      margin: 0 45px;
+    }
+
+    .app-recipes__paginator--current-page {
+      color: $font-color;
+      font-weight: 500;
+      font-size: 16px;
+    }
   }
 
   .app-recipes__container {

@@ -4,7 +4,6 @@ import { Recipe } from './../../interfaces/recipe.model';
 import { LocalStorageService } from '../../services/local-storage.service';
 import { LocalStorageConsts } from '../../consts/localstorage-consts';
 import { MatDialog } from '@angular/material/dialog';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { RecipesFilterDialogComponent } from './recipes-filter-dialog/recipes-filter-dialog.component';
 
 @Component({
@@ -14,6 +13,8 @@ import { RecipesFilterDialogComponent } from './recipes-filter-dialog/recipes-fi
 })
 export class RecipesComponent implements OnInit {
   products: Product[] = [];
+  currentPage: number = 1;
+  countOfRecipes: number = 0;
 
   // MOCKUP USUNAC POTEM//
   recipes: Recipe[] = [
@@ -152,8 +153,6 @@ export class RecipesComponent implements OnInit {
   ];
   // ___________________ //
 
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
-
   constructor(
     private localStorageService: LocalStorageService,
     private dialog: MatDialog
@@ -168,7 +167,9 @@ export class RecipesComponent implements OnInit {
       this.products = dataFromLocalStorage;
     }
 
-    this.translatePaginator();
+    //WYWOLAC ENDPOINT KTORY ZWRACA LICZBE PASUJACYCH PRZEPISOW
+    this.countOfRecipes = 80;
+    //JAK BEDZIE BACKEND TO WYWOLAC ENDPOINT PO PRZEPISY Z CURRENTPAGE
   }
 
   deleteProduct(index: number) {
@@ -196,13 +197,12 @@ export class RecipesComponent implements OnInit {
     });
   }
 
-  translatePaginator() {
-    this.paginator._intl.itemsPerPageLabel = 'Przepisy na stronie:';
-    this.paginator._intl.nextPageLabel = 'Następna strona';
-    this.paginator._intl.previousPageLabel = 'Poprzednia strona';
-  }
-
-  onChangedPage(pageData: PageEvent) {
-    console.log('');
+  getRecipes(action: string) {
+    if (action === 'next') {
+      this.currentPage++;
+    } else {
+      this.currentPage--;
+    }
+    //TU WYWOLAC ENDPOINT DLA POBRANIA PRZEPISOW NA PAGE
   }
 }
