@@ -41,6 +41,7 @@ import { SetBodyParametersDialogComponent } from './components/account-settings/
 import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-new-recipe.component';
 import { AddProductToRecipeComponent } from './components/recipes/add-new-recipe/add-product-to-recipe/add-product-to-recipe.component';
 import { AddAnotherStepToRecipeComponent } from './components/recipes/add-new-recipe/add-another-step-to-recipe/add-another-step-to-recipe.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -60,6 +61,7 @@ import { AddAnotherStepToRecipeComponent } from './components/recipes/add-new-re
     AddNewRecipeComponent,
     AddProductToRecipeComponent,
     AddAnotherStepToRecipeComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
