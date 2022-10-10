@@ -60,6 +60,13 @@
           userData.dietType
         }}</span>
       </div>
+      <div class="app-account-settings__card--data-line">
+        <span>Aktywność fizyczna: </span>
+        <span class="app-account-settings__card--dotted-space"></span>
+        <span class="app-account-settings__card--data-to-right">{{
+          userData.physicalActivity
+        }}</span>
+      </div>
       <button
         (click)="openSetBodyParametersDialog('0ms', '0ms')"
         class="app-account-settings__card--change-button"

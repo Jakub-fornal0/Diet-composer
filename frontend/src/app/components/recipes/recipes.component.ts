@@ -169,7 +169,7 @@ export class RecipesComponent implements OnInit {
     }
 
     //WYWOLAC ENDPOINT KTORY ZWRACA LICZBE PASUJACYCH PRZEPISOW
-    this.countOfRecipes = 5000;
+    this.countOfRecipes = 4570;
     this.countOfPages = Math.ceil(this.countOfRecipes / 12);
     //JAK BEDZIE BACKEND TO WYWOLAC ENDPOINT PO PRZEPISY Z CURRENTPAGE
   }

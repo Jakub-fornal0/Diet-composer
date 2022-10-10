@@ -26,6 +26,7 @@ export class AccountSettingsComponent implements OnInit {
       weight: 0,
       height: 0,
       dietType: '-',
+      physicalActivity: '-',
       BMI: 0,
       caloricDemand: 0,
       proteinsDemand: 0,
@@ -56,7 +57,7 @@ export class AccountSettingsComponent implements OnInit {
   ): void {
     this.dialog
       .open(SetBodyParametersDialogComponent, {
-        width: '500px',
+        width: '600px',
         enterAnimationDuration,
         exitAnimationDuration,
         data: {
@@ -65,6 +66,7 @@ export class AccountSettingsComponent implements OnInit {
           weight: this.userData.weight,
           height: this.userData.height,
           dietType: this.userData.dietType,
+          physicalActivity: this.userData.physicalActivity,
         },
       })
       .afterClosed()
@@ -75,6 +77,7 @@ export class AccountSettingsComponent implements OnInit {
           this.userData.weight = data.weight;
           this.userData.height = data.height;
           this.userData.dietType = data.dietType;
+          this.userData.physicalActivity = data.physicalActivity;
         }
 
         //TUTAJ WYWOLAC HTTP ZAPISAC DANE I ODEBRAC PARAMETRY ZAPOTREBOWANIA KTORE PRZYPISAC

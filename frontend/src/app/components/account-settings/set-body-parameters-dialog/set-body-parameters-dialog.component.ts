@@ -21,6 +21,7 @@ export class SetBodyParametersDialogComponent implements OnInit {
       weight: [data.weight, [Validators.required]],
       height: [data.height, [Validators.required]],
       dietType: [data.dietType, [Validators.required]],
+      physicalActivity: [data.physicalActivity, [Validators.required]],
     });
   }
 

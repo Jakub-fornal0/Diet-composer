@@ -8,6 +8,7 @@ export const UserConsts = {
   weight: 0,
   height: 0,
   dietType: '',
+  physicalActivity: '',
   BMI: 0,
   caloricDemand: 0,
   proteinsDemand: 0,

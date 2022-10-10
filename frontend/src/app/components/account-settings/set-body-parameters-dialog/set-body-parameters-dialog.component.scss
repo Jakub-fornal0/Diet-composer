@@ -19,6 +19,10 @@ input[type="number"] {
   appearance: textfield;
 }
 
+::ng-deep .mat-dialog-content {
+  max-height: 80vh;
+}
+
 .app-set-body-parameters-dialog__container {
   display: flex;
   flex-direction: column;
@@ -28,6 +32,18 @@ input[type="number"] {
   h1 {
     margin-top: 22px;
     padding-bottom: 5px;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .app-set-body-parameters-dialog__container--container-input {
+    width: 70%;
   }
 
   .app-set-body-parameters-dialog__container--input {
