@@ -1,114 +1,89 @@
-<div mat-dialog-content class="app-set-body-parameters-dialog__container">
-  <form [formGroup]="bodyParametersForm">
-    <h1>Podaj parametry</h1>
-    <div class="app-set-body-parameters-dialog__container--container-input">
-      <mat-form-field
-        appearance="outline"
-        class="app-set-body-parameters-dialog__container--input"
-      >
-        <mat-label>Wiek</mat-label>
-        <input
-          matInput
-          type="number"
-          max="150"
-          min="0"
-          formControlName="age"
-          required
-        />
-        <mat-error>To pole jest wymagane.</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="app-set-body-parameters-dialog__container--container-input">
-      <mat-form-field
-        appearance="outline"
-        class="app-set-body-parameters-dialog__container--input"
-      >
-        <mat-label>Płeć</mat-label>
-        <mat-select formControlName="gender" required>
-          <mat-option>--</mat-option>
-          <mat-option value="mężczyzna">mężczyzna</mat-option>
-          <mat-option value="kobieta">kobieta</mat-option>
-        </mat-select>
-        <mat-error>To pole jest wymagane.</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="app-set-body-parameters-dialog__container--container-input">
-      <mat-form-field
-        appearance="outline"
-        class="app-set-body-parameters-dialog__container--input"
-      >
-        <mat-label>Waga (kg)</mat-label>
-        <input
-          type="number"
-          max="600"
-          min="0"
-          matInput
-          formControlName="weight"
-          required
-        />
-        <mat-error>To pole jest wymagane.</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="app-set-body-parameters-dialog__container--container-input">
-      <mat-form-field
-        appearance="outline"
-        class="app-set-body-parameters-dialog__container--input"
-      >
-        <mat-label>Wzrost (cm)</mat-label>
-        <input
-          type="number"
-          max="600"
-          min="0"
-          matInput
-          formControlName="height"
-          required
-        />
-        <mat-error>To pole jest wymagane.</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="app-set-body-parameters-dialog__container--container-input">
-      <mat-form-field
-        appearance="outline"
-        class="app-set-body-parameters-dialog__container--input"
-      >
-        <mat-label>Rodzaj diety</mat-label>
-        <mat-select formControlName="dietType" required>
-          <mat-option>--</mat-option>
-          <mat-option value="przyrost wagi">przyrost wagi</mat-option>
-          <mat-option value="utrzymanie wagi">utrzymanie wagi</mat-option>
-          <mat-option value="spadek wagi">spadek wagi</mat-option>
-        </mat-select>
-        <mat-error>To pole jest wymagane.</mat-error>
-      </mat-form-field>
-    </div>
-    <div class="app-set-body-parameters-dialog__container--container-input">
-      <mat-form-field
-        appearance="outline"
-        class="app-set-body-parameters-dialog__container--input"
-      >
-        <mat-label>Aktywność fizyczna</mat-label>
-        <mat-select formControlName="physicalActivity" required>
-          <mat-option>--</mat-option>
-          <mat-option value="brak ćwiczeń">brak ćwiczeń</mat-option>
-          <mat-option value="znikoma">znikoma</mat-option>
-          <mat-option value="mała">mała</mat-option>
-          <mat-option value="umiarkowana">umiarkowana</mat-option>
-          <mat-option value="duża">duża</mat-option>
-          <mat-option value="bardzo duża">bardzo duża</mat-option>
-        </mat-select>
-        <mat-error>To pole jest wymagane.</mat-error>
-      </mat-form-field>
-    </div>
-  </form>
-</div>
-<div mat-dialog-actions class="app-set-body-parameters-dialog__buttons">
-  <button
-    mat-button
-    mat-dialog-close
-    class="app-set-body-parameters-dialog__buttons--cancel"
-  >
-    Anuluj
-  </button>
+<form [formGroup]="bodyParametersForm" class="form">
+  <h1 class="form__header">Podaj parametry</h1>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Wiek</mat-label>
+      <input
+        matInput
+        type="number"
+        max="150"
+        min="0"
+        formControlName="age"
+        required
+      />
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Płeć</mat-label>
+      <mat-select formControlName="gender" required>
+        <mat-option>--</mat-option>
+        <mat-option value="mężczyzna">mężczyzna</mat-option>
+        <mat-option value="kobieta">kobieta</mat-option>
+      </mat-select>
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Waga (kg)</mat-label>
+      <input
+        type="number"
+        max="600"
+        min="0"
+        matInput
+        formControlName="weight"
+        required
+      />
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Wzrost (cm)</mat-label>
+      <input
+        type="number"
+        max="600"
+        min="0"
+        matInput
+        formControlName="height"
+        required
+      />
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Rodzaj diety</mat-label>
+      <mat-select formControlName="dietType" required>
+        <mat-option>--</mat-option>
+        <mat-option value="przyrost wagi">przyrost wagi</mat-option>
+        <mat-option value="utrzymanie wagi">utrzymanie wagi</mat-option>
+        <mat-option value="spadek wagi">spadek wagi</mat-option>
+      </mat-select>
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Aktywność fizyczna</mat-label>
+      <mat-select formControlName="physicalActivity" required>
+        <mat-option>--</mat-option>
+        <mat-option value="brak ćwiczeń">brak ćwiczeń</mat-option>
+        <mat-option value="znikoma">znikoma</mat-option>
+        <mat-option value="mała">mała</mat-option>
+        <mat-option value="umiarkowana">umiarkowana</mat-option>
+        <mat-option value="duża">duża</mat-option>
+        <mat-option value="bardzo duża">bardzo duża</mat-option>
+      </mat-select>
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+</form>
+
+<div mat-dialog-actions class="buttons-container">
+  <button mat-button mat-dialog-close>Anuluj</button>
   <button
     mat-raised-button
     [disabled]="bodyParametersForm.invalid"

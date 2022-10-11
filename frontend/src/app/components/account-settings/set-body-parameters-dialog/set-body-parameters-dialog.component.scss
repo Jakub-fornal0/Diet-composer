@@ -1,63 +1,31 @@
-$font-color: #616159;
+@import "../../../utilities/variables";
 
-h1,
-p {
-  text-align: center;
-  font-weight: 400;
-  margin: 0;
-  color: $font-color;
-}
-
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  appearance: none;
-  margin: 0;
-}
-
-/* disable for Firefox */
-input[type="number"] {
-  appearance: textfield;
-}
-
-::ng-deep .mat-dialog-content {
-  max-height: 80vh;
-}
-
-.app-set-body-parameters-dialog__container {
+.form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
-  h1 {
-    margin-top: 22px;
+  .form__header {
+    margin-top: 10px;
     padding-bottom: 5px;
+    text-align: center;
+    font-weight: 500;
   }
 
-  form {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .app-set-body-parameters-dialog__container--container-input {
+  .form__input-container {
     width: 70%;
   }
 
-  .app-set-body-parameters-dialog__container--input {
+  .form__input {
     width: 100%;
     padding: 2px 0;
   }
 }
 
-.app-set-body-parameters-dialog__buttons {
+.buttons-container {
   display: flex;
   align-items: center;
   justify-content: center;
-
-  .app-set-body-parameters-dialog__buttons--cancel {
-    color: #961c14;
-  }
 }
