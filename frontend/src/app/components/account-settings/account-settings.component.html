@@ -7,26 +7,28 @@
         [alt]="userData.userName"
       />
       <button class="button-with-border">Zmień zdjęcie</button>
-      <span class="image-container__user-name">{{ userData.userName }}</span>
-      <span class="image-container__user-email">{{ userData.email }}</span>
+      <span class="image-container__user-name text">{{
+        userData.userName
+      }}</span>
+      <span class="image-container__user-email text">{{ userData.email }}</span>
     </div>
     <div class="user-data-container data-container col-lg-4 col-md-6 col-sm-12">
-      <mat-icon class="user-data-container__icon">accessibility</mat-icon>
-      <h2 class="user-data__header">Podstawowe dane:</h2>
+      <mat-icon class="user-data-container__icon text">accessibility</mat-icon>
+      <h2 class="user-data__header text">Podstawowe dane:</h2>
       <div class="inline-data">
-        <span class="inline-data__name">Wiek: </span>
+        <span class="inline-data__name text">Wiek: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value">{{ userData.age }}</span>
+        <span class="inline-data__value text">{{ userData.age }}</span>
       </div>
       <div class="inline-data">
-        <span class="inline-data__name">Płeć: </span>
+        <span class="inline-data__name text">Płeć: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value">{{ userData.gender }}</span>
+        <span class="inline-data__value text">{{ userData.gender }}</span>
       </div>
       <div class="inline-data">
-        <span class="inline-data__name">Waga: </span>
+        <span class="inline-data__name text">Waga: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value">{{ userData.weight }} kg</span>
+        <span class="inline-data__value text">{{ userData.weight }} kg</span>
       </div>
       <div class="inline-data">
         <span class="inline-data__name">Wzrost: </span>
@@ -34,14 +36,16 @@
         <span class="inline-data__value">{{ userData.height }} cm</span>
       </div>
       <div class="inline-data">
-        <span class="inline-data__name">Rodzaj diety: </span>
+        <span class="inline-data__name text">Rodzaj diety: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value">{{ userData.dietType }}</span>
+        <span class="inline-data__value text">{{ userData.dietType }}</span>
       </div>
       <div class="inline-data">
-        <span class="inline-data__name">Aktywność fizyczna: </span>
+        <span class="inline-data__name text">Aktywność fizyczna: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value">{{ userData.physicalActivity }}</span>
+        <span class="inline-data__value text">{{
+          userData.physicalActivity
+        }}</span>
       </div>
       <button
         (click)="openSetBodyParametersDialog('0ms', '0ms')"
@@ -49,40 +53,44 @@
       >
         Zmień
       </button>
-      <mat-icon class="user-data-container__icon">restaurant_menu</mat-icon>
-      <h2 class="user-data-container__header">Twoje zapotrzebowanie:</h2>
+      <mat-icon class="user-data-container__icon text"
+        >restaurant_menu</mat-icon
+      >
+      <h2 class="user-data-container__header text">Twoje zapotrzebowanie:</h2>
       <div class="inline-data">
-        <span class="inline-data__name">BMI: </span>
+        <span class="inline-data__name text">BMI: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value">{{ userData.BMI }}</span>
+        <span class="inline-data__value text">{{ userData.BMI }}</span>
       </div>
       <div class="inline-data">
-        <span class="inline-data__name">Kaloryczne: </span>
+        <span class="inline-data__name text">Kaloryczne: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value"
+        <span class="inline-data__value text"
           >{{ userData.caloricDemand }} kcal</span
         >
       </div>
       <div class="inline-data">
-        <span class="inline-data__name">Białkowe: </span>
+        <span class="inline-data__name text">Białkowe: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value">{{ userData.proteinsDemand }} g</span>
+        <span class="inline-data__value text"
+          >{{ userData.proteinsDemand }} g</span
+        >
       </div>
       <div class="inline-data">
-        <span class="inline-data__name">Tłuszczowe: </span>
+        <span class="inline-data__name text">Tłuszczowe: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value">{{ userData.fatsDemand }} g</span>
+        <span class="inline-data__value text">{{ userData.fatsDemand }} g</span>
       </div>
       <div class="inline-data">
-        <span class="inline-data__name">Węglowodanowe: </span>
+        <span class="inline-data__name text">Węglowodanowe: </span>
         <span class="inline-data__dotted-space"></span>
-        <span class="inline-data__value"
+        <span class="inline-data__value text"
           >{{ userData.carbohydratesDemand }} g</span
         >
       </div>
     </div>
     <div class="user-recipes-container col-lg-4 col-md-12 col-sm-12">
-      <h2 class="user-recipes-container__header">Twoje przepisy:</h2>
+      <h2 class="user-recipes-container__header text">Twoje przepisy:</h2>
       <div *ngIf="userData.recipes.length" class="user-recipes-container__list">
         <div
           class="user-recipes-container__recipe"
@@ -96,7 +104,7 @@
               [alt]="recipe.recipeName"
             />
             <p
-              class="user-recipes-container__recipe-name"
+              class="user-recipes-container__recipe-name text"
               [routerLink]="['/recipes/detail', recipe.id]"
             >
               {{ recipe.recipeName }}
@@ -118,7 +126,7 @@
       </div>
       <div
         *ngIf="!userData.recipes.length"
-        class="user-recipes-container__list"
+        class="user-recipes-container__list text"
       >
         <p>Nie dodano przepisów.</p>
       </div>

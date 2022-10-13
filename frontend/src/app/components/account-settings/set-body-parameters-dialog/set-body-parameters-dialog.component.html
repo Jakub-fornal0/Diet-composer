@@ -1,5 +1,5 @@
 <form [formGroup]="bodyParametersForm" class="form">
-  <h1 class="form__header">Podaj parametry</h1>
+  <h1 class="form__header text">Podaj parametry</h1>
   <div class="form__input-container">
     <mat-form-field appearance="outline" class="form__input">
       <mat-label>Wiek</mat-label>
@@ -83,8 +83,9 @@
 </form>
 
 <div mat-dialog-actions class="buttons-container">
-  <button mat-button mat-dialog-close>Anuluj</button>
+  <button class="text" mat-button mat-dialog-close>Anuluj</button>
   <button
+    class="text"
     mat-raised-button
     [disabled]="bodyParametersForm.invalid"
     (click)="saveBodyParameters()"
