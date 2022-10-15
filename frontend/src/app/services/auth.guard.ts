@@ -6,14 +6,11 @@ import {
   UrlTree,
 } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthorizationService } from './authorization.service';
+import { AuthService } from './auth.service';
 
 @Injectable()
-export class AuthorizationGuard implements CanActivate {
-  constructor(
-    private authorizationService: AuthorizationService,
-    private router: Router
-  ) {}
+export class AuthGuard implements CanActivate {
+  constructor(private authService: AuthService, private router: Router) {}
 
   canActivate(
     route: ActivatedRouteSnapshot
@@ -22,7 +19,7 @@ export class AuthorizationGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
-    if (this.authorizationService.userIsAuth()) {
+    if (this.authService.userIsAuth()) {
       if (route.data['requiredAuth'] == false) {
         this.router.navigate(['/']);
         return false;

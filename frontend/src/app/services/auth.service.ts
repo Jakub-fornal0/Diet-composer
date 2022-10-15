@@ -1,7 +1,14 @@
 import { loginData } from './../interfaces/login.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, map, Observable, of } from 'rxjs';
+import {
+  BehaviorSubject,
+  catchError,
+  map,
+  Observable,
+  of,
+  Subject,
+} from 'rxjs';
 import { environment } from '../../environments/environment';
 import { registerData } from '../interfaces/register.model';
 import { UserProfile } from '../interfaces/user.model';
@@ -12,8 +19,9 @@ import { Token } from '../interfaces/token.model';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthorizationService {
+export class AuthService {
   private apiURL = environment.apiURL;
+  private AuthStatusListener = new Subject<boolean>();
   userProfile = new BehaviorSubject<UserProfile | null>(null);
   jwtService: JwtHelperService = new JwtHelperService();
 
@@ -33,9 +41,11 @@ export class AuthorizationService {
         localStorage.setItem(LocalStorageConsts.TOKEN, JSON.stringify(token));
         var userInfo = this.jwtService.decodeToken(token.token) as UserProfile;
         this.userProfile.next(userInfo);
+        this.AuthStatusListener.next(true);
         return true;
       }),
       catchError((error) => {
+        this.AuthStatusListener.next(false);
         return of(false);
       })
     );
@@ -68,5 +78,9 @@ export class AuthorizationService {
       return true;
     }
     return false;
+  }
+
+  getAuthStatusListener() {
+    return this.AuthStatusListener.asObservable();
   }
 }

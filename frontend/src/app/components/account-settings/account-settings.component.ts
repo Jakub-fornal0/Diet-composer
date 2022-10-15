@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { AccountService } from 'src/app/services/account.service';
 import { UserConsts } from '../../consts/user-consts';
 import { User } from '../../interfaces/user.model';
 import { SetBodyParametersDialogComponent } from './set-body-parameters-dialog/set-body-parameters-dialog.component';
@@ -12,7 +13,10 @@ import { SetBodyParametersDialogComponent } from './set-body-parameters-dialog/s
 export class AccountSettingsComponent implements OnInit {
   userData: User = UserConsts;
 
-  constructor(private dialog: MatDialog) {}
+  constructor(
+    private dialog: MatDialog,
+    private accountService: AccountService
+  ) {}
 
   ngOnInit(): void {
     // MOCKUP USUNAC POTEM //
@@ -80,7 +84,15 @@ export class AccountSettingsComponent implements OnInit {
           this.userData.physicalActivity = data.physicalActivity;
         }
 
-        //TUTAJ WYWOLAC HTTP ZAPISAC DANE I ODEBRAC PARAMETRY ZAPOTREBOWANIA KTORE PRZYPISAC
+        this.accountService
+          .calculateUserDemands({ ...data, id: this.userData.id })
+          .subscribe((res) => {
+            this.userData.BMI = res.BMI;
+            this.userData.caloricDemand = res.caloricDemand;
+            this.userData.fatsDemand = res.fatsDemand;
+            this.userData.carbohydratesDemand = res.carbohydratesDemand;
+            this.userData.proteinsDemand = res.proteinsDemand;
+          });
       });
   }
 }

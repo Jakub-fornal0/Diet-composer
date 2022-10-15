@@ -152,7 +152,7 @@ exports.downloadUserImage = async (req, res) => {
 
 exports.BMI = async (req, res) => {
   try {
-    const { id, age, gender, weight, height, dietType, physicalActiviti } =
+    const { id, age, gender, weight, height, dietType, physicalActivity } =
       req.body;
     const diet = {
       odchudzanie: -300,
@@ -178,13 +178,13 @@ exports.BMI = async (req, res) => {
     if (gender === "kobieta") {
       cpm = (
         (10 * weight + 6.25 * height - 5 * age - 161) *
-          parseFloat(PAL[physicalActiviti]) -
+          parseFloat(PAL[physicalActivity]) -
         diet[dietType]
       ).toFixed(2);
     } else {
       cpm = (
         (10 * weight + 6.25 * height - 5 * age + 5) *
-          parseFloat(PAL[physicalActiviti]) -
+          parseFloat(PAL[physicalActivity]) -
         diet[dietType]
       ).toFixed(2);
     }

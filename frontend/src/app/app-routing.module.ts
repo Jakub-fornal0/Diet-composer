@@ -9,26 +9,26 @@ import { RecipesComponent } from './components/recipes/recipes.component';
 import { ScheduleComponent } from './components/schedule/schedule.component';
 import { SigninComponent } from './components/signin/signin.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { AuthorizationGuard } from './services/authorization.guard';
+import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [
   {
     path: 'login',
     component: SigninComponent,
     data: { requiredAuth: false },
-    canActivate: [AuthorizationGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'login/register',
     component: SignupComponent,
     data: { requiredAuth: false },
-    canActivate: [AuthorizationGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'products',
     component: ProductsComponent,
     data: { requiredAuth: true },
-    canActivate: [AuthorizationGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'recipes',
@@ -38,31 +38,31 @@ const routes: Routes = [
     path: 'recipes/detail/:recipeId',
     component: RecipeDetailComponent,
     data: { requiredAuth: false },
-    canActivate: [AuthorizationGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'recipes/add',
     component: AddNewRecipeComponent,
     data: { requiredAuth: true },
-    canActivate: [AuthorizationGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'recipes/edit/:recipeId',
     component: AddNewRecipeComponent,
     data: { requiredAuth: true },
-    canActivate: [AuthorizationGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'schedule',
     component: ScheduleComponent,
     data: { requiredAuth: true },
-    canActivate: [AuthorizationGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'account/settings',
     component: AccountSettingsComponent,
     data: { requiredAuth: true },
-    canActivate: [AuthorizationGuard],
+    canActivate: [AuthGuard],
   },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
@@ -72,6 +72,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes, { scrollPositionRestoration: 'enabled' }),
   ],
   exports: [RouterModule],
-  providers: [AuthorizationGuard],
+  providers: [AuthGuard],
 })
 export class AppRoutingModule {}

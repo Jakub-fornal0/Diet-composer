@@ -7,7 +7,7 @@
         matInput
         type="number"
         max="150"
-        min="0"
+        min="1"
         formControlName="age"
         required
       />
@@ -18,7 +18,6 @@
     <mat-form-field appearance="outline" class="form__input">
       <mat-label>Płeć</mat-label>
       <mat-select formControlName="gender" required>
-        <mat-option>--</mat-option>
         <mat-option value="mężczyzna">mężczyzna</mat-option>
         <mat-option value="kobieta">kobieta</mat-option>
       </mat-select>
@@ -31,7 +30,7 @@
       <input
         type="number"
         max="600"
-        min="0"
+        min="1"
         matInput
         formControlName="weight"
         required
@@ -45,7 +44,7 @@
       <input
         type="number"
         max="600"
-        min="0"
+        min="1"
         matInput
         formControlName="height"
         required
@@ -57,7 +56,6 @@
     <mat-form-field appearance="outline" class="form__input">
       <mat-label>Rodzaj diety</mat-label>
       <mat-select formControlName="dietType" required>
-        <mat-option>--</mat-option>
         <mat-option value="przyrost wagi">przyrost wagi</mat-option>
         <mat-option value="utrzymanie wagi">utrzymanie wagi</mat-option>
         <mat-option value="spadek wagi">spadek wagi</mat-option>
@@ -69,7 +67,6 @@
     <mat-form-field appearance="outline" class="form__input">
       <mat-label>Aktywność fizyczna</mat-label>
       <mat-select formControlName="physicalActivity" required>
-        <mat-option>--</mat-option>
         <mat-option value="brak ćwiczeń">brak ćwiczeń</mat-option>
         <mat-option value="znikoma">znikoma</mat-option>
         <mat-option value="mała">mała</mat-option>
