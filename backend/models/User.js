@@ -48,6 +48,24 @@ class User{
         let sql=`SELECT * FROM users WHERE email = "${email}";`;
         return connDB.execute(sql);
     }
+
+    static CheckExistingUserById = async (id) => {
+        let sql=`SELECT * FROM users WHERE id = "${id}";`;
+        const [user, _]= await connDB.execute(sql);
+        
+        return user;
+    }
+
+    static downloadUserImage = async (id) => {
+        let sql=`SELECT id, userImage FROM users WHERE id = "${id}";`;
+        const downloadImage = await connDB.execute(sql);
+        return downloadImage;
+    }
+
+    static UpdateImage = async (id, fileName) => {
+        let sql=`UPDATE users SET userImage="${fileName}" WHERE id = "${id}";`;
+        const update = await connDB.execute(sql);
+    }
     
     get userImage() {
         return this.userImage;
@@ -161,19 +179,6 @@ class User{
         this.carbohydratesDemand = value;
     }
 }
-const fileStorage = () => {
-    let fileName = crypto.randomBytes(20).toString('hex');
-    const Engine = multer.diskStorage({
-        destination: (req, file, cb) => {
-            cb(null, "./images");
-        },
-        filename: (req, file, cb) => {
-            cb(null, + fileName)
-        }
-    });
-    return Engine;
-};
-
 
 const userValidate = (data) => {
     const schema = Joi.object({
@@ -268,4 +273,4 @@ const userValidate = (data) => {
   };
   
 
-module.exports = {User, userValidate, registrationValidation, loginValidation, fileStorage};
+module.exports = {User, userValidate, registrationValidation, loginValidation};

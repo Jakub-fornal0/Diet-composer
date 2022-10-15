@@ -42,6 +42,8 @@ import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-n
 import { AddProductToRecipeComponent } from './components/recipes/add-new-recipe/add-product-to-recipe/add-product-to-recipe.component';
 import { AddAnotherStepToRecipeComponent } from './components/recipes/add-new-recipe/add-another-step-to-recipe/add-another-step-to-recipe.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthorizationInterceptor } from './services/authorization-token-interceptor';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     NotFoundComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
@@ -91,7 +94,13 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
     MatSidenavModule,
     MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthorizationInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

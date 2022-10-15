@@ -22,3 +22,9 @@ export interface UserRecipe {
   recipeImage: string;
   recipeName: string;
 }
+
+export interface UserProfile {
+  id: string;
+  iat: number;
+  exp: number;
+}
