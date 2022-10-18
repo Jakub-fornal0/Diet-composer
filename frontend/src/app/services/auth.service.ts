@@ -21,7 +21,7 @@ import { Token } from '../interfaces/token.model';
 })
 export class AuthService {
   private apiURL = environment.apiURL;
-  private AuthStatusListener = new Subject<boolean>();
+  private authStatusListener = new Subject<boolean>();
   userProfile = new BehaviorSubject<UserProfile | null>(null);
   jwtService: JwtHelperService = new JwtHelperService();
 
@@ -41,11 +41,11 @@ export class AuthService {
         localStorage.setItem(LocalStorageConsts.TOKEN, JSON.stringify(token));
         var userInfo = this.jwtService.decodeToken(token.token) as UserProfile;
         this.userProfile.next(userInfo);
-        this.AuthStatusListener.next(true);
+        this.authStatusListener.next(true);
         return true;
       }),
       catchError((error) => {
-        this.AuthStatusListener.next(false);
+        this.authStatusListener.next(false);
         return of(false);
       })
     );
@@ -81,6 +81,6 @@ export class AuthService {
   }
 
   getAuthStatusListener() {
-    return this.AuthStatusListener.asObservable();
+    return this.authStatusListener.asObservable();
   }
 }

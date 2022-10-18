@@ -4,6 +4,7 @@ import { AccountService } from 'src/app/services/account.service';
 import { UserConsts } from '../../consts/user-consts';
 import { User } from '../../interfaces/user.model';
 import { SetBodyParametersDialogComponent } from './set-body-parameters-dialog/set-body-parameters-dialog.component';
+import { SetUserImageDialogComponent } from './set-user-image-dialog/set-user-image-dialog.component';
 
 @Component({
   selector: 'app-account-settings',
@@ -82,17 +83,35 @@ export class AccountSettingsComponent implements OnInit {
           this.userData.height = data.height;
           this.userData.dietType = data.dietType;
           this.userData.physicalActivity = data.physicalActivity;
-        }
 
-        this.accountService
-          .calculateUserDemands({ ...data, id: this.userData.id })
-          .subscribe((res) => {
-            this.userData.BMI = res.BMI;
-            this.userData.caloricDemand = res.caloricDemand;
-            this.userData.fatsDemand = res.fatsDemand;
-            this.userData.carbohydratesDemand = res.carbohydratesDemand;
-            this.userData.proteinsDemand = res.proteinsDemand;
-          });
+          this.accountService
+            .calculateUserDemands({ ...data, id: this.userData.id })
+            .subscribe((res) => {
+              this.userData.BMI = res.BMI;
+              this.userData.caloricDemand = res.caloricDemand;
+              this.userData.fatsDemand = res.fatsDemand;
+              this.userData.carbohydratesDemand = res.carbohydratesDemand;
+              this.userData.proteinsDemand = res.proteinsDemand;
+            });
+        }
+      });
+  }
+
+  openSetUserImageDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.dialog
+      .open(SetUserImageDialogComponent, {
+        width: '600px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          this.userData.userImage = data.preview;
+        }
       });
   }
 }

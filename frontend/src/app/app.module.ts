@@ -44,6 +44,7 @@ import { AddAnotherStepToRecipeComponent } from './components/recipes/add-new-re
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthInterceptor } from './services/auth-token-interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { SetUserImageDialogComponent } from './components/account-settings/set-user-image-dialog/set-user-image-dialog.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
     AddProductToRecipeComponent,
     AddAnotherStepToRecipeComponent,
     NotFoundComponent,
+    SetUserImageDialogComponent,
   ],
   imports: [
     HttpClientModule,

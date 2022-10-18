@@ -6,7 +6,12 @@
         [src]="userData.userImage"
         [alt]="userData.userName"
       />
-      <button class="button-with-border">Zmień zdjęcie</button>
+      <button
+        class="button-with-border"
+        (click)="openSetUserImageDialog('0ms', '0ms')"
+      >
+        Zmień zdjęcie
+      </button>
       <span class="image-container__user-name text">{{
         userData.userName
       }}</span>

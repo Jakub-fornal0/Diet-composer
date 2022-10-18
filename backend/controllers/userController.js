@@ -152,12 +152,14 @@ exports.downloadUserImage = async (req, res) => {
 
 exports.BMI = async (req, res) => {
   try {
+    console.log("dane z frontu")
+    console.log(req.body)
     const { id, age, gender, weight, height, dietType, physicalActivity } =
       req.body;
     const diet = {
       odchudzanie: -300,
       utrzymanie: 0,
-      przyrost: 300,
+      "przyrost wagi": 300,
     };
     const PAL = {
       "brak ćwiczeń": 1.4,
@@ -194,6 +196,14 @@ exports.BMI = async (req, res) => {
 
     let sql = `UPDATE users SET age="${age}", gender="${gender}", weight="${weight}", height = "${height}", dietType = "${dietType}", BMI = "${BMI}", caloricDemand = "${cpm}", proteinsDemand = "${proteins}", fatsDemand ="${fats}", carbohydratesDemand="${carbohydrates}" WHERE id ="${id}";`;
     connDB.execute(sql);
+    console.log("wyniki:")
+    console.log({
+      BMI: BMI,
+      proteinsDemand: proteins,
+      fatsDemand: fats,
+      caloricDemand: cpm,
+      carbohydratesDemand: carbohydrates,
+    })
     res.status(201).send({
       BMI: BMI,
       proteinsDemand: proteins,

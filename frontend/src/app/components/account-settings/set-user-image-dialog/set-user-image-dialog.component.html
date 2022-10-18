@@ -1,0 +1,30 @@
+<form class="container" [formGroup]="userImageFormGroup">
+  <h1 class="container__header text">Wybierz zdjęcie</h1>
+  <div class="container__image-preview">
+    <label class="container__label">
+      <mat-icon class="container__image-icon" *ngIf="!imagePreview"
+        >add_photo_alternate</mat-icon
+      >
+      <p class="container__image-text" *ngIf="!imagePreview">wybierz zdjęcie</p>
+      <img class="container__image" *ngIf="imagePreview" [src]="imagePreview" />
+      <input
+        #imageInput
+        type="file"
+        accept="image/*"
+        (change)="processFile($event)"
+      />
+    </label>
+  </div>
+</form>
+
+<div mat-dialog-actions class="buttons-container">
+  <button class="text" mat-button mat-dialog-close>Anuluj</button>
+  <button
+    class="text"
+    mat-raised-button
+    [disabled]="!userImageFormGroup.get('userImage')?.value"
+    (click)="saveUserImage()"
+  >
+    Zapisz
+  </button>
+</div>
