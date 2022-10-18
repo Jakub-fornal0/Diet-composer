@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountService } from 'src/app/services/account.service';
+import { AuthService } from '../../services/auth.service';
 import { UserConsts } from '../../consts/user-consts';
-import { User } from '../../interfaces/user.model';
+import { User, UserProfile } from '../../interfaces/user.model';
 import { SetBodyParametersDialogComponent } from './set-body-parameters-dialog/set-body-parameters-dialog.component';
 import { SetUserImageDialogComponent } from './set-user-image-dialog/set-user-image-dialog.component';
 
@@ -12,14 +13,20 @@ import { SetUserImageDialogComponent } from './set-user-image-dialog/set-user-im
   styleUrls: ['./account-settings.component.scss'],
 })
 export class AccountSettingsComponent implements OnInit {
+  userProfile?: UserProfile | null;
   userData: User = UserConsts;
 
   constructor(
     private dialog: MatDialog,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.authService.userProfile.subscribe((data) => {
+      this.userProfile = data;
+    });
+
     // MOCKUP USUNAC POTEM //
     this.userData = {
       id: 'id445455',
@@ -85,7 +92,7 @@ export class AccountSettingsComponent implements OnInit {
           this.userData.physicalActivity = data.physicalActivity;
 
           this.accountService
-            .calculateUserDemands({ ...data, id: this.userData.id })
+            .calculateUserDemands({ ...data, id: this.userProfile?.id })
             .subscribe((res) => {
               this.userData.BMI = res.BMI;
               this.userData.caloricDemand = res.caloricDemand;
@@ -111,6 +118,14 @@ export class AccountSettingsComponent implements OnInit {
       .subscribe((data) => {
         if (data) {
           this.userData.userImage = data.preview;
+
+          if (this.userProfile?.id) {
+            this.accountService
+              .setUserImage(data.file.userImage, this.userProfile.id)
+              .subscribe((res) => {
+                console.log(res);
+              });
+          }
         }
       });
   }

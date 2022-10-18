@@ -25,4 +25,14 @@ export class AccountService {
       userParameters
     );
   }
+
+  setUserImage(image: File, id: string): Observable<any> {
+    const uploadImageData = new FormData();
+    uploadImageData.append('image', image);
+    uploadImageData.append('id', id);
+    return this.http.post<any>(
+      `${this.apiURL}/user/uploadImage`,
+      uploadImageData
+    );
+  }
 }
