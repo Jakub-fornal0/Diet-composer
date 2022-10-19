@@ -1,7 +1,5 @@
 const connDB = require("../config/database");
 const Joi = require("joi");
-const multer = require("multer");
-var crypto = require("crypto");
 
 class User{
 
@@ -14,6 +12,7 @@ class User{
     weight = 0;
     height = 0;
     dietType = "odchudzanie";
+    physicalActivity = "mała";
     BMI = 0;
     caloricDemand = 0;
     proteinsDemand = 0;
@@ -22,7 +21,7 @@ class User{
 
     constructor(options) {
         this.id = options && options.id;
-        this.userImage = options && options.userImage || "none";
+        this.userImage = options && options.userImage || "defaultUser";
         this.userName = options && options.userName || "default";
         this.email = options && options.email || "default@email.com";
         this.password = options && options.password || "default";
@@ -31,6 +30,7 @@ class User{
         this.weight = options && options.weight || 0;
         this.height = options && options.height || 0;
         this.dietType = options && options.dietType || "odchudzanie";
+        this.physicalActivity = options && options.physicalActivity || "mała";
         this.BMI = options && options.BMI || 0;
         this.caloricDemand = options && options.caloricDemand || 0;
         this.proteinsDemand = options && options.proteinsDemand || 0;
@@ -75,6 +75,13 @@ class User{
         this.userImage = value;
     }
     
+    get physicalActivity() {
+        return this.physicalActivity;
+    }
+    set physicalActivity(value) {
+        this.physicalActivity = value;
+    }
+
     get userName() {
         return this.userName;
     }

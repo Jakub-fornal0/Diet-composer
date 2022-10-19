@@ -14,7 +14,7 @@ let ActiveUserTokens = [];
 
 exports.registration = async (req, res) => {
   try {
-    const [neww, _] = await User.CheckExistingUserByEmail(req.body.email);
+    const [neww, _] = await User.CheckExistingUserByEmail(req.body.email); 
     if (neww.length)
       return res
         .status(409)
@@ -24,15 +24,18 @@ exports.registration = async (req, res) => {
       return res.status(400).send({ message: error.details[0].message });
     const id = uuidv4();
     const { userName, email, password } = req.body;
+    console.log("tu");
     const user = new User({
       id: id,
       userName: userName,
       email: email,
-      password: password,
+      password: password
     });
+    console.log("tu");
     const salt = await bcrypt.genSalt(Number(process.env.SALT));
     const hashPassword = await bcrypt.hash(user.password, salt);
-    const sql = `INSERT INTO users(id, userImage, userName, email, password, age, gender, weight, height, dietType, BMI, caloricDemand, proteinsDemand, fatsDemand, carbohydratesDemand) VALUES('${user.id}','${user.userImage}','${user.userName}','${user.email}','${hashPassword}','${user.age}','${user.gender}','${user.weight}','${user.height}','${user.dietType}','${user.BMI}','${user.caloricDemand}','${user.proteinsDemand}','${user.fatsDemand}','${user.carbohydratesDemand}')`;
+    console.log("tu");
+    const sql = `INSERT INTO users(id, userImage, userName, email, password, age, gender, weight, height, dietType, physicalActivity, BMI, caloricDemand, proteinsDemand, fatsDemand, carbohydratesDemand) VALUES('${user.id}','${user.userImage}','${user.userName}','${user.email}','${hashPassword}','${user.age}','${user.gender}','${user.weight}','${user.height}','${user.dietType}','${user.physicalActivity}','${user.BMI}','${user.caloricDemand}','${user.proteinsDemand}','${user.fatsDemand}','${user.carbohydratesDemand}')`;
     connDB.execute(sql);
     res.status(201).send({ message: "Stworzono nowego użytkownika!" });
   } catch (error) {
@@ -57,7 +60,7 @@ exports.login = async (req, response) => {
         .status(401)
         .send({ message: "Niepoprawny email lub hasło!" });
     const token = jwt.sign({ id: neww[0].id }, process.env.ACCESS_TOKEN, {
-      expiresIn: "1h",
+      expiresIn: "15s",
     });
     const refreshToken = jwt.sign(
       { id: neww[0].id },
@@ -67,7 +70,6 @@ exports.login = async (req, response) => {
     response.status(200).send({
       token: token,
       tokenToRefresh: refreshToken,
-      id: neww[0].id,
       message: "Zalogowano!",
     });
   } catch (error) {
@@ -103,7 +105,6 @@ exports.logout = (req, res, next) => {
 };
 
 exports.uploadImage = async (req, res) => {
-  console.log(req.body)
   try {
     var fileName = crypto.randomBytes(20).toString("hex");
 
@@ -156,16 +157,16 @@ exports.BMI = async (req, res) => {
     const { id, age, gender, weight, height, dietType, physicalActivity } =
       req.body;
     const diet = {
-      odchudzanie: -300,
-      utrzymanie: 0,
+      "spadek wagi": -300,
+      "utrzymanie wagi": 0,
       "przyrost wagi": 300,
     };
     const PAL = {
       "brak ćwiczeń": 1.4,
-      znikoma: 1.6,
-      mała: 1.8,
-      umiarkowana: 2,
-      duża: 2.2,
+      "znikoma": 1.6,
+      "mała": 1.8,
+      "umiarkowana": 2,
+      "duża": 2.2,
       "bardzo duża": 2.4,
     };
     const [user, _] = await User.CheckExistingUserById(id);
@@ -192,8 +193,12 @@ exports.BMI = async (req, res) => {
     let proteins = ((cpm * 0.2) / 4).toFixed(1);
     let carbohydrates = ((cpm * 0.6) / 4).toFixed(1);
     let fats = ((cpm * 0.2) / 9).toFixed(1);
+    console.log("kalorie: " + cpm);
+    console.log(proteins);
+    console.log(carbohydrates);
+    console.log(fats);
 
-    let sql = `UPDATE users SET age="${age}", gender="${gender}", weight="${weight}", height = "${height}", dietType = "${dietType}", BMI = "${BMI}", caloricDemand = "${cpm}", proteinsDemand = "${proteins}", fatsDemand ="${fats}", carbohydratesDemand="${carbohydrates}" WHERE id ="${id}";`;
+    let sql = `UPDATE users SET age="${age}", gender="${gender}", weight="${weight}", height = "${height}", dietType = "${dietType}", physicalActivity = "${physicalActivity}", BMI = "${BMI}", caloricDemand = "${cpm}", proteinsDemand = "${proteins}", fatsDemand ="${fats}", carbohydratesDemand="${carbohydrates}" WHERE id ="${id}";`;
     connDB.execute(sql);
     res.status(201).send({
       BMI: BMI,
