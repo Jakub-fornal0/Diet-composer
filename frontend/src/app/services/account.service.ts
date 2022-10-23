@@ -26,6 +26,10 @@ export class AccountService {
     );
   }
 
+  getUserData(): Observable<any> {
+    return this.http.get<any>(`${this.apiURL}/user/All`);
+  }
+
   setUserImage(image: File, id: string): Observable<any> {
     const uploadImageData = new FormData();
     uploadImageData.append('image', image);

@@ -72,11 +72,14 @@ export class AuthService {
     this.getAccessToken();
     let userProfile = this.userProfile.getValue();
     if (!this.getAccessToken()) {
+      this.authStatusListener.next(false);
       return false;
     }
     if (userProfile) {
+      this.authStatusListener.next(true);
       return true;
     }
+    this.authStatusListener.next(false);
     return false;
   }
 
