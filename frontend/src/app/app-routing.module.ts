@@ -37,8 +37,6 @@ const routes: Routes = [
   {
     path: 'recipes/detail/:recipeId',
     component: RecipeDetailComponent,
-    data: { requiredAuth: false },
-    canActivate: [AuthGuard],
   },
   {
     path: 'recipes/add',

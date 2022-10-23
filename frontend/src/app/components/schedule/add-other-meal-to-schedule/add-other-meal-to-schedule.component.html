@@ -1,0 +1,82 @@
+<form [formGroup]="snackMealForm" class="form">
+  <h1 class="form__header text">Podaj wartości odżywcze przekąski</h1>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Nazwa posiłku</mat-label>
+      <input matInput formControlName="mealName" maxlength="25" required />
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Kaloryczność</mat-label>
+      <input
+        matInput
+        type="number"
+        max="10000"
+        min="1"
+        formControlName="calories"
+        required
+      />
+      <span matSuffix>kcal</span>
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Tłuszcze</mat-label>
+      <input
+        matInput
+        type="number"
+        max="10000"
+        min="1"
+        formControlName="fats"
+        required
+      />
+      <span matSuffix>g</span>
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Węglowodany</mat-label>
+      <input
+        matInput
+        type="number"
+        max="10000"
+        min="1"
+        formControlName="carbohydrates"
+        required
+      />
+      <span matSuffix>g</span>
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+  <div class="form__input-container">
+    <mat-form-field appearance="outline" class="form__input">
+      <mat-label>Białka</mat-label>
+      <input
+        matInput
+        type="number"
+        max="10000"
+        min="1"
+        formControlName="proteins"
+        required
+      />
+      <span matSuffix>g</span>
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+  </div>
+</form>
+
+<div mat-dialog-actions class="buttons-container">
+  <button class="text" mat-button mat-dialog-close>Anuluj</button>
+  <button
+    class="text"
+    mat-raised-button
+    [disabled]="snackMealForm.invalid"
+    (click)="saveOtherMeal()"
+  >
+    Zapisz
+  </button>
+</div>

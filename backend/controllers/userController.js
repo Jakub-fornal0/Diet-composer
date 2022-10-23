@@ -60,7 +60,7 @@ exports.login = async (req, response) => {
         .status(401)
         .send({ message: "Niepoprawny email lub hasło!" });
     const token = jwt.sign({ id: neww[0].id }, process.env.ACCESS_TOKEN, {
-      expiresIn: "15s",
+      expiresIn: "2h",
     });
     const refreshToken = jwt.sign(
       { id: neww[0].id },

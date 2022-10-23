@@ -45,6 +45,7 @@ import { NotFoundComponent } from './components/not-found/not-found.component';
 import { AuthInterceptor } from './services/auth-token-interceptor';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SetUserImageDialogComponent } from './components/account-settings/set-user-image-dialog/set-user-image-dialog.component';
+import { AddOtherMealToScheduleComponent } from './components/schedule/add-other-meal-to-schedule/add-other-meal-to-schedule.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { SetUserImageDialogComponent } from './components/account-settings/set-u
     AddAnotherStepToRecipeComponent,
     NotFoundComponent,
     SetUserImageDialogComponent,
+    AddOtherMealToScheduleComponent,
   ],
   imports: [
     HttpClientModule,

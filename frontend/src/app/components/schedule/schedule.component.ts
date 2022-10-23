@@ -6,6 +6,8 @@ import {
   ScheduleDetailsConsts,
 } from '../../consts/schedule-consts';
 import { Schedule, ScheduleDetails } from '../../interfaces/schedule.model';
+import { MatDialog } from '@angular/material/dialog';
+import { AddOtherMealToScheduleComponent } from './add-other-meal-to-schedule/add-other-meal-to-schedule.component';
 
 @Component({
   selector: 'app-schedule',
@@ -37,7 +39,10 @@ export class ScheduleComponent implements OnInit {
     'dinner',
   ];
 
-  constructor(private localStorageService: LocalStorageService) {}
+  constructor(
+    private localStorageService: LocalStorageService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     const dataFromLocalStorage =
@@ -76,6 +81,10 @@ export class ScheduleComponent implements OnInit {
           this.scheduleDetails.eatenFats += this.schedule[key].fats;
         }
       }
+    });
+
+    this.schedule.snack.forEach((meal) => {
+      this.addSnack(meal);
     });
   }
 
@@ -156,5 +165,56 @@ export class ScheduleComponent implements OnInit {
     this.scheduleDetails.eatenCarbohydrates = 0;
     this.scheduleDetails.eatenProteins = 0;
     this.scheduleDetails.eatenFats = 0;
+  }
+
+  openAddOtherMealDialog(
+    enterAnimationDuration: string,
+    exitAnimationDuration: string
+  ): void {
+    this.dialog
+      .open(AddOtherMealToScheduleComponent, {
+        width: '600px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+      })
+      .afterClosed()
+      .subscribe((snack) => {
+        if (snack) {
+          this.addSnack(snack);
+          this.schedule.snack.push(snack);
+          this.localStorageService.setItemToLocalStorage(
+            LocalStorageConsts.SCHEDULE,
+            this.schedule
+          );
+        }
+      });
+  }
+
+  addSnack(data: any) {
+    this.scheduleDetails.eatenCalories += data.calories;
+    this.scheduleDetails.eatenCarbohydrates += data.carbohydrates;
+    this.scheduleDetails.eatenProteins += data.proteins;
+    this.scheduleDetails.eatenFats += data.fats;
+  }
+
+  deleteSnack(index: number) {
+    this.scheduleDetails.eatenCalories -= this.schedule.snack[index].calories;
+    this.scheduleDetails.eatenCarbohydrates -=
+      this.schedule.snack[index].carbohydrates;
+    this.scheduleDetails.eatenProteins -= this.schedule.snack[index].proteins;
+    this.scheduleDetails.eatenFats -= this.schedule.snack[index].fats;
+
+    this.schedule.snack.splice(index, 1);
+    this.localStorageService.setItemToLocalStorage(
+      LocalStorageConsts.SCHEDULE,
+      this.schedule
+    );
+  }
+
+  clearSchedule() {
+    this.localStorageService.removeItemFromLocalStorage(
+      LocalStorageConsts.SCHEDULE
+    );
+    window.location.reload();
   }
 }

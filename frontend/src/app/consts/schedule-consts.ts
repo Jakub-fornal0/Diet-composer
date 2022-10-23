@@ -49,6 +49,7 @@ export const ScheduleConsts = {
     carbohydrates: 0,
     eaten: false,
   },
+  snack: [],
 };
 
 export const ScheduleDetailsConsts = {

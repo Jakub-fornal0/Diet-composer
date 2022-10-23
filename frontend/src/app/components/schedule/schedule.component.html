@@ -1,4 +1,4 @@
-<div class="app-schedule">
+<div class="schedule-container">
   <mat-card class="app-schedule__card row">
     <div
       class="app-schedule__card--meals-container col-lg-8 col-md-12 col-sm-12"
@@ -54,7 +54,7 @@
       class="app-schedule__card--details-container col-lg-4 col-md-12 col-sm-12"
     >
       <div class="app-schedule__card--details-header">
-        <mat-icon>trending_up</mat-icon>
+        <mat-icon class="text">trending_up</mat-icon>
         <h1>Statystyki dnia</h1>
       </div>
       <div class="app-schedule__card--detail">
@@ -99,6 +99,32 @@
           {{ scheduleDetails.eatenProteins }} /
           {{ scheduleDetails.totalProteins }}
         </p>
+      </div>
+      <div class="app-schedule__card--buttons">
+        <button (click)="clearSchedule()" class="white-button">Wyczyść</button>
+        <button
+          class="white-button"
+          (click)="openAddOtherMealDialog('0ms', '0ms')"
+        >
+          Dodaj przekąske
+        </button>
+      </div>
+      <div>
+        <h2 class="header text">Przekąski</h2>
+        <p *ngIf="!schedule.snack.length" class="subheader text">
+          Nie dodano przekąsek.
+        </p>
+        <div class="snack-container">
+          <div
+            *ngFor="let snack of schedule.snack; let i = index"
+            class="snack"
+          >
+            <span class="snack__name text">{{ snack.mealName }}</span>
+            <button mat-button (click)="deleteSnack(i)" class="snack__delete">
+              <mat-icon class="close-delete-icon">close</mat-icon>
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </mat-card>
