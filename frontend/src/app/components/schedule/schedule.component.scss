@@ -1,8 +1,9 @@
 @import "../../utilities/variables";
+
 p,
-h1 {
+h2 {
   margin: 0;
-  color: $font-color;
+  padding: 0;
 }
 
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
@@ -11,11 +12,6 @@ h1 {
 
 ::ng-deep .mat-checkbox-ripple .mat-ripple-element {
   background-color: green !important;
-}
-
-mat-checkbox {
-  padding: 0;
-  text-align: center;
 }
 
 .schedule-container {
@@ -27,219 +23,221 @@ mat-checkbox {
   height: 100%;
 }
 
-.app-schedule__card {
+.card-container {
   display: flex;
   padding: 0;
   width: 90%;
   height: auto;
   margin-top: 90px;
   min-height: 85vh;
+}
 
-  .app-schedule__card--meals-container {
-    display: flex;
+.data-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.meals-container {
+  justify-content: center;
+  padding: 30px 30px 30px 45px;
+
+  .meals-container__meals {
     flex-direction: column;
-    justify-content: center;
-    padding: 30px 30px 30px 45px;
+    padding: 15px 0;
+    border-bottom: dotted 1px #ccc;
+    margin: 0;
+  }
 
-    .app-schedule__card--meals-details {
-      flex-direction: column;
-      padding: 15px 0;
-      border-bottom: dotted 1px #ccc;
-      margin: 0;
+  .meals-container__meal-header {
+    padding-bottom: 10px;
+    font-weight: 500;
+  }
 
-      .app-schedule__card--meal-type-header {
-        padding-bottom: 10px;
-        font-weight: 500;
-        font-size: 16px;
+  .meals-container__meal-details {
+    display: flex;
+    align-items: center;
+
+    .meals-container__meal-details--checkbox {
+      padding: 0;
+      text-align: center;
+    }
+
+    .meals-container__meal-details--image {
+      width: 100px;
+      height: 50px;
+      cursor: pointer;
+    }
+
+    .meals-container__meal-details--recipe-name {
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
       }
+    }
 
-      .app-schedule__card--meal-details {
-        display: flex;
-        align-items: center;
+    .meals-container__meal-details--delete {
+      margin: 0;
+      padding: 0;
+      margin-left: auto;
+      margin-right: 10px;
+      cursor: pointer;
+      transition: all 0.5s ease-in-out;
 
-        .app-schedule__card--recipe-image {
-          width: 100px;
-          height: 50px;
-          cursor: pointer;
-        }
-
-        .app-schedule__card--recipe-name {
-          cursor: pointer;
-          font-size: 15px;
-
-          &:hover {
-            text-decoration: underline;
-          }
-        }
-
-        .app-schedule__card--delete-icon {
-          margin: 0;
-          padding: 0;
-          margin-left: auto;
-          margin-right: 10px;
-          cursor: pointer;
-          transition: all 0.5s ease-in-out;
-
-          &:hover {
-            transform: scale(1.1);
-            color: #ab1818;
-          }
-        }
+      &:hover {
+        transform: scale(1.1);
+        color: $delete-color;
       }
     }
   }
+}
 
-  .app-schedule__card--details-container {
+.details-container {
+  padding: 30px 20px;
+
+  .details-container__header {
     display: flex;
     flex-direction: column;
-    padding: 30px 10px;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
 
-    .app-schedule__card--details-header {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-
-      mat-icon {
-        margin-right: 20px;
-        font-weight: 500;
-        font-size: 35px;
-        width: 35px;
-        height: 35px;
-      }
-      h1 {
-        text-transform: uppercase;
-        font-weight: 500;
-        padding-bottom: 20px;
-        text-align: center;
-        margin-right: 20px;
-      }
+    .details-container__header--icon {
+      margin-right: 20px;
+      font-size: 35px;
+      width: 35px;
+      height: 35px;
     }
 
-    .app-schedule__card--buttons {
-      display: flex;
-      margin: 20px 0;
-
-      .white-button {
-        margin: 0 2px;
-        padding: 10px 15px;
-      }
-    }
-
-    .app-schedule__card--detail {
-      padding-bottom: 5px;
-      display: flex;
-      align-items: baseline;
-
-      .app-schedule__card--dotted {
-        border-bottom: 1px dotted #aaa;
-        flex-grow: 1;
-        margin: 0 10px;
-      }
-
-      .app-schedule__card--detail-to-right {
-        margin-left: auto;
-        margin-right: 20px;
-      }
-
-      p {
-        font-weight: 500;
-      }
-    }
-
-    .header {
+    .details-container__header--text {
+      text-transform: uppercase;
+      padding-bottom: 20px;
       text-align: center;
-      margin-bottom: 10px;
+      margin-right: 20px;
+    }
+  }
+
+  .details-container__data {
+    padding-bottom: 5px;
+    display: flex;
+    align-items: baseline;
+
+    .details-container__data--name {
       font-weight: 500;
+      color: $font-color;
     }
 
-    .subheader {
-      text-align: center;
-      font-weight: 400;
+    .details-container__data--dotted {
+      border-bottom: 1px dotted #aaa;
+      flex-grow: 1;
+      margin: 0 10px;
     }
 
-    .snack-container {
-      max-height: 31vh;
-      overflow: auto;
+    .details-container__data--value {
+      margin-left: auto;
+      margin-right: 20px;
     }
+  }
+}
 
-    .snack {
-      width: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      border-bottom: solid 1px #ccc;
-    }
+.details-container__buttons {
+  display: flex;
+  margin: 20px 0;
 
-    .snack__name {
+  .white-button {
+    margin: 0 2px;
+    padding: 10px 15px;
+  }
+}
+
+.snack-container {
+  .snack-container__header {
+    text-align: center;
+    margin-bottom: 10px;
+    font-weight: 500;
+  }
+
+  .snack-container__subheader {
+    text-align: center;
+    font-weight: 400;
+  }
+
+  .snack-container__snacks {
+    max-height: 26vh;
+    overflow: auto;
+  }
+
+  .snack-container__snack {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: solid 1px #ccc;
+
+    .snack-container__snack--name {
       width: 95%;
     }
 
-    .snack__delete {
+    .snack-container__snack--delete {
       float: right;
     }
   }
 }
 
 @media (max-width: 992px) {
-  .app-schedule {
-    .app-schedule__card {
-      min-height: 0;
-    }
+  .card-container {
+    min-height: 0;
   }
 }
 
 @media (max-width: 576px) {
-  .app-schedule {
-    .app-schedule__card {
-      .app-schedule__card--text {
+  .center-text {
+    text-align: center;
+  }
+
+  .meals-container {
+    padding: 10px;
+
+    .meals-container__meal-header {
+      text-align: center;
+    }
+
+    .meals-container__meal-details {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .meals-container__meal-details--checkbox {
         text-align: center;
+        padding-bottom: 15px;
       }
 
-      .app-schedule__card--detail-to-right {
+      .meals-container__meal-details--image {
+        margin-right: 0;
+        width: 130px;
+        height: 75px;
+        margin-bottom: 15px;
+      }
+
+      .meals-container__meal-details--recipe-name {
+        text-align: center;
+        margin-bottom: 15px;
+      }
+
+      .meals-container__meal-details--delete {
+        margin: 0;
+        padding: 0;
+      }
+    }
+  }
+
+  .details-container {
+    padding: 10px;
+
+    .details-container__data {
+      .details-container__data--value {
         margin-left: auto;
         margin-right: 0;
-      }
-
-      .app-schedule__card--meals-container {
-        padding: 10px;
-
-        .app-schedule__card--meals-details {
-          .app-schedule__card--meal-type-header {
-            text-align: center;
-          }
-
-          .app-schedule__card--meal-details {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            .app-schedule__card--checkbox {
-              text-align: center;
-              padding-bottom: 15px;
-            }
-
-            .app-schedule__card--recipe-image {
-              margin-right: 0;
-              width: 130px;
-              height: 75px;
-              margin-bottom: 15px;
-            }
-
-            .app-schedule__card--recipe-name {
-              text-align: center;
-              margin-bottom: 15px;
-            }
-
-            .app-schedule__card--delete-icon {
-              margin: 0;
-              padding: 0;
-            }
-          }
-        }
-      }
-      .app-schedule__card--details-container {
-        padding: 10px;
       }
     }
   }
