@@ -35,7 +35,7 @@ exports.createProduct = async (req, res) => {
 exports.deleteUserProduct = async (req, res) => {
   try {
     const idFromToken = jwt.decode(req.headers["x-access-token"]).id;
-    const idProduct = req.body.idProduct;
+    const idProduct = req.params.productId;
     await userProduct.destroy({
       where: {
         [Op.and]: [{ userId: idFromToken, productId: idProduct }],
@@ -71,7 +71,7 @@ exports.getAllUserProducts = async (req, res) => {
         userId: idFromToken,
       },
     });
-    res.status(200).send({ Produkty: userProducts });
+    res.status(200).send({ Products: userProducts });
   } catch (error) {
     res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
   }

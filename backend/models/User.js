@@ -19,7 +19,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       userImage: {
         type: DataTypes.STRING,
-        unique: true,
+        defaultValue: 'defaultUser',
       },
       userName: {
         type: DataTypes.STRING,
@@ -66,7 +66,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       dietPurpose: {
         type: DataTypes.ENUM,
-        values: ["odchudzanie", "utrzymanie wagi", "przyrost", "-"],
+        values: ["spadek wagi", "utrzymanie wagi", "przyrost wagi", "-"],
       },
       physicalActivity: {
         type: DataTypes.ENUM,
