@@ -5,6 +5,7 @@ import { LocalStorageService } from '../../services/local-storage.service';
 import { LocalStorageConsts } from '../../consts/localstorage-consts';
 import { MatDialog } from '@angular/material/dialog';
 import { RecipesFilterDialogComponent } from './recipes-filter-dialog/recipes-filter-dialog.component';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-recipes',
@@ -156,17 +157,22 @@ export class RecipesComponent implements OnInit {
 
   constructor(
     private localStorageService: LocalStorageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
-    const dataFromLocalStorage =
-      this.localStorageService.getItemFromLocalStorage<Product[]>(
-        LocalStorageConsts.PRODUCTS
-      );
-    if (dataFromLocalStorage) {
-      this.products = dataFromLocalStorage;
-    }
+    this.productService.getAllUserProducts().subscribe((res) => {
+      //ZMIENIC PRODUKTY NA INNA NAZWE
+      res.Produkty.forEach((product: any) => {
+        this.products.push({
+          id: product.id,
+          name: product.product.name,
+          measureUnit: product.product.measureUnit,
+          quantity: product.quantity,
+        });
+      });
+    });
 
     //WYWOLAC ENDPOINT KTORY ZWRACA LICZBE PASUJACYCH PRZEPISOW
     this.countOfRecipes = 4570;
