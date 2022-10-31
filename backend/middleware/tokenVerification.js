@@ -1,16 +1,15 @@
 const jwt = require("jsonwebtoken");
 
 function tokenVerification(req, res, next) {
+  let token = req.headers["authorization"]?.split(" ")[1];
 
-  let token = req.headers["authorization"]?.split(' ')[1];
-  
   if (!token) {
     res.status(403).send({ message: "Nie znaleziono tokenu!" });
-  }else{
+  } else {
     jwt.verify(token, process.env.ACCESS_TOKEN, (err, decodeduser) => {
       if (err) {
         res.status(401).send({ message: "Niezautoryzowano!" });
-      }else{
+      } else {
         req.id = decodeduser;
         next();
       }

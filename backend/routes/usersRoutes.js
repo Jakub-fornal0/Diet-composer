@@ -1,17 +1,11 @@
 const router = require("express").Router();
-const userController = require("../controllers/userController");
+const usersController = require("../controllers/usersController");
 
-router.post("/registration", userController.registration);
-router.post("/login", userController.login);
-router.post("/refreshToken", userController.refreshToken);
-router.delete("/logout", userController.logout);
-router.post("/uploadImage", userController.uploadImage);
-router.get("/downloadUserImage", userController.downloadUserImage);
-router.post("/BodyMassIndex", userController.BMI);
-router.get("/All", userController.All);
-
-//do zrobiebia
-
-router.post("/resetPassword", userController.resetPassword);
+router.post("/refreshToken", usersController.refreshToken);
+router.delete("/logout", usersController.logout);
+router.post("/uploadImage", usersController.uploadImage);
+router.get("/downloadUserImage", usersController.downloadUserImage);
+router.post("/BodyMassIndex", usersController.BMI);
+router.get("/All", usersController.All);
 
 module.exports = router;

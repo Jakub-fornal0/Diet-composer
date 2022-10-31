@@ -1,283 +1,110 @@
-const connDB = require("../config/database");
-const Joi = require("joi");
+require("dotenv").config();
+const { DataTypes } = require("sequelize");
+const useBcrypt = require("sequelize-bcrypt");
 
-class User{
-
-    userImage = "none";
-    userName = "default";
-    email = "default@email.com";
-    password = "default";
-    age = 0;
-    gender = "kobieta";
-    weight = 0;
-    height = 0;
-    dietType = "odchudzanie";
-    physicalActivity = "mała";
-    BMI = 0;
-    caloricDemand = 0;
-    proteinsDemand = 0;
-    fatsDemand = 0;
-    carbohydratesDemand = 0;
-
-    constructor(options) {
-        this.id = options && options.id;
-        this.userImage = options && options.userImage || "defaultUser";
-        this.userName = options && options.userName || "default";
-        this.email = options && options.email || "default@email.com";
-        this.password = options && options.password || "default";
-        this.age = options && options.age || 0;
-        this.gender = options && options.gender || "kobieta";
-        this.weight = options && options.weight || 0;
-        this.height = options && options.height || 0;
-        this.dietType = options && options.dietType || "odchudzanie";
-        this.physicalActivity = options && options.physicalActivity || "mała";
-        this.BMI = options && options.BMI || 0;
-        this.caloricDemand = options && options.caloricDemand || 0;
-        this.proteinsDemand = options && options.proteinsDemand || 0;
-        this.fatsDemand = options && options.fatsDemand || 0;
-        this.carbohydratesDemand = options && options.carbohydratesDemand || 0;
-    }
-
-    static saveToDB(){
-        let sql=`SELECT * FROM users;`;
-        
-        return  connDB.execute(sql);
-    }
-
-    static CheckExistingUserByEmail(email){
-        let sql=`SELECT * FROM users WHERE email = "${email}";`;
-        return connDB.execute(sql);
-    }
-
-    static CheckExistingUserById = async (id) => {
-        let sql=`SELECT * FROM users WHERE id = "${id}";`;
-        const [user, _]= await connDB.execute(sql);
-        
-        return user;
-    }
-
-    static downloadUserImage = async (id) => {
-        let sql=`SELECT id, userImage FROM users WHERE id = "${id}";`;
-        const downloadImage = await connDB.execute(sql);
-        return downloadImage;
-    }
-
-    static UpdateImage = async (id, fileName) => {
-        let sql=`UPDATE users SET userImage="${fileName}" WHERE id = "${id}";`;
-        const update = await connDB.execute(sql);
-    }
-    
-    get userImage() {
-        return this.userImage;
-    }
-
-    set userImage(value) {
-        this.userImage = value;
-    }
-    
-    get physicalActivity() {
-        return this.physicalActivity;
-    }
-    set physicalActivity(value) {
-        this.physicalActivity = value;
-    }
-
-    get userName() {
-        return this.userName;
-    }
-    
-    set userName(value) {
-        this.userName = value;
-    }
-    
-    get email() {
-        return this.email;
-    }
-
-    set email(value) {
-        this.email = value;
-    }
-    
-    get password() {
-        return this.password;
-    }
-
-    set password(value) {
-        this.password = value;
-    }
-    
-    get age() {
-        return this.age;
-    }
-
-    set age(value) {
-        this.age = value;
-    }
-    
-    get gender() {
-        return this.gender;
-    }
-
-    set gender(value) {
-        this.gender = value;
-    }
-    
-    get weight() {
-        return this.weight;
-    }
-
-    set weight(value) {
-        this.weight = value;
-    }
-    
-    get height() {
-        return this.height;
-    }
-
-    set height(value) {
-        this.height = value;
-    }
-    
-    get dietType() {
-        return this.dietType;
-    }
-
-    set dietType(value) {
-        this.dietType = value;
-    }
-    
-    get BMI() {
-        return this.BMI;
-    }
-
-    set BMI(value) {
-        this.BMI = value;
-    }
-    
-    get caloricDemand() {
-        return this.caloricDemand;
-    }
-
-    set caloricDemand(value) {
-        this.caloricDemand = value;
-    }
-    
-    get proteinsDemand() {
-        return this.proteinsDemand;
-    }
-
-    set proteinsDemand(value) {
-        this.proteinsDemand = value;
-    }
-    
-    get fatsDemand() {
-        return this.fatsDemand;
-    }
-
-    set fatsDemand(value) {
-        this.fatsDemand = value;
-    }
-    
-    get carbohydratesDemand() {
-        return this.carbohydratesDemand;
-    }
-
-    set carbohydratesDemand(value) {
-        this.carbohydratesDemand = value;
-    }
-}
-
-const userValidate = (data) => {
-    const schema = Joi.object({
-
-      userImage: Joi.string(),
-
-      userName: Joi.string()
-                   .pattern(new RegExp('^[a-zA-Z0-9]{5,30}$'))
-                   .required()
-                   .label("userName"),
-
-      email: Joi.string()
-                .email()
-                .required()
-                .label("email"),
-
-      password: Joi.string()
-                   .pattern(new RegExp('^[a-zA-Z0-9!@#$%^&*?]{8,30}$'))
-                   .required()
-                   .label("password"),
-
-      age: Joi.number()
-               .integer()
-               .min(1)
-               .max(120)
-               .label("age"),
-
-      gender: Joi.string(), 
-
-      weight: Joi.number()
-                 .precision(1)
-                 .min(1)
-                 .max(200)
-                 .label("weight"),
-
-     height: Joi.number()
-                .integer()
-                .min(1)
-                .max(300)
-                .label("height"),
-
-      dietType: Joi.string(),
-
-      BMI: Joi.number(),
-
-      caloricDemand: Joi.number(),
-
-      proteinsDemand: Joi.number(),
-
-      fatsDemand: Joi.number(),
-
-      carbohydratesDemand: Joi.number()
-
-    });
-    return schema.validate(data);
+module.exports = (sequelize, Sequelize) => {
+  const options = {
+    field: "password",
+    rounds: parseInt(process.env.ROUNDS),
+    compare: "authenticate",
   };
 
-  const loginValidation = (data) => {
-    const schema = Joi.object({
-
-        email: Joi.string()
-                  .email()
-                  .required()
-                  .label("email"),
-
-        password: Joi.string()
-                     .pattern(new RegExp('^[a-zA-Z0-9!@#$%^&*?]{8,30}$'))
-                     .required()
-                     .label("password")
-    });
-    return schema.validate(data);
-  };
-
-  const registrationValidation = (data) => {
-    const schema = Joi.object({
-      userName: Joi.string()
-                   .pattern(new RegExp('^[a-zA-Z0-9]{5,30}$'))
-                   .required()
-                   .label("userName"),
-
-      email: Joi.string()
-                .email()
-                .required()
-                .label("email"),
-
-      password: Joi.string()
-                   .pattern(new RegExp('^[a-zA-Z0-9!@#$%^&*?]{8,30}$'))
-                   .required()
-                   .label("password")
-       });
-    return schema.validate(data);
-  };
-  
-
-module.exports = {User, userValidate, registrationValidation, loginValidation};
+  const User = sequelize.define(
+    "user",
+    {
+      id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true,
+      },
+      userImage: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      userName: {
+        type: DataTypes.STRING,
+        unique: true,
+        validate: {
+          is: /^[a-zA-Z0-9]{5,30}$/i,
+        },
+      },
+      email: {
+        type: DataTypes.STRING,
+        unique: true,
+        validate: {
+          is: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/i,
+        },
+      },
+      password: {
+        type: DataTypes.STRING,
+        unique: true,
+      },
+      age: {
+        type: DataTypes.INTEGER,
+        defaultValue: 0,
+        validate: {
+          min: 0,
+        },
+      },
+      gender: {
+        type: DataTypes.ENUM,
+        values: ["kobieta", "mężczyzna", "-"],
+      },
+      weight: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+        validate: {
+          min: 0,
+        },
+      },
+      height: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+        validate: {
+          min: 0,
+        },
+      },
+      dietPurpose: {
+        type: DataTypes.ENUM,
+        values: ["odchudzanie", "utrzymanie wagi", "przyrost", "-"],
+      },
+      physicalActivity: {
+        type: DataTypes.ENUM,
+        values: [
+          "brak ćwiczeń",
+          "znikoma",
+          "mała",
+          "umiarkowana",
+          "duża",
+          "bardzo duża",
+          "-",
+        ],
+      },
+      BMI: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+      },
+      caloricDemand: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+      },
+      proteinsDemand: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+      },
+      fatsDemand: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+      },
+      carbohydratesDemand: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+      },
+    },
+    {
+      timestamps: false,
+    }
+  );
+  useBcrypt(User, options);
+  return User;
+};
