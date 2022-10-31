@@ -32,7 +32,7 @@ export class AuthService {
   }
 
   login(loginData: loginData): Observable<any> {
-    return this.http.post<any>(`${this.apiURL}/sigin`, loginData).pipe(
+    return this.http.post<any>(`${this.apiURL}/signin`, loginData).pipe(
       map((data) => {
         var token = { token: data.token } as Token;
         localStorage.setItem(LocalStorageConsts.TOKEN, JSON.stringify(token));

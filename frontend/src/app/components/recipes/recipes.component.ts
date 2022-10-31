@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Product } from './../../interfaces/product.model';
 import { Recipe } from './../../interfaces/recipe.model';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { LocalStorageConsts } from '../../consts/localstorage-consts';
 import { MatDialog } from '@angular/material/dialog';
 import { RecipesFilterDialogComponent } from './recipes-filter-dialog/recipes-filter-dialog.component';
 import { ProductService } from 'src/app/services/product.service';
@@ -156,17 +154,15 @@ export class RecipesComponent implements OnInit {
   // ___________________ //
 
   constructor(
-    private localStorageService: LocalStorageService,
     private dialog: MatDialog,
     private productService: ProductService
   ) {}
 
   ngOnInit(): void {
     this.productService.getAllUserProducts().subscribe((res) => {
-      //ZMIENIC PRODUKTY NA INNA NAZWE
-      res.Produkty.forEach((product: any) => {
+      res.Products.forEach((product: any) => {
         this.products.push({
-          id: product.id,
+          id: product.product.id,
           name: product.product.name,
           measureUnit: product.product.measureUnit,
           quantity: product.quantity,
@@ -181,16 +177,11 @@ export class RecipesComponent implements OnInit {
   }
 
   deleteProduct(index: number) {
-    this.products.splice(index, 1);
-    this.localStorageService.setItemToLocalStorage(
-      LocalStorageConsts.PRODUCTS,
-      this.products
-    );
-    if (!this.products.length) {
-      this.localStorageService.removeItemFromLocalStorage(
-        LocalStorageConsts.PRODUCTS
-      );
-    }
+    this.productService
+      .deleteUserProduct(this.products[index].id!)
+      .subscribe(() => {
+        this.products.splice(index, 1);
+      });
   }
 
   openFiltersDialog(

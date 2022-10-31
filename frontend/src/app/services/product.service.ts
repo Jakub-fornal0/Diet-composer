@@ -30,10 +30,9 @@ export class ProductService {
     );
   }
 
-  //ZROBIC
   deleteUserProduct(productId: number): Observable<any> {
     return this.http.delete<any>(
-      `${this.apiURL}/product/user/delete`,
+      `${this.apiURL}/product/user/delete/${productId}`,
       this.httpOptions
     );
   }

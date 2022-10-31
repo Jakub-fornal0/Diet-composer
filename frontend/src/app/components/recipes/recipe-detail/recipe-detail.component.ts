@@ -82,10 +82,9 @@ export class RecipeDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.productService.getAllUserProducts().subscribe((res) => {
-      //ZMIENIC PRODUKTY NA INNA NAZWE
-      res.Produkty.forEach((product: any) => {
+      res.Products.forEach((product: any) => {
         this.products.push({
-          id: product.id,
+          id: product.product.id,
           name: product.product.name,
           measureUnit: product.product.measureUnit,
           quantity: product.quantity,

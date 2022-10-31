@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { map, Observable } from 'rxjs';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { LocalStorageConsts } from '../../consts/localstorage-consts';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from 'src/app/services/product.service';
 
@@ -25,7 +23,6 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private localStorageService: LocalStorageService,
     private snackBar: MatSnackBar,
     private productService: ProductService
   ) {
@@ -52,10 +49,9 @@ export class ProductsComponent implements OnInit {
     });
 
     this.productService.getAllUserProducts().subscribe((res) => {
-      //ZMIENIC PRODUKTY NA INNA NAZWE
-      res.Produkty.forEach((product: any) => {
+      res.Products.forEach((product: any) => {
         this.chosenProducts.push({
-          id: product.id,
+          id: product.product.id,
           name: product.product.name,
           measureUnit: product.product.measureUnit,
           quantity: product.quantity,
@@ -116,12 +112,6 @@ export class ProductsComponent implements OnInit {
 
     this.productService.addUserProduct(product).subscribe(() => {
       this.chosenProducts.push(product);
-
-      //USUNAC POTEM
-      // this.localStorageService.setItemToLocalStorage(
-      //   LocalStorageConsts.PRODUCTS,
-      //   this.chosenProducts
-      // );
     });
 
     this.snackBar.open('Dodano produkt.', '', { duration: 1500 });
@@ -130,19 +120,11 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(index: number) {
-    //INDEX TO NUMER W TABELI, POBRAC ID PO TYM INDEXIE
-    console.log(index);
-    // this.productService.deleteUserProduct()
-    this.chosenProducts.splice(index, 1);
-    // this.localStorageService.setItemToLocalStorage(
-    //   LocalStorageConsts.PRODUCTS,
-    //   this.chosenProducts
-    // );
-    // if (!this.chosenProducts.length) {
-    //   this.localStorageService.removeItemFromLocalStorage(
-    //     LocalStorageConsts.PRODUCTS
-    //   );
-    // }
+    this.productService
+      .deleteUserProduct(this.chosenProducts[index].id!)
+      .subscribe(() => {
+        this.chosenProducts.splice(index, 1);
+      });
 
     this.snackBar.open('Usunięto produkt.', '', { duration: 1500 });
   }
