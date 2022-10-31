@@ -20,7 +20,10 @@ export class SetBodyParametersDialogComponent implements OnInit {
       gender: [data.gender, [Validators.required, Validators.minLength(2)]],
       weight: [data.weight, [Validators.required]],
       height: [data.height, [Validators.required]],
-      dietType: [data.dietType, [Validators.required, Validators.minLength(2)]],
+      dietPurpose: [
+        data.dietPurpose,
+        [Validators.required, Validators.minLength(2)],
+      ],
       physicalActivity: [
         data.physicalActivity,
         [Validators.required, Validators.minLength(2)],

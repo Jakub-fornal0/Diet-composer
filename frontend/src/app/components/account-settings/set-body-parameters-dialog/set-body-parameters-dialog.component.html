@@ -26,7 +26,7 @@
   </div>
   <div class="form__input-container">
     <mat-form-field appearance="outline" class="form__input">
-      <mat-label>Waga (kg)</mat-label>
+      <mat-label>Waga</mat-label>
       <input
         type="number"
         max="600"
@@ -35,12 +35,13 @@
         formControlName="weight"
         required
       />
+      <span matSuffix>kg</span>
       <mat-error>To pole jest wymagane.</mat-error>
     </mat-form-field>
   </div>
   <div class="form__input-container">
     <mat-form-field appearance="outline" class="form__input">
-      <mat-label>Wzrost (cm)</mat-label>
+      <mat-label>Wzrost</mat-label>
       <input
         type="number"
         max="600"
@@ -49,13 +50,14 @@
         formControlName="height"
         required
       />
+      <span matSuffix>cm</span>
       <mat-error>To pole jest wymagane.</mat-error>
     </mat-form-field>
   </div>
   <div class="form__input-container">
     <mat-form-field appearance="outline" class="form__input">
-      <mat-label>Rodzaj diety</mat-label>
-      <mat-select formControlName="dietType" required>
+      <mat-label>Cel diety</mat-label>
+      <mat-select formControlName="dietPurpose" required>
         <mat-option value="przyrost wagi">przyrost wagi</mat-option>
         <mat-option value="utrzymanie wagi">utrzymanie wagi</mat-option>
         <mat-option value="spadek wagi">spadek wagi</mat-option>

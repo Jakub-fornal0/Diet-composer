@@ -1,9 +1,8 @@
+import { UserConsts } from './../../consts/user-consts';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { AccountService } from 'src/app/services/account.service';
-import { AuthService } from '../../services/auth.service';
-import { UserConsts } from '../../consts/user-consts';
-import { User, UserProfile } from '../../interfaces/user.model';
+import { User } from '../../interfaces/user.model';
 import { SetBodyParametersDialogComponent } from './set-body-parameters-dialog/set-body-parameters-dialog.component';
 import { SetUserImageDialogComponent } from './set-user-image-dialog/set-user-image-dialog.component';
 
@@ -13,59 +12,18 @@ import { SetUserImageDialogComponent } from './set-user-image-dialog/set-user-im
   styleUrls: ['./account-settings.component.scss'],
 })
 export class AccountSettingsComponent implements OnInit {
-  userProfile?: UserProfile | null;
   userData: User = UserConsts;
 
   constructor(
     private dialog: MatDialog,
-    private accountService: AccountService,
-    private authService: AuthService
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
-    this.authService.userProfile.subscribe((data) => {
-      this.userProfile = data;
-    });
-
     this.accountService.getUserData().subscribe((res) => {
-      console.log(res);
       this.userData = res.user;
+      this.userData.recipes = res.recipes;
     });
-
-    // MOCKUP USUNAC POTEM //
-    this.userData = {
-      id: 'id445455',
-      userImage: 'assets/user-default-image.png',
-      userName: 'Andrzej',
-      email: 'andrzej@gmail.com',
-      age: 0,
-      gender: '-',
-      weight: 0,
-      height: 0,
-      dietType: '-',
-      physicalActivity: '-',
-      BMI: 0,
-      caloricDemand: 0,
-      proteinsDemand: 0,
-      fatsDemand: 0,
-      carbohydratesDemand: 0,
-      recipes: [
-        { id: '23', recipeImage: 'assets/zdj.jpg', recipeName: 'Makaron' },
-        { id: '11', recipeImage: 'assets/zdj.jpg', recipeName: 'Schabowe' },
-        { id: '12', recipeImage: 'assets/zdj.jpg', recipeName: 'Schabowe' },
-        {
-          id: '13',
-          recipeImage: 'assets/zdj.jpg',
-          recipeName: 'Schabowe dddddd c cccccc vvvv ddfddddfdfdfdfd sss',
-        },
-        { id: '14', recipeImage: 'assets/zdj.jpg', recipeName: 'Schabowe ' },
-        { id: '15', recipeImage: 'assets/zdj.jpg', recipeName: 'Schabowe' },
-        { id: '111', recipeImage: 'assets/zdj.jpg', recipeName: 'Schabowe' },
-        { id: '211', recipeImage: 'assets/zdj.jpg', recipeName: 'Schabowe' },
-        { id: '511', recipeImage: 'assets/zdj.jpg', recipeName: 'Schabowe' },
-      ],
-    };
-    //_____________________//
   }
 
   openSetBodyParametersDialog(
@@ -82,7 +40,7 @@ export class AccountSettingsComponent implements OnInit {
           gender: this.userData.gender,
           weight: this.userData.weight,
           height: this.userData.height,
-          dietType: this.userData.dietType,
+          dietPurpose: this.userData.dietPurpose,
           physicalActivity: this.userData.physicalActivity,
         },
       })
@@ -93,18 +51,16 @@ export class AccountSettingsComponent implements OnInit {
           this.userData.gender = data.gender;
           this.userData.weight = data.weight;
           this.userData.height = data.height;
-          this.userData.dietType = data.dietType;
+          this.userData.dietPurpose = data.dietPurpose;
           this.userData.physicalActivity = data.physicalActivity;
 
-          this.accountService
-            .calculateUserDemands({ ...data, id: this.userProfile?.id })
-            .subscribe((res) => {
-              this.userData.BMI = res.BMI;
-              this.userData.caloricDemand = res.caloricDemand;
-              this.userData.fatsDemand = res.fatsDemand;
-              this.userData.carbohydratesDemand = res.carbohydratesDemand;
-              this.userData.proteinsDemand = res.proteinsDemand;
-            });
+          this.accountService.calculateUserDemands(data).subscribe((res) => {
+            this.userData.BMI = res.BMI;
+            this.userData.caloricDemand = res.caloricDemand;
+            this.userData.fatsDemand = res.fatsDemand;
+            this.userData.carbohydratesDemand = res.carbohydratesDemand;
+            this.userData.proteinsDemand = res.proteinsDemand;
+          });
         }
       });
   }
@@ -122,15 +78,11 @@ export class AccountSettingsComponent implements OnInit {
       .afterClosed()
       .subscribe((data) => {
         if (data) {
-          this.userData.userImage = data.preview;
-
-          if (this.userProfile?.id) {
-            this.accountService
-              .setUserImage(data.file.userImage, this.userProfile.id)
-              .subscribe((res) => {
-                console.log(res);
-              });
-          }
+          this.accountService
+            .setUserImage(data.file.userImage)
+            .subscribe((res) => {
+              this.userData.userImage = data.preview;
+            });
         }
       });
   }

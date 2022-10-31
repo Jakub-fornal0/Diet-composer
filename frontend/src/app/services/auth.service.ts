@@ -28,14 +28,11 @@ export class AuthService {
   constructor(private http: HttpClient) {}
 
   userRegister(registerData: registerData): Observable<any> {
-    return this.http.post<any>(
-      `${this.apiURL}/user/registration`,
-      registerData
-    );
+    return this.http.post<any>(`${this.apiURL}/signup`, registerData);
   }
 
   login(loginData: loginData): Observable<any> {
-    return this.http.post<any>(`${this.apiURL}/user/login`, loginData).pipe(
+    return this.http.post<any>(`${this.apiURL}/sigin`, loginData).pipe(
       map((data) => {
         var token = { token: data.token } as Token;
         localStorage.setItem(LocalStorageConsts.TOKEN, JSON.stringify(token));

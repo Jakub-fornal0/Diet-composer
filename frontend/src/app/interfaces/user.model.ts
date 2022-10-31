@@ -7,7 +7,7 @@ export interface User {
   gender: string;
   weight: number;
   height: number;
-  dietType: string;
+  dietPurpose: string;
   physicalActivity: string;
   BMI: number;
   caloricDemand: number;
