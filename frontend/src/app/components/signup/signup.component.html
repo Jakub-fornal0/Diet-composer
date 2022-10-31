@@ -64,10 +64,7 @@
             >
           </mat-form-field>
         </div>
-        <div
-          *ngIf="!registerDataAreCorrect"
-          class="app-signup__card--error-message"
-        >
+        <div *ngIf="error" class="app-signup__card--error-message">
           {{ error }}
         </div>
         <div class="app-signup__card--register-button">

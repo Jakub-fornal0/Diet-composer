@@ -2,6 +2,7 @@ import { Product } from './../../../../interfaces/product.model';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { map, Observable } from 'rxjs';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-add-product-to-recipe',
@@ -9,63 +10,7 @@ import { map, Observable } from 'rxjs';
   styleUrls: ['./add-product-to-recipe.component.scss'],
 })
 export class AddProductToRecipeComponent implements OnInit {
-  products: Product[] = [
-    {
-      id: '11',
-      name: 'mleko 1,5%',
-      measureUnit: 'l',
-    },
-    {
-      id: '1',
-      name: 'mleko 2%',
-      measureUnit: 'l',
-    },
-    {
-      id: '2',
-      name: 'śmietana 12%',
-      measureUnit: 'g',
-    },
-    {
-      id: '3',
-      name: 'mąka',
-      measureUnit: 'kg',
-    },
-    {
-      id: '4',
-      name: 'jaja rozmiar M',
-      measureUnit: 'szt',
-    },
-    {
-      id: '5',
-      name: 'pierś z kurczaka',
-      measureUnit: 'kg',
-    },
-    {
-      id: '6',
-      name: 'makaron pióra',
-      measureUnit: 'g',
-    },
-    {
-      id: '7',
-      name: 'pomidor',
-      measureUnit: 'g',
-    },
-    {
-      id: '8',
-      name: 'ryż',
-      measureUnit: 'g',
-    },
-    {
-      id: '9',
-      name: 'mięso mielone',
-      measureUnit: 'g',
-    },
-    {
-      id: '10',
-      name: 'olej rzepakowy',
-      measureUnit: 'l',
-    },
-  ];
+  products!: Product[];
 
   @Input() product?: Product;
   @Output() returnProductData = new EventEmitter<Product>();
@@ -76,7 +21,10 @@ export class AddProductToRecipeComponent implements OnInit {
   inputMeasureUnit: string = '';
   productDoesntExist: boolean = false;
 
-  constructor(private formBuilder: FormBuilder) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private productService: ProductService
+  ) {
     this.addProductForm = this.formBuilder.group({
       productName: ['', Validators.required],
       productQuantity: [0, Validators.required],
@@ -99,6 +47,10 @@ export class AddProductToRecipeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.productService.getAllProducts().subscribe((res) => {
+      this.products = res.data.allProducts;
+    });
+
     if (this.product) {
       const productName = {
         id: this.product?.id,

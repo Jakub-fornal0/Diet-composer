@@ -7,7 +7,8 @@ export interface User {
   gender: string;
   weight: number;
   height: number;
-  dietType: string;
+  dietPurpose: string;
+  physicalActivity: string;
   BMI: number;
   caloricDemand: number;
   proteinsDemand: number;
@@ -20,4 +21,10 @@ export interface UserRecipe {
   id?: string;
   recipeImage: string;
   recipeName: string;
+}
+
+export interface UserProfile {
+  id: string;
+  iat: number;
+  exp: number;
 }

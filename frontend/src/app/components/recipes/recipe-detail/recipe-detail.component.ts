@@ -1,11 +1,10 @@
 import { RecipeDetail } from './../../../interfaces/recipe.model';
 import { Component, OnInit } from '@angular/core';
-import { LocalStorageService } from '../../../services/local-storage.service';
-import { LocalStorageConsts } from '../../../consts/localstorage-consts';
 import { RecipeStepConsts } from '../../../consts/recipe-step-consts';
 import { Product } from '../../../interfaces/product.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-recipe-to-schedule.component';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -26,19 +25,19 @@ export class RecipeDetailComponent implements OnInit {
     portions: 4,
     level: 'Łatwy',
     products: [
-      { id: '6', name: 'makaron pióra', quantity: 200, measureUnit: 'g' },
-      { id: '5', name: 'pierś z kurczaka', quantity: 0.2, measureUnit: 'kg' },
-      { id: '12', name: 'cebula', quantity: 1, measureUnit: 'szt' },
+      { id: 5, name: 'makaron pióra', quantity: 200, measureUnit: 'g' },
+      { id: 7, name: 'pierś z kurczaka', quantity: 0.2, measureUnit: 'kg' },
+      { id: 12, name: 'cebula', quantity: 1, measureUnit: 'szt' },
       {
-        id: '13',
+        id: 13,
         name: 'przecier pomidorowy',
         quantity: 150,
         measureUnit: 'ml',
       },
-      { id: '7', name: 'pomidor', quantity: 150, measureUnit: 'g' },
-      { id: '15', name: 'ser zółty', quantity: 300, measureUnit: 'g' },
-      { id: '10', name: 'olej rzepakowy', quantity: 0.25, measureUnit: 'l' },
-      { id: '18', name: 'woda', quantity: 250, measureUnit: 'ml' },
+      { id: 67, name: 'pomidor', quantity: 150, measureUnit: 'g' },
+      { id: 15, name: 'ser zółty', quantity: 300, measureUnit: 'g' },
+      { id: 10, name: 'olej rzepakowy', quantity: 0.25, measureUnit: 'l' },
+      { id: 18, name: 'woda', quantity: 250, measureUnit: 'ml' },
     ],
     recipeStep: [
       {
@@ -77,18 +76,21 @@ export class RecipeDetailComponent implements OnInit {
   // _________________________________________________//
 
   constructor(
-    private localStorageService: LocalStorageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
-    const dataFromLocalStorage =
-      this.localStorageService.getItemFromLocalStorage<Product[]>(
-        LocalStorageConsts.PRODUCTS
-      );
-    if (dataFromLocalStorage) {
-      this.products = dataFromLocalStorage;
-    }
+    this.productService.getAllUserProducts().subscribe((res) => {
+      res.Products.forEach((product: any) => {
+        this.products.push({
+          id: product.product.id,
+          name: product.product.name,
+          measureUnit: product.product.measureUnit,
+          quantity: product.quantity,
+        });
+      });
+    });
 
     this.recipe.recipeStep.forEach(() =>
       this.recipeSteps.push(RecipeStepConsts.TODO)
@@ -98,7 +100,7 @@ export class RecipeDetailComponent implements OnInit {
 
   checkUserHaveProduct(recipeProduct: Product): boolean {
     const foundProduct = this.products.find(
-      (userProduct) => userProduct.id === recipeProduct.id
+      (userProduct: Product) => userProduct.id === recipeProduct.id
     );
 
     if (

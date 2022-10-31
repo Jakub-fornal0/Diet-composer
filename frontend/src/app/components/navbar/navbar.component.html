@@ -106,7 +106,10 @@
         routerLink="/login"
         >Logowanie</a
       >
-      <a (click)="sidenav.toggle()" class="app-navbar__desktop--mobile-link"
+      <a
+        *ngIf="userIsAuthenticated"
+        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+        class="app-navbar__desktop--mobile-link"
         >Wyloguj się</a
       >
     </div>

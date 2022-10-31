@@ -80,15 +80,15 @@ export class AddNewRecipeComponent implements OnInit {
         this.nutrientsFormGroup.get('proteins')?.setValue(150);
 
         this.recipeProductsEdit = [
-          { id: '11', name: 'mleko 1,5%', measureUnit: 'l', quantity: 100 },
-          { id: '1', name: 'mleko 2%', measureUnit: 'l', quantity: 4 },
-          { id: '2', name: 'śmietana 12%', measureUnit: 'g', quantity: 400 },
-          { id: '3', name: 'mąka', measureUnit: 'kg', quantity: 23 },
-          { id: '4', name: 'jaja rozmiar M', measureUnit: 'szt', quantity: 10 },
-          { id: '5', name: 'pierś z kurczaka', measureUnit: 'kg', quantity: 2 },
-          { id: '6', name: 'makaron pióra', measureUnit: 'g', quantity: 450 },
-          { id: '7', name: 'pomidor', measureUnit: 'g', quantity: 200 },
-          { id: '8', name: 'ryż', measureUnit: 'g', quantity: 200 },
+          { id: 11, name: 'mleko 1,5%', measureUnit: 'l', quantity: 100 },
+          { id: 1, name: 'mleko 2%', measureUnit: 'l', quantity: 4 },
+          { id: 2, name: 'śmietana 12%', measureUnit: 'g', quantity: 400 },
+          { id: 3, name: 'mąka', measureUnit: 'kg', quantity: 23 },
+          { id: 4, name: 'jaja rozmiar M', measureUnit: 'szt', quantity: 10 },
+          { id: 5, name: 'pierś z kurczaka', measureUnit: 'kg', quantity: 2 },
+          { id: 6, name: 'makaron pióra', measureUnit: 'g', quantity: 450 },
+          { id: 7, name: 'pomidor', measureUnit: 'g', quantity: 200 },
+          { id: 8, name: 'ryż', measureUnit: 'g', quantity: 200 },
         ];
 
         this.recipeProducts = [];
@@ -131,7 +131,7 @@ export class AddNewRecipeComponent implements OnInit {
       } else {
         this.mode = 'create';
         this.recipeProducts = [
-          { id: '0', name: '', quantity: 0, measureUnit: '' },
+          { id: 0, name: '', quantity: 0, measureUnit: '' },
         ];
         this.recipeSteps = [{ id: '0', stepName: '' }];
         this.recipeId = '';
@@ -172,7 +172,7 @@ export class AddNewRecipeComponent implements OnInit {
 
   addAnotherProduct() {
     this.recipeProducts.push({
-      id: '0',
+      id: 0,
       name: '',
       measureUnit: '',
       quantity: 0,

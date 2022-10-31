@@ -41,6 +41,11 @@ import { SetBodyParametersDialogComponent } from './components/account-settings/
 import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-new-recipe.component';
 import { AddProductToRecipeComponent } from './components/recipes/add-new-recipe/add-product-to-recipe/add-product-to-recipe.component';
 import { AddAnotherStepToRecipeComponent } from './components/recipes/add-new-recipe/add-another-step-to-recipe/add-another-step-to-recipe.component';
+import { NotFoundComponent } from './components/not-found/not-found.component';
+import { AuthInterceptor } from './services/auth-token-interceptor';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
+import { SetUserImageDialogComponent } from './components/account-settings/set-user-image-dialog/set-user-image-dialog.component';
+import { AddOtherMealToScheduleComponent } from './components/schedule/add-other-meal-to-schedule/add-other-meal-to-schedule.component';
 
 @NgModule({
   declarations: [
@@ -60,8 +65,12 @@ import { AddAnotherStepToRecipeComponent } from './components/recipes/add-new-re
     AddNewRecipeComponent,
     AddProductToRecipeComponent,
     AddAnotherStepToRecipeComponent,
+    NotFoundComponent,
+    SetUserImageDialogComponent,
+    AddOtherMealToScheduleComponent,
   ],
   imports: [
+    HttpClientModule,
     BrowserModule,
     AppRoutingModule,
     MatToolbarModule,
@@ -89,7 +98,13 @@ import { AddAnotherStepToRecipeComponent } from './components/recipes/add-new-re
     MatSidenavModule,
     MatSnackBarModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Product } from './../../interfaces/product.model';
 import { Recipe } from './../../interfaces/recipe.model';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { LocalStorageConsts } from '../../consts/localstorage-consts';
 import { MatDialog } from '@angular/material/dialog';
 import { RecipesFilterDialogComponent } from './recipes-filter-dialog/recipes-filter-dialog.component';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-recipes',
@@ -15,6 +14,7 @@ export class RecipesComponent implements OnInit {
   products: Product[] = [];
   currentPage: number = 1;
   countOfRecipes: number = 0;
+  countOfPages: number = 0;
 
   // MOCKUP USUNAC POTEM//
   recipes: Recipe[] = [
@@ -154,35 +154,34 @@ export class RecipesComponent implements OnInit {
   // ___________________ //
 
   constructor(
-    private localStorageService: LocalStorageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private productService: ProductService
   ) {}
 
   ngOnInit(): void {
-    const dataFromLocalStorage =
-      this.localStorageService.getItemFromLocalStorage<Product[]>(
-        LocalStorageConsts.PRODUCTS
-      );
-    if (dataFromLocalStorage) {
-      this.products = dataFromLocalStorage;
-    }
+    this.productService.getAllUserProducts().subscribe((res) => {
+      res.Products.forEach((product: any) => {
+        this.products.push({
+          id: product.product.id,
+          name: product.product.name,
+          measureUnit: product.product.measureUnit,
+          quantity: product.quantity,
+        });
+      });
+    });
 
     //WYWOLAC ENDPOINT KTORY ZWRACA LICZBE PASUJACYCH PRZEPISOW
-    this.countOfRecipes = 80;
+    this.countOfRecipes = 4570;
+    this.countOfPages = Math.ceil(this.countOfRecipes / 12);
     //JAK BEDZIE BACKEND TO WYWOLAC ENDPOINT PO PRZEPISY Z CURRENTPAGE
   }
 
   deleteProduct(index: number) {
-    this.products.splice(index, 1);
-    this.localStorageService.setItemToLocalStorage(
-      LocalStorageConsts.PRODUCTS,
-      this.products
-    );
-    if (!this.products.length) {
-      this.localStorageService.removeItemFromLocalStorage(
-        LocalStorageConsts.PRODUCTS
-      );
-    }
+    this.productService
+      .deleteUserProduct(this.products[index].id!)
+      .subscribe(() => {
+        this.products.splice(index, 1);
+      });
   }
 
   openFiltersDialog(
@@ -203,6 +202,11 @@ export class RecipesComponent implements OnInit {
     } else {
       this.currentPage--;
     }
+    //TU WYWOLAC ENDPOINT DLA POBRANIA PRZEPISOW NA PAGE
+  }
+
+  setAsCurrentPage(numberOfPages: number) {
+    this.currentPage = numberOfPages;
     //TU WYWOLAC ENDPOINT DLA POBRANIA PRZEPISOW NA PAGE
   }
 }

@@ -44,10 +44,7 @@
             >
           </mat-form-field>
         </div>
-        <div
-          *ngIf="!loginDataAreCorrect"
-          class="app-signin__card--error-message"
-        >
+        <div *ngIf="error" class="app-signin__card--error-message">
           {{ error }}
         </div>
         <div class="app-signin__card--login-button">

@@ -1,0 +1,26 @@
+$not-found-background-color: #fafafa;
+$font-color: #616159;
+
+.app-not-found {
+  background-color: $not-found-background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100vw;
+  height: 100vh;
+}
+
+h2 {
+  font-size: 30px;
+  font-weight: 500;
+  color: $font-color;
+  text-align: center;
+}
+
+h1 {
+  color: #b00404;
+  font-size: 100px;
+  padding-bottom: 25px;
+  font-weight: 700;
+}

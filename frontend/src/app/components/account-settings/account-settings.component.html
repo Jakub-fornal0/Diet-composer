@@ -1,142 +1,129 @@
-<div class="app-account-settings">
-  <mat-card class="app-account-settings__card row">
-    <div
-      class="app-account-settings__card--image-login-data-container col-lg-4 col-md-6 col-sm-12"
-    >
+<div class="account-container">
+  <mat-card class="card-container row">
+    <div class="image-container data-container col-lg-4 col-md-6 col-sm-12">
       <img
-        class="app-account-settings__card--image"
+        class="image-container__image"
         [src]="userData.userImage"
         [alt]="userData.userName"
       />
-      <button class="app-account-settings__card--change-button">
+      <button
+        class="button-with-border"
+        (click)="openSetUserImageDialog('0ms', '0ms')"
+      >
         Zmień zdjęcie
       </button>
-      <span class="app-account-settings__card--user-name">{{
+      <span class="image-container__user-name text">{{
         userData.userName
       }}</span>
-      <span class="app-account-settings__card--user-email">{{
-        userData.email
-      }}</span>
+      <span class="image-container__user-email text">{{ userData.email }}</span>
     </div>
-    <div
-      class="app-account-settings__card--user-data-container col-lg-4 col-md-6 col-sm-12"
-    >
-      <mat-icon class="app-account-settings__card--icon"
-        >accessibility</mat-icon
-      >
-      <h2>Podstawowe dane:</h2>
-      <div class="app-account-settings__card--data-line">
-        <span>Wiek: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right">{{
-          userData.age
-        }}</span>
+    <div class="user-data-container data-container col-lg-4 col-md-6 col-sm-12">
+      <mat-icon class="user-data-container__icon text">accessibility</mat-icon>
+      <h2 class="user-data__header text">Podstawowe dane:</h2>
+      <div class="inline-data">
+        <span class="inline-data__name text">Wiek: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text">{{ userData.age }}</span>
       </div>
-      <div class="app-account-settings__card--data-line">
-        <span>Płeć: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right">{{
-          userData.gender
-        }}</span>
+      <div class="inline-data">
+        <span class="inline-data__name text">Płeć: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text">{{ userData.gender }}</span>
       </div>
-      <div class="app-account-settings__card--data-line">
-        <span>Waga: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right"
-          >{{ userData.weight }} kg</span
-        >
+      <div class="inline-data">
+        <span class="inline-data__name text">Waga: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text">{{ userData.weight }} kg</span>
       </div>
-      <div class="app-account-settings__card--data-line">
-        <span>Wzrost: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right"
-          >{{ userData.height }} cm</span
-        >
+      <div class="inline-data">
+        <span class="inline-data__name">Wzrost: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value">{{ userData.height }} cm</span>
       </div>
-      <div class="app-account-settings__card--data-line">
-        <span>Rodzaj diety: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right">{{
-          userData.dietType
+      <div class="inline-data">
+        <span class="inline-data__name text">Cel diety: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text">{{ userData.dietPurpose }}</span>
+      </div>
+      <div class="inline-data">
+        <span class="inline-data__name text">Aktywność fizyczna: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text">{{
+          userData.physicalActivity
         }}</span>
       </div>
       <button
         (click)="openSetBodyParametersDialog('0ms', '0ms')"
-        class="app-account-settings__card--change-button"
+        class="button-with-border"
       >
         Zmień
       </button>
-      <mat-icon class="app-account-settings__card--icon"
+      <mat-icon class="user-data-container__icon text"
         >restaurant_menu</mat-icon
       >
-      <h2>Twoje zapotrzebowanie:</h2>
-      <div class="app-account-settings__card--data-line">
-        <span>BMI: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right">{{
-          userData.BMI
-        }}</span>
+      <h2 class="user-data-container__header text">Twoje zapotrzebowanie:</h2>
+      <div class="inline-data">
+        <span class="inline-data__name text">BMI: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text">{{ userData.BMI }}</span>
       </div>
-      <div class="app-account-settings__card--data-line">
-        <span>Kaloryczne: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right"
+      <div class="inline-data">
+        <span class="inline-data__name text">Kaloryczne: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text"
           >{{ userData.caloricDemand }} kcal</span
         >
       </div>
-      <div class="app-account-settings__card--data-line">
-        <span>Białkowe: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right"
+      <div class="inline-data">
+        <span class="inline-data__name text">Białkowe: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text"
           >{{ userData.proteinsDemand }} g</span
         >
       </div>
-      <div class="app-account-settings__card--data-line">
-        <span>Tłuszczowe: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right"
-          >{{ userData.fatsDemand }} g</span
-        >
+      <div class="inline-data">
+        <span class="inline-data__name text">Tłuszczowe: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text">{{ userData.fatsDemand }} g</span>
       </div>
-      <div class="app-account-settings__card--data-line">
-        <span>Węglowodanowe: </span>
-        <span class="app-account-settings__card--dotted-space"></span>
-        <span class="app-account-settings__card--data-to-right"
+      <div class="inline-data">
+        <span class="inline-data__name text">Węglowodanowe: </span>
+        <span class="inline-data__dotted-space"></span>
+        <span class="inline-data__value text"
           >{{ userData.carbohydratesDemand }} g</span
         >
       </div>
     </div>
-    <div
-      class="app-account-settings__card--user-recipes-container col-lg-4 col-md-12 col-sm-12"
-    >
-      <h2>Twoje przepisy:</h2>
-      <div
-        *ngIf="userData.recipes.length"
-        class="app-account-settings__card--recipe-list"
-      >
+    <div class="user-recipes-container col-lg-4 col-md-12 col-sm-12">
+      <h2 class="user-recipes-container__header text">Twoje przepisy:</h2>
+      <div *ngIf="userData.recipes.length" class="user-recipes-container__list">
         <div
-          class="app-account-settings__card--recipe"
+          class="user-recipes-container__recipe"
           *ngFor="let recipe of userData.recipes"
         >
-          <div class="app-account-settings__card--inline">
+          <div class="user-recipes-container__recipe--inline">
             <img
+              class="user-recipes-container__image"
               [routerLink]="['/recipes/detail', recipe.id]"
               [src]="recipe.recipeImage"
               [alt]="recipe.recipeName"
             />
-            <p [routerLink]="['/recipes/detail', recipe.id]">
+            <p
+              class="user-recipes-container__recipe-name text"
+              [routerLink]="['/recipes/detail', recipe.id]"
+            >
               {{ recipe.recipeName }}
             </p>
           </div>
           <div
-            class="app-account-settings__card--inline app-account-settings__card--to-right"
+            class="user-recipes-container__recipe--inline user-recipes-container__recipe--icons"
           >
             <mat-icon
-              class="app-account-settings__card--icon"
+              class="user-recipes-container__icon"
               [routerLink]="['/recipes/edit', recipe.id]"
               >edit</mat-icon
             >
-            <mat-icon class="app-account-settings__card--icon"
+            <mat-icon class="user-recipes-container__icon"
               >delete_outline</mat-icon
             >
           </div>
@@ -144,9 +131,9 @@
       </div>
       <div
         *ngIf="!userData.recipes.length"
-        class="app-account-settings__card--recipe-list"
+        class="user-recipes-container__list text"
       >
-        <p>Nie dodano przepisów.</p>
+        <p class="user-recipes-container__header">Nie dodano przepisów.</p>
       </div>
     </div>
   </mat-card>

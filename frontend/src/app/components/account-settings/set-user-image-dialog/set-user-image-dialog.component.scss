@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .container__header {
+    margin-top: 10px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .container__image-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 450px;
+    height: 350px;
+    border: 1px solid rgba($color: #616159, $alpha: 0.2);
+    border-radius: 25px;
+  }
+
+  .container__label {
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .container__image-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    cursor: pointer;
+    color: rgba($color: #616159, $alpha: 0.8);
+  }
+
+  .container__image-text {
+    cursor: pointer;
+    font-weight: 400;
+  }
+
+  .container__image {
+    cursor: pointer;
+    width: 450px;
+    height: 350px;
+    border-radius: 25px;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input[type="file"] {
+  visibility: hidden;
+}

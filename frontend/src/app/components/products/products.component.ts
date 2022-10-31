@@ -3,9 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { map, Observable } from 'rxjs';
-import { LocalStorageService } from '../../services/local-storage.service';
-import { LocalStorageConsts } from '../../consts/localstorage-consts';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { ProductService } from 'src/app/services/product.service';
 
 @Component({
   selector: 'app-products',
@@ -17,74 +16,15 @@ export class ProductsComponent implements OnInit {
   filteredProducts?: Observable<Product[]>;
   inputMeasureUnit: string = '';
   chosenProducts: Product[] = [];
-  chosenproductId?: string;
+  chosenproductId?: number;
   productIsChosen: boolean = false;
   productDoesntExist: boolean = false;
-
-  // mockup produktów DO USUNIECIA JAK BEDZIE POLĄCZENIE Z BAZA
-  products: Product[] = [
-    {
-      id: '11',
-      name: 'mleko 1,5%',
-      measureUnit: 'l',
-    },
-    {
-      id: '1',
-      name: 'mleko 2%',
-      measureUnit: 'l',
-    },
-    {
-      id: '2',
-      name: 'śmietana 12%',
-      measureUnit: 'g',
-    },
-    {
-      id: '3',
-      name: 'mąka',
-      measureUnit: 'kg',
-    },
-    {
-      id: '4',
-      name: 'jaja rozmiar M',
-      measureUnit: 'szt',
-    },
-    {
-      id: '5',
-      name: 'pierś z kurczaka',
-      measureUnit: 'kg',
-    },
-    {
-      id: '6',
-      name: 'makaron pióra',
-      measureUnit: 'g',
-    },
-    {
-      id: '7',
-      name: 'pomidor',
-      measureUnit: 'g',
-    },
-    {
-      id: '8',
-      name: 'ryż',
-      measureUnit: 'g',
-    },
-    {
-      id: '9',
-      name: 'mięso mielone',
-      measureUnit: 'g',
-    },
-    {
-      id: '10',
-      name: 'olej rzepakowy',
-      measureUnit: 'l',
-    },
-  ];
-  // ---------------------------------------------------------//
+  products!: Product[];
 
   constructor(
     private formBuilder: FormBuilder,
-    private localStorageService: LocalStorageService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private productService: ProductService
   ) {
     this.productForm = this.formBuilder.group({
       product: [''],
@@ -104,15 +44,22 @@ export class ProductsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.productForm.get('quantity')?.disable();
+    this.productService.getAllProducts().subscribe((res) => {
+      this.products = res.data.allProducts;
+    });
 
-    const dataFromLocalStorage =
-      this.localStorageService.getItemFromLocalStorage<Product[]>(
-        LocalStorageConsts.PRODUCTS
-      );
-    if (dataFromLocalStorage) {
-      this.chosenProducts = dataFromLocalStorage;
-    }
+    this.productService.getAllUserProducts().subscribe((res) => {
+      res.Products.forEach((product: any) => {
+        this.chosenProducts.push({
+          id: product.product.id,
+          name: product.product.name,
+          measureUnit: product.product.measureUnit,
+          quantity: product.quantity,
+        });
+      });
+    });
+
+    this.productForm.get('quantity')?.disable();
   }
 
   checkProductExist() {
@@ -156,17 +103,16 @@ export class ProductsComponent implements OnInit {
   }
 
   addProduct() {
-    this.chosenProducts.push({
+    const product: Product = {
       id: this.chosenproductId,
       name: this.productForm.get('product')?.value.name,
       measureUnit: this.inputMeasureUnit,
       quantity: this.productForm.get('quantity')?.value,
-    });
+    };
 
-    this.localStorageService.setItemToLocalStorage(
-      LocalStorageConsts.PRODUCTS,
-      this.chosenProducts
-    );
+    this.productService.addUserProduct(product).subscribe(() => {
+      this.chosenProducts.push(product);
+    });
 
     this.snackBar.open('Dodano produkt.', '', { duration: 1500 });
     this.productForm.get('product')?.setValue('');
@@ -174,16 +120,11 @@ export class ProductsComponent implements OnInit {
   }
 
   deleteProduct(index: number) {
-    this.chosenProducts.splice(index, 1);
-    this.localStorageService.setItemToLocalStorage(
-      LocalStorageConsts.PRODUCTS,
-      this.chosenProducts
-    );
-    if (!this.chosenProducts.length) {
-      this.localStorageService.removeItemFromLocalStorage(
-        LocalStorageConsts.PRODUCTS
-      );
-    }
+    this.productService
+      .deleteUserProduct(this.chosenProducts[index].id!)
+      .subscribe(() => {
+        this.chosenProducts.splice(index, 1);
+      });
 
     this.snackBar.open('Usunięto produkt.', '', { duration: 1500 });
   }
