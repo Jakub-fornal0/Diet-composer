@@ -20,6 +20,15 @@ body {
   padding: 0;
 }
 
+.link {
+  color: $font-color;
+  font-weight: 500;
+
+  &:hover {
+    color: $font-color;
+  }
+}
+
 h1,
 h2,
 h3,
