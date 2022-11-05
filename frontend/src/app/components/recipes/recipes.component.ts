@@ -3,7 +3,9 @@ import { Product } from './../../interfaces/product.model';
 import { Recipe } from './../../interfaces/recipe.model';
 import { MatDialog } from '@angular/material/dialog';
 import { RecipesFilterDialogComponent } from './recipes-filter-dialog/recipes-filter-dialog.component';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from '../../services/product.service';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-recipes',
@@ -11,6 +13,8 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./recipes.component.scss'],
 })
 export class RecipesComponent implements OnInit {
+  authListenerSubs?: Subscription;
+  userIsAuthenticated: boolean = true;
   products: Product[] = [];
   currentPage: number = 1;
   countOfRecipes: number = 0;
@@ -155,20 +159,30 @@ export class RecipesComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private productService: ProductService
+    private productService: ProductService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.productService.getAllUserProducts().subscribe((res) => {
-      res.Products.forEach((product: any) => {
-        this.products.push({
-          id: product.product.id,
-          name: product.product.name,
-          measureUnit: product.product.measureUnit,
-          quantity: product.quantity,
+    this.userIsAuthenticated = this.authService.userIsAuth();
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuth) => {
+        this.userIsAuthenticated = isAuth;
+      });
+
+    if (this.userIsAuthenticated) {
+      this.productService.getAllUserProducts().subscribe((res) => {
+        res.Products.forEach((product: any) => {
+          this.products.push({
+            id: product.product.id,
+            name: product.product.name,
+            measureUnit: product.product.measureUnit,
+            quantity: product.quantity,
+          });
         });
       });
-    });
+    }
 
     //WYWOLAC ENDPOINT KTORY ZWRACA LICZBE PASUJACYCH PRZEPISOW
     this.countOfRecipes = 4570;

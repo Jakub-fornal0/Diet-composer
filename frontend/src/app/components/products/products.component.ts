@@ -72,18 +72,18 @@ export class ProductsComponent implements OnInit {
         ? this.productForm.get('product')?.value
         : this.productForm.get('product')?.value.name;
 
+    const productIdExistInChosenProducts = this.chosenProducts.find(
+      (product) => product.id === this.productForm.get('product')?.value.id
+    );
+
+    if (productIdExistInChosenProducts) {
+      this.productIsChosen = true;
+    }
+
     this.products.forEach((product: Product) => {
-      const productIdExistInChosenProducts = this.chosenProducts.find(
-        (product) => product.id === this.productForm.get('product')?.value.id
-      );
-
-      if (productIdExistInChosenProducts) {
-        this.productIsChosen = true;
-      }
-
       if (
         product.name.toLowerCase() === productName.toLowerCase() &&
-        product.id &&
+        this.productForm.get('product')?.value.id &&
         !this.productIsChosen
       ) {
         this.productDoesntExist = false;
