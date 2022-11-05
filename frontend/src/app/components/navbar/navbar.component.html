@@ -38,7 +38,9 @@
       </a>
     </li>
     <li *ngIf="userIsAuthenticated">
-      <a class="app-navbar__desktop--logout"><mat-icon>input</mat-icon> </a>
+      <a class="app-navbar__desktop--logout" (click)="logout()"
+        ><mat-icon>input</mat-icon>
+      </a>
     </li>
 
     <li *ngIf="!userIsAuthenticated">
@@ -108,7 +110,9 @@
       >
       <a
         *ngIf="userIsAuthenticated"
-        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+        (click)="
+          sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen; logout()
+        "
         class="app-navbar__desktop--mobile-link"
         >Wyloguj się</a
       >
