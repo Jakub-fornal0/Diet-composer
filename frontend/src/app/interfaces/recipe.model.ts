@@ -9,6 +9,7 @@ export interface Recipe {
   portions: number;
   level: string;
   category: string;
+  dietType: string;
 }
 
 export interface RecipeDetail {

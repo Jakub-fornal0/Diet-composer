@@ -21,6 +21,7 @@ export class AddNewRecipeComponent implements OnInit {
     recipeTime: [0, Validators.required],
     recipeLevel: ['', Validators.required],
     recipeCategory: ['', Validators.required],
+    dietType: ['', Validators.required],
     recipeImage: new FormControl(),
   });
 
@@ -69,6 +70,7 @@ export class AddNewRecipeComponent implements OnInit {
         this.mainRecipeDataFormGroup.get('recipeTime')?.setValue(50);
         this.mainRecipeDataFormGroup.get('recipeLevel')?.setValue('Łatwy');
         this.mainRecipeDataFormGroup.get('recipeCategory')?.setValue('Obiad');
+        this.mainRecipeDataFormGroup.get('dietType')?.setValue('inna');
         this.mainRecipeDataFormGroup
           .get('recipeImage')
           ?.setValue('assets/zdj.jpg');

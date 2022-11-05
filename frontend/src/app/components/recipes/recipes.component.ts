@@ -32,6 +32,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '2',
@@ -43,6 +44,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Średni',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '3',
@@ -54,6 +56,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Trudny',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '4',
@@ -65,6 +68,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '5',
@@ -76,6 +80,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '6',
@@ -87,6 +92,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '7',
@@ -98,6 +104,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '8',
@@ -109,6 +116,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '9',
@@ -120,6 +128,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '10',
@@ -131,6 +140,7 @@ export class RecipesComponent implements OnInit {
       portions: 4,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '11',
@@ -142,6 +152,7 @@ export class RecipesComponent implements OnInit {
       portions: 4444,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
     {
       id: '12',
@@ -153,6 +164,7 @@ export class RecipesComponent implements OnInit {
       portions: 111,
       level: 'Łatwy',
       category: 'obiad',
+      dietType: 'inna',
     },
   ];
   // ___________________ //

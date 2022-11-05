@@ -284,6 +284,10 @@ input[type="number"] {
     flex-direction: column;
   }
 
+  .break {
+    visibility: hidden;
+  }
+
   .app-add-new-recipe {
     .card {
       p {
