@@ -43,20 +43,23 @@ try {
   db.userProducts.belongsTo(db.products);
 
   //jeden do wielu przepis / kroki postępowania
-  db.recipes.hasMany(db.recipeSteps);
-  db.recipeSteps.belongsTo(db.recipes);
+  db.recipes.hasMany(db.recipeSteps, {onUpdate: 'CASCADE', onDelete: 'CASCADE'});
+  db.recipeSteps.belongsTo(db.recipes, { as: 'recipeStep' });
 
   //wiele do wielu(produkty/przepisy)
   db.recipes.belongsToMany(db.products, { through: db.recipeProducts });
   db.products.belongsToMany(db.recipes, { through: db.recipeProducts });
   db.recipes.hasMany(db.recipeProducts);
-  db.recipeProducts.belongsTo(db.recipes);
+  db.recipeProducts.belongsTo(db.recipes, { as: 'products' });
   db.products.hasMany(db.recipeProducts);
   db.recipeProducts.belongsTo(db.products);
 
-  //jeden do wielu użytkownik / przepis    -----------------------------------------------------------Czy relacją
-  db.users.hasMany(db.recipes);
+  //jeden do wielu (użytkownik/przepis)
+  db.users.hasMany(db.recipes, {onUpdate: 'CASCADE', onDelete: 'CASCADE'});
   db.recipes.belongsTo(db.users);
+
+
+  
 
   console.log("Connection has been established successfully.");
 } catch (error) {

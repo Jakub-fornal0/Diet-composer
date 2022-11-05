@@ -12,6 +12,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(express.static("public"));
 app.use("/images", express.static("images"));
+app.use("/imagesRecipe", express.static("imagesRecipe"));
 app.use(cors()); // poprawić
 app.use(express.json());
 

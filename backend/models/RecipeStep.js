@@ -10,6 +10,9 @@ module.exports = (sequelize, Sequelize) => {
         autoIncrement: true,
         unique: true,
       },
+      step:{
+        type: DataTypes.INTEGER,
+      },
       name: {
         type: DataTypes.STRING,
       },
