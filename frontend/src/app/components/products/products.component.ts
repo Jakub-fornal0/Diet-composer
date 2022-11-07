@@ -84,7 +84,8 @@ export class ProductsComponent implements OnInit {
       if (
         product.name.toLowerCase() === productName.toLowerCase() &&
         this.productForm.get('product')?.value.id &&
-        !this.productIsChosen
+        !this.productIsChosen &&
+        product.measureUnit
       ) {
         this.productDoesntExist = false;
         this.inputMeasureUnit = product.measureUnit;

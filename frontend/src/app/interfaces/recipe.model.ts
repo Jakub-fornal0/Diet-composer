@@ -28,7 +28,24 @@ export interface RecipeDetail {
   carbohydrates: number;
 }
 
+export interface RecipeAddData {
+  name: string;
+  description: string;
+  cookingTime: number;
+  portions: number;
+  level: string;
+  category: string;
+  dietType: string;
+  author: string;
+  calories: number;
+  fats: number;
+  proteins: number;
+  carbohydrates: number;
+  products: string;
+  steps: string;
+}
+
 export interface RecipeStep {
-  id?: string;
-  stepName: string;
+  id?: number;
+  name: string;
 }

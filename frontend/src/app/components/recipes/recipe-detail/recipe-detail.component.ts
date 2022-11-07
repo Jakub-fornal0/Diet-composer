@@ -41,30 +41,26 @@ export class RecipeDetailComponent implements OnInit {
     ],
     recipeStep: [
       {
-        id: '1',
-        stepName: 'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
+        id: 1,
+        name: 'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
       },
-      { id: '1', stepName: 'Podsmaż je na oleju.' },
-      { id: '1', stepName: 'Ugotuj makaron na sposób al dente.' },
+      { id: 2, name: 'Podsmaż je na oleju.' },
+      { id: 3, name: 'Ugotuj makaron na sposób al dente.' },
       {
-        id: '1',
-        stepName:
-          'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
-      },
-      {
-        id: '1',
-        stepName:
-          'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
+        id: 4,
+        name: 'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
       },
       {
-        id: '1',
-        stepName:
-          'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
+        id: 5,
+        name: 'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
       },
       {
-        id: '1',
-        stepName:
-          'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
+        id: 6,
+        name: 'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
+      },
+      {
+        id: 7,
+        name: 'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
       },
     ],
     author: 'Pędzimąż Andrzej',

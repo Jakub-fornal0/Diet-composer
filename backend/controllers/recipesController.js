@@ -25,16 +25,14 @@ exports.addRecipes = async (req, res) => {
       });
     };
     const upload = multer({ storage: Engine(fileName) }).single("image");
-
     upload(req, res, async (err) => {
       const userId = jwt.decode(req.headers["x-access-token"]).id;
-      console.log(userId);
-      if (!userId)
+      if (!userId){
       return res
         .status(401)
         .send({ message: "Nie udało się zautoryzować użytkownika" });
-      const data = JSON.parse(req.body.JSON);
-      const {
+      }
+      let {
         name,
         author,
         description,
@@ -49,7 +47,10 @@ exports.addRecipes = async (req, res) => {
         carbohydrates,
         steps,
         products,
-      } = data;
+      } = req.body.JSON;
+
+      steps = JSON.parse(steps);
+      products = JSON.parse(products);
 
       if (err) {
         return res
@@ -99,7 +100,6 @@ exports.addRecipes = async (req, res) => {
             array.productId = array.id;
             delete array.id;
           });
-          console.log(products);
           recipeProducts.bulkCreate(products)
             .then(() => {
               console.log(

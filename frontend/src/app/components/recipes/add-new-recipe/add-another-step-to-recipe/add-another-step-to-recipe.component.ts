@@ -11,13 +11,13 @@ export class AddAnotherStepToRecipeComponent implements OnInit {
   recipeStepForm: FormGroup;
 
   @Input() index: number = 0;
-  @Input() recipeStep: RecipeStep = { id: '0', stepName: '' };
+  @Input() recipeStep: RecipeStep = { id: 0, name: '' };
   @Output() returnRecipeStepData = new EventEmitter<RecipeStep>();
   @Output() recipeStepToDelete = new EventEmitter();
 
   constructor(private formBuilder: FormBuilder) {
     this.recipeStepForm = this.formBuilder.group({
-      stepName: ['', Validators.required],
+      name: ['', Validators.required],
     });
 
     this.recipeStepForm.valueChanges.subscribe(() => {
@@ -26,7 +26,7 @@ export class AddAnotherStepToRecipeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.recipeStepForm.get('stepName')?.setValue(this.recipeStep.stepName);
+    this.recipeStepForm.get('name')?.setValue(this.recipeStep.name);
   }
 
   deleteRecipeStep() {

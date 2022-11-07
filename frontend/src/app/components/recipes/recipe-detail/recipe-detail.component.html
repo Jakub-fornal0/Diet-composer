@@ -77,20 +77,20 @@
           *ngIf="recipeSteps[i] === 'doing'"
           class="app-recipe-detail--recipe-step-doing"
         >
-          {{ i + 1 }}. {{ recipe.stepName }}</span
+          {{ i + 1 }}. {{ recipe.name }}</span
         >
 
         <span
           *ngIf="recipeSteps[i] === 'toDo'"
           class="app-recipe-detail--recipe-step-todo"
         >
-          {{ i + 1 }}. {{ recipe.stepName }}</span
+          {{ i + 1 }}. {{ recipe.name }}</span
         >
         <span
           *ngIf="recipeSteps[i] === 'done'"
           class="app-recipe-detail--recipe-step-done"
         >
-          {{ i + 1 }}. {{ recipe.stepName }}</span
+          {{ i + 1 }}. {{ recipe.name }}</span
         >
         <br />
       </div>

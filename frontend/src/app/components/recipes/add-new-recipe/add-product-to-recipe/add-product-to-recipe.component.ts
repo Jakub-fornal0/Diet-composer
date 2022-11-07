@@ -51,7 +51,7 @@ export class AddProductToRecipeComponent implements OnInit {
       this.products = res.data.allProducts;
     });
 
-    if (this.product) {
+    if (this.product && this.product?.measureUnit) {
       const productName = {
         id: this.product?.id,
         name: this.product?.name,
@@ -92,7 +92,8 @@ export class AddProductToRecipeComponent implements OnInit {
     this.products.forEach((product: Product) => {
       if (
         product.name.toLowerCase() === productName.toLowerCase() &&
-        product.id
+        product.id &&
+        product.measureUnit
       ) {
         this.productDoesntExist = false;
         this.inputMeasureUnit = product.measureUnit;
