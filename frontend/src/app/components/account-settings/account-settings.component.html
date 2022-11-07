@@ -105,14 +105,14 @@
             <img
               class="user-recipes-container__image"
               [routerLink]="['/recipes/detail', recipe.id]"
-              [src]="recipe.recipeImage"
-              [alt]="recipe.recipeName"
+              [src]="recipe.image"
+              [alt]="recipe.name"
             />
             <p
               class="user-recipes-container__recipe-name text"
               [routerLink]="['/recipes/detail', recipe.id]"
             >
-              {{ recipe.recipeName }}
+              {{ recipe.name }}
             </p>
           </div>
           <div

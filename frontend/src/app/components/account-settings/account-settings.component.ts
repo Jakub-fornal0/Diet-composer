@@ -21,6 +21,7 @@ export class AccountSettingsComponent implements OnInit {
 
   ngOnInit(): void {
     this.accountService.getUserData().subscribe((res) => {
+      console.log(res);
       this.userData = res.user;
       this.userData.recipes = res.recipes;
     });
