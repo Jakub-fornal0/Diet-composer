@@ -32,6 +32,7 @@ exports.addRecipes = async (req, res) => {
         .status(401)
         .send({ message: "Nie udało się zautoryzować użytkownika" });
       }
+
       let {
         name,
         author,
@@ -47,7 +48,7 @@ exports.addRecipes = async (req, res) => {
         carbohydrates,
         steps,
         products,
-      } = req.body.JSON;
+      } = req.body;
 
       steps = JSON.parse(steps);
       products = JSON.parse(products);

@@ -232,9 +232,6 @@ export class AddNewRecipeComponent implements OnInit {
     if (this.mode === 'edit') {
       //WYWOLAC ENDPOINT Z EDIT
     } else {
-      const image = new FormData();
-      image.append('image', this.mainRecipeDataFormGroup.get('image')?.value);
-
       this.products.forEach((product) => {
         delete product['measureUnit'];
       });
@@ -259,14 +256,13 @@ export class AddNewRecipeComponent implements OnInit {
         steps: JSON.stringify(this.steps),
       };
 
-      const newRecipeData = {
-        image: this.mainRecipeDataFormGroup.get('image')?.value,
-        JSON: recipeAddData,
-      };
+      const recipeImage = this.mainRecipeDataFormGroup.get('image')?.value;
 
-      this.recipeService.addRecipe(newRecipeData).subscribe((res) => {
-        console.log(res);
-      });
+      this.recipeService
+        .addRecipe(recipeImage, recipeAddData)
+        .subscribe((res) => {
+          console.log(res);
+        });
     }
   }
 }
