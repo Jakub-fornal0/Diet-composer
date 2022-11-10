@@ -261,6 +261,7 @@ export class AddNewRecipeComponent implements OnInit {
       this.recipeService
         .addRecipe(recipeImage, recipeAddData)
         .subscribe((res) => {
+          // zrobic nawigacje do konta
           console.log(res);
         });
     }

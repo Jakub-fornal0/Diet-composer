@@ -25,14 +25,14 @@ exports.addRecipes = async (req, res) => {
       });
     };
     const upload = multer({ storage: Engine(fileName) }).single("image");
+
     upload(req, res, async (err) => {
       const userId = jwt.decode(req.headers["x-access-token"]).id;
-      if (!userId){
+      if (!userId)
       return res
         .status(401)
         .send({ message: "Nie udało się zautoryzować użytkownika" });
-      }
-
+      
       let {
         name,
         author,
@@ -49,7 +49,7 @@ exports.addRecipes = async (req, res) => {
         steps,
         products,
       } = req.body;
-
+      
       steps = JSON.parse(steps);
       products = JSON.parse(products);
 
@@ -101,6 +101,7 @@ exports.addRecipes = async (req, res) => {
             array.productId = array.id;
             delete array.id;
           });
+          console.log(products);
           recipeProducts.bulkCreate(products)
             .then(() => {
               console.log(
@@ -129,84 +130,150 @@ exports.addRecipes = async (req, res) => {
   }
 };
 
-exports.updateRecipes = async (req, res) => { //---------------------------------------------------------------DO REALIZACJI!----------
+exports.updateRecipes = async (req, res) => {
   try {
-    const userId = jwt.decode(req.headers["x-access-token"]).id;
-    const {
-      image,
-      name,
-      author,
-      description,
-      cookingTime,
-      portions,
-      level,
-      dietType,
-      category,
-      calories,
-      fats,
-      proteins,
-      carbohydrates,
-      steps,
-      products,
-    } = req.body;
-
-    const recipe2 = await recipe.findOne({
-      where: { id: req.body.id },
-    }).then(async (rec) => {
-      products.forEach((array) => {
-        array.recipeId = rec.id;
-        array.productId = array.id;
-        delete array.id;
-      });
-
-      await recipeProducts.bulkCreate(products, {
-        fields: ["quantity", "recipeId", "productId"],
-        updateOnDuplicate: ["quantity"],
-      });
-    });
-
-    /*
-    const recipe = await Recipe.findOne({
-      where:{id:req.body.id}
-    });
-    await recipeProducts.update(
-      {
-          id: {
-            [Sequelize.Op.in]: products.map((item) => item.id),
-          }, 
-          name: {
-            [Sequelize.Op.in]: products.map((item) => item.name),
-          }
-      },
-      {
-          where: {
-             recipeId: recipe.id
-          },
-      },
-  );*/
-    /*
-    await Recipe.findOne({
-      where:{id:req.body.id}
-    }).then(async (recipe)=>{
-      console.log(recipe.id);
-      await recipeProducts.update({products},{
-        where: {
-          recipeId : recipe.id,
+    var fileName = crypto.randomBytes(20).toString("hex");
+    const Engine = (Name) => {
+      return multer.diskStorage({
+        destination: (req, file, cb) => {
+          cb(null, "./imagesRecipe");
+        },
+        filename: (req, file, cb) => {
+          cb(null, Name + ".png");
         },
       });
-      res.json('zaktualizowano');
+    };
+    const upload = multer({ storage: Engine(fileName) }).single("image");
+
+    upload(req, res, async (err) => {
+      const userId = jwt.decode(req.headers["x-access-token"]).id;
+
+      let {
+        id,
+        name,
+        author,
+        description,
+        cookingTime,
+        portions,
+        level,
+        dietType,
+        category,
+        calories,
+        fats,
+        proteins,
+        carbohydrates,
+        steps,
+        products,
+      } = newData;
+
+      steps = JSON.parse(steps);
+      products = JSON.parse(products);
+
+      await user.findOne({
+        where: {
+          id: userId,
+        },
+      })
+        .then(() => {
+          recipe.findOne({
+            where: {
+              id: id,
+            },
+          }).then(async (userRecipeToDelete) => {
+            const path = "./imagesRecipe/" + userRecipeToDelete.image + ".png";
+            fs.unlink(path, (err) => {
+              if (err) {
+                console.error(err);
+                return;
+              }
+              recipe.destroy({
+                where: {
+                  id: userRecipeToDelete.id,
+                },
+              }).then( async () => {
+
+                await recipe.create({
+                  id:id,
+                  image: fileName,
+                  name: name,
+                  author: author,
+                  description: description,
+                  cookingTime: cookingTime,
+                  portions: portions,
+                  level: level,
+                  dietType: dietType,
+                  category: category,
+                  calories: calories,
+                  fats: fats,
+                  proteins: proteins,
+                  carbohydrates: carbohydrates,
+                  userId: userId,
+                })
+                  .then((result) => {
+                    steps.forEach((array) => {
+                      array.recipeId = result.id;
+                      array.step = array.id;
+                      delete array.id;
+                    });
+                    recipeSteps.bulkCreate(steps)
+                      .then(() =>
+                        console.log(
+                          "Tabela kroków realizacji przepisu została zaktualizowana"
+                        )
+                      )
+                      .catch((err) => {
+                        res.status(500).send({
+                          message:
+                            err.message ||
+                            "Powstał nieokreślony błąd podczas zapisu danych",
+                        });
+                      });
+                    products.forEach((array) => {
+                      array.recipeId = result.id;
+                      array.productId = array.id;
+                      delete array.id;
+                    });
+                    console.log(products);
+                    recipeProducts.bulkCreate(products)
+                      .then(() => {
+                        console.log(
+                          "Tabela produktów wymaganych do przepisu została zaktualizowana"
+                        );
+                        res.status(201).send({ message: "Zaktualizowano wybrany przepis!" });
+                      })
+                      .catch((err) => {
+                        res.status(500).send({
+                          message:
+                            err.message ||
+                            "Powstał nieokreślony błąd podczas zapisu danych",
+                        });
+                      });
+                  })
+                  .catch((err) => {
+                    res.status(500).send({
+                      message:
+                        err.message ||
+                        "Powstał nieokreślony błąd podczas zapisu przepisu",
+                    });
+                  });
+
+
+              });
+            });
+          });
+        })
+        .catch((err) => {
+          res.status(404).send({
+            message: err.message || "Nie znaleziono przpisów użytkownika",
+          });
+        });
     });
-    */
-    /*
-    await Recipe.update({
-      where: {
-        id: userId,
-      }
-    });*/
   } catch (error) {
     res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
   }
 };
+  
+
 
 exports.deleteRecipes = async (req, res) => {
   try {

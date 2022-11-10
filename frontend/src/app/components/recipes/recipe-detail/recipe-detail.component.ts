@@ -4,7 +4,9 @@ import { RecipeStepConsts } from '../../../consts/recipe-step-consts';
 import { Product } from '../../../interfaces/product.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-recipe-to-schedule.component';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from '../../../services/product.service';
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { RecipeService } from '../../../services/recipe.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -73,10 +75,22 @@ export class RecipeDetailComponent implements OnInit {
 
   constructor(
     private dialog: MatDialog,
-    private productService: ProductService
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute,
+    private recipeService: RecipeService
   ) {}
 
   ngOnInit(): void {
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      // jak nie znajdzie to nawigacje do not found
+      if (paramMap.has('recipeId')) {
+        const recipeId = paramMap.get('recipeId') || '';
+        this.recipeService.getRecipeDetail(recipeId).subscribe((res) => {
+          console.log(res);
+        });
+      }
+    });
+
     this.productService.getAllUserProducts().subscribe((res) => {
       res.Products.forEach((product: any) => {
         this.products.push({

@@ -44,13 +44,13 @@ try {
 
   //jeden do wielu przepis / kroki postępowania
   db.recipes.hasMany(db.recipeSteps, {onUpdate: 'CASCADE', onDelete: 'CASCADE'});
-  db.recipeSteps.belongsTo(db.recipes, { as: 'recipeStep' });
+  db.recipeSteps.belongsTo(db.recipes, { foreignKey: 'recipeId', as: 'recipeStep' });
 
   //wiele do wielu(produkty/przepisy)
   db.recipes.belongsToMany(db.products, { through: db.recipeProducts });
   db.products.belongsToMany(db.recipes, { through: db.recipeProducts });
   db.recipes.hasMany(db.recipeProducts);
-  db.recipeProducts.belongsTo(db.recipes, { as: 'products' });
+  db.recipeProducts.belongsTo(db.recipes, { foreignKey: 'recipeId', as: 'products' });
   db.products.hasMany(db.recipeProducts);
   db.recipeProducts.belongsTo(db.products);
 

@@ -46,4 +46,8 @@ export class RecipeService {
       this.httpOptions
     );
   }
+
+  getRecipeDetail(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiURL}/recipe/${id}`, this.httpOptions);
+  }
 }

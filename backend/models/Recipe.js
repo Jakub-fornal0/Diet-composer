@@ -40,7 +40,7 @@ module.exports = (sequelize, Sequelize) => {
       },
       level: {
         type: DataTypes.ENUM,
-        values: ["łatwy, ", "średni", "trudny"],
+        values: ["łatwy", "średni", "trudny"],
       },
       dietType: {
         type: DataTypes.ENUM,

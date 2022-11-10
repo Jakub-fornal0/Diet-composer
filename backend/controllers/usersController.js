@@ -225,7 +225,7 @@ exports.BMI = async (req, res) => {
 exports.All = async (req, res) => {
   try {
     const idFromToken = jwt.decode(req.headers["x-access-token"]).id;
-    const getUserRecipes = await recipes.findAll({
+    let getUserRecipes = await recipes.findAll({
       attributes: ["id", "image", "name"],
       where: {
         userId: idFromToken,
@@ -241,6 +241,10 @@ exports.All = async (req, res) => {
       .then((userData) => {
         userData.userImage =
           "http://localhost:3000/images/" + userData.userImage + ".png";
+          getUserRecipes.forEach((array) => {
+            JSON.stringify(array);
+            array.image="http://localhost:3000/imagesRecipe/" + array.image + ".png";
+          });
         res.status(200).send({ user: userData, recipes: getUserRecipes });
       })
       .catch((err) => {
