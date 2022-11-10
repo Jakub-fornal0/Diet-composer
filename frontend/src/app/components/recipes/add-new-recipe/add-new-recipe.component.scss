@@ -30,6 +30,11 @@ form {
   padding-top: 15px;
 }
 
+mat-radio-group {
+  display: flex;
+  flex-direction: column;
+}
+
 app-add-product-to-recipe,
 app-add-another-step-to-recipe {
   width: 90%;
@@ -101,7 +106,6 @@ input[type="number"] {
       width: 100%;
       display: flex;
       justify-content: center;
-      align-items: center;
       padding-bottom: 5px;
 
       .card__input-container--input {
@@ -177,7 +181,17 @@ input[type="number"] {
     }
 
     .card__input-container--padding-bottom {
-      padding-bottom: 15px;
+      padding: 0 10px;
+      padding-bottom: 25px;
+    }
+
+    .card__input-container--input-title {
+      text-align: center;
+    }
+
+    .card__input-container--radio {
+      display: flex;
+      flex-direction: column;
     }
 
     .card__input-container--margin-bottom {
@@ -228,6 +242,9 @@ input[type="number"] {
       }
     }
   }
+  mat-radio-group {
+    padding-left: 30%;
+  }
 }
 
 @media (max-width: 768px) {
@@ -276,15 +293,6 @@ input[type="number"] {
 
 @media (max-width: 576px) {
   ::ng-deep .mat-step-text-label {
-    visibility: hidden;
-  }
-
-  mat-radio-group {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .break {
     visibility: hidden;
   }
 
@@ -354,5 +362,8 @@ input[type="number"] {
         }
       }
     }
+  }
+  mat-radio-group {
+    padding-left: 15%;
   }
 }
