@@ -71,6 +71,20 @@ export class RecipeDetailComponent implements OnInit {
             this.recipe = res.RecipeDetail;
             this.recipe.recipeStep = recipeSteps;
             this.recipe.products = products;
+            this.recipe.calories = parseFloat(
+              (res.RecipeDetail.calories / res.RecipeDetail.portions).toFixed(2)
+            );
+            this.recipe.fats = parseFloat(
+              (res.RecipeDetail.fats / res.RecipeDetail.portions).toFixed(2)
+            );
+            this.recipe.carbohydrates = parseFloat(
+              (
+                res.RecipeDetail.carbohydrates / res.RecipeDetail.portions
+              ).toFixed(2)
+            );
+            this.recipe.proteins = parseFloat(
+              (res.RecipeDetail.proteins / res.RecipeDetail.portions).toFixed(2)
+            );
 
             this.recipe.recipeStep.forEach(() =>
               this.recipeSteps.push(RecipeStepConsts.TODO)
