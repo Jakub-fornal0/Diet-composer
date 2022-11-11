@@ -4,6 +4,7 @@ import { RecipeAddData, RecipeStep } from '../../../interfaces/recipe.model';
 import { Product } from '../../../interfaces/product.model';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { RecipeService } from '../../../services/recipe.service';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-add-new-recipe',
@@ -12,8 +13,8 @@ import { RecipeService } from '../../../services/recipe.service';
 })
 export class AddNewRecipeComponent implements OnInit {
   mode: string = 'create';
-  recipeId?: string;
   imagePreview!: string;
+  userName!: string;
 
   mainRecipeDataFormGroup = this.formBuilder.group({
     name: ['', Validators.required],
@@ -45,10 +46,15 @@ export class AddNewRecipeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private activatedRoute: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private accountService: AccountService
   ) {}
 
   ngOnInit(): void {
+    this.accountService.getUserData().subscribe((res) => {
+      this.userName = res.user.userName;
+    });
+
     this.mainRecipeDataFormGroup.get('portions')?.disable();
     this.mainRecipeDataFormGroup.get('cookingTime')?.reset();
     this.nutrientsFormGroup.get('calories')?.reset();
@@ -59,7 +65,7 @@ export class AddNewRecipeComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('recipeId')) {
         this.mode = 'edit';
-        this.recipeId = paramMap.get('recipeId') || '';
+        const recipeId = paramMap.get('recipeId') || '';
 
         // TU BEDZIE WYWOLANIE SERWISU KTORY POBIERZE DANE PRZEPISU PO ID I PRZYPISZE DO ZMIENNEJ
         // ZROBIC SPRAWDZENIE JESLI ID USERA JEST ROZNE OD ID TWORCY PRZEPISU ZROBIC NAWIGACJE NA PRZEPISY
@@ -130,7 +136,6 @@ export class AddNewRecipeComponent implements OnInit {
         this.mode = 'create';
         this.products = [{ id: 0, name: '', quantity: 0, measureUnit: '' }];
         this.steps = [{ id: 0, name: '' }];
-        this.recipeId = '';
       }
     });
   }
@@ -257,7 +262,7 @@ export class AddNewRecipeComponent implements OnInit {
         category:
           this.mainRecipeDataFormGroup.get('category')?.value || 'śniadanie',
         dietType: this.mainRecipeDataFormGroup.get('dietType')?.value || 'inna',
-        author: 'dddddd',
+        author: this.userName,
         calories: this.nutrientsFormGroup.get('calories')?.value || 1,
         fats: this.nutrientsFormGroup.get('fats')?.value || 1,
         proteins: this.nutrientsFormGroup.get('proteins')?.value || 1,
