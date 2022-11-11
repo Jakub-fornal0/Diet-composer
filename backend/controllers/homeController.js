@@ -118,8 +118,8 @@ exports.getSelectRecipe = async (req, res) => {
       ],
     });
     //console.log(data.image);
-    //data.image =
-          //"http://localhost:3000/imagesRecipe/" + data.image + ".png";
+    data.image =
+          "http://localhost:3000/imagesRecipe/" + data.image + ".png";
     
     res.status(200).send({ RecipeDetail: data });
   } catch (error) {

@@ -38,7 +38,7 @@ export class SigninComponent implements OnInit {
 
       this.authService.login(this.loginData).subscribe({
         next: (res) => {
-          if (res === false) {
+          if (!res) {
             this.error = 'Wprowadzony email lub hasło są nieprawidłowe.';
           } else {
             this.router.navigate(['/']);

@@ -1,12 +1,13 @@
-import { RecipeDetail } from './../../../interfaces/recipe.model';
+import { RecipeDetail, RecipeStep } from './../../../interfaces/recipe.model';
 import { Component, OnInit } from '@angular/core';
 import { RecipeStepConsts } from '../../../consts/recipe-step-consts';
 import { Product } from '../../../interfaces/product.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-recipe-to-schedule.component';
 import { ProductService } from '../../../services/product.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { RecipeService } from '../../../services/recipe.service';
+import { RecipeDetailConsts } from '../../../consts/recipe-detail-consts';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -16,77 +17,66 @@ import { RecipeService } from '../../../services/recipe.service';
 export class RecipeDetailComponent implements OnInit {
   products: Product[] = [];
   recipeSteps: string[] = [];
-
-  // _________________________MOCKUP _________________________//
-  recipe: RecipeDetail = {
-    id: '1',
-    image: 'assets/zdj.jpg',
-    name: 'Zapiekanka makaronowa',
-
-    cookingTime: 45,
-    portions: 4,
-    level: 'Łatwy',
-    products: [
-      { id: 5, name: 'makaron pióra', quantity: 200, measureUnit: 'g' },
-      { id: 7, name: 'pierś z kurczaka', quantity: 0.2, measureUnit: 'kg' },
-      { id: 12, name: 'cebula', quantity: 1, measureUnit: 'szt' },
-      {
-        id: 13,
-        name: 'przecier pomidorowy',
-        quantity: 150,
-        measureUnit: 'ml',
-      },
-      { id: 67, name: 'pomidor', quantity: 150, measureUnit: 'g' },
-      { id: 15, name: 'ser zółty', quantity: 300, measureUnit: 'g' },
-      { id: 10, name: 'olej rzepakowy', quantity: 0.25, measureUnit: 'l' },
-      { id: 18, name: 'woda', quantity: 250, measureUnit: 'ml' },
-    ],
-    recipeStep: [
-      {
-        id: 1,
-        name: 'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
-      },
-      { id: 2, name: 'Podsmaż je na oleju.' },
-      { id: 3, name: 'Ugotuj makaron na sposób al dente.' },
-      {
-        id: 4,
-        name: 'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
-      },
-      {
-        id: 5,
-        name: 'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
-      },
-      {
-        id: 6,
-        name: 'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
-      },
-      {
-        id: 7,
-        name: 'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
-      },
-    ],
-    author: 'Pędzimąż Andrzej',
-    calories: 500,
-    fats: 1,
-    proteins: 2,
-    carbohydrates: 3,
-  };
-  // _________________________________________________//
+  recipe: RecipeDetail = RecipeDetailConsts;
 
   constructor(
     private dialog: MatDialog,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
-    private recipeService: RecipeService
+    private recipeService: RecipeService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
-      // jak nie znajdzie to nawigacje do not found
       if (paramMap.has('recipeId')) {
         const recipeId = paramMap.get('recipeId') || '';
-        this.recipeService.getRecipeDetail(recipeId).subscribe((res) => {
-          console.log(res);
+
+        this.recipeService.getRecipeDetail(recipeId).subscribe({
+          error: (err) => {
+            if (err.status === 500) {
+              this.router.navigate(['/not-found']);
+            }
+          },
+          next: (res) => {
+            let recipeSteps: RecipeStep[] = [];
+            res.RecipeDetail.recipeSteps.forEach(
+              (recipeStep: { step: number; name: string }) => {
+                recipeSteps.push({
+                  id: recipeStep.step,
+                  name: recipeStep.name,
+                });
+              }
+            );
+
+            let products: Product[] = [];
+            res.RecipeDetail.products.forEach(
+              (product: {
+                id: number;
+                name: string;
+                recipeProduct: { quantity: number };
+                measureUnit: string;
+              }) => {
+                products.push({
+                  id: product.id,
+                  name: product.name,
+                  quantity: product.recipeProduct.quantity,
+                  measureUnit: product.measureUnit,
+                });
+              }
+            );
+
+            delete res.RecipeDetail['products'];
+            delete res.RecipeDetail['recipeSteps'];
+            this.recipe = res.RecipeDetail;
+            this.recipe.recipeStep = recipeSteps;
+            this.recipe.products = products;
+
+            this.recipe.recipeStep.forEach(() =>
+              this.recipeSteps.push(RecipeStepConsts.TODO)
+            );
+            this.recipeSteps[0] = RecipeStepConsts.DOING;
+          },
         });
       }
     });
@@ -101,11 +91,6 @@ export class RecipeDetailComponent implements OnInit {
         });
       });
     });
-
-    this.recipe.recipeStep.forEach(() =>
-      this.recipeSteps.push(RecipeStepConsts.TODO)
-    );
-    this.recipeSteps[0] = RecipeStepConsts.DOING;
   }
 
   checkUserHaveProduct(recipeProduct: Product): boolean {

@@ -62,6 +62,10 @@ const routes: Routes = [
     data: { requiredAuth: true },
     canActivate: [AuthGuard],
   },
+  {
+    path: 'not-found',
+    component: NotFoundComponent,
+  },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
 

@@ -1,0 +1,15 @@
+export const RecipeDetailConsts = {
+  id: '',
+  image: '',
+  name: '',
+  cookingTime: 0,
+  portions: 0,
+  level: '',
+  products: [],
+  recipeStep: [],
+  author: '',
+  calories: 0,
+  fats: 0,
+  proteins: 0,
+  carbohydrates: 0,
+};
