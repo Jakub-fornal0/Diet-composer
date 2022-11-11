@@ -38,6 +38,7 @@ export class AddNewRecipeComponent implements OnInit {
   productsEdit: Product[] = [];
   productsAreValid: boolean = false;
   productIdIsChosen: number = -1;
+  productExistInChosenProduct: boolean = false;
 
   steps: RecipeStep[] = [];
   stepsAreValid: boolean = false;
@@ -182,20 +183,11 @@ export class AddNewRecipeComponent implements OnInit {
   }
 
   saveProductData(data: any, index: number) {
-    if (data.id && data.quantity) {
-      let productExistInChosenProduct = this.products.find(
-        (product) => product.id === data.id
-      );
-      if (productExistInChosenProduct) {
-        this.productIdIsChosen = data.id;
-      } else {
-        this.products[index].id = data.id;
-        this.products[index].name = data.name;
-        this.products[index].quantity = data.quantity;
-        this.products[index].measureUnit = data.measureUnit;
-      }
-      this.checkProducts();
-    }
+    this.products[index].id = data.id;
+    this.products[index].name = data.name;
+    this.products[index].quantity = data.quantity;
+    this.products[index].measureUnit = data.measureUnit;
+    this.checkProducts();
   }
 
   deleteProduct(index: number) {
@@ -205,13 +197,32 @@ export class AddNewRecipeComponent implements OnInit {
 
   checkProducts() {
     this.productsAreValid = true;
+    this.productIdIsChosen = -1;
+    this.productExistInChosenProduct = false;
+
+    if (this.products.length > 0) {
+      let lastProducts = this.products[this.products.length - 1];
+      this.products.forEach((product, index, products) => {
+        if (index !== products.length - 1 && lastProducts?.id) {
+          if (product.id === lastProducts.id) {
+            this.productExistInChosenProduct = true;
+          }
+        }
+      });
+
+      if (this.productExistInChosenProduct && lastProducts.id) {
+        this.productIdIsChosen = lastProducts.id;
+      }
+    }
+
     this.products.forEach((product) => {
       if (
         !product.name ||
         !product.quantity ||
         !product.measureUnit ||
         product.quantity <= 0 ||
-        product.quantity > 10000
+        product.quantity > 10000 ||
+        this.productExistInChosenProduct
       ) {
         this.productsAreValid = false;
       }

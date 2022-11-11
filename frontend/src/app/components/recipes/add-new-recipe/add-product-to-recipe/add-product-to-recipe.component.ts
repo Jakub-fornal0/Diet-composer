@@ -113,7 +113,8 @@ export class AddProductToRecipeComponent implements OnInit {
     });
 
     if (
-      this.productIdIsChosen == this.addProductForm.get('productName')?.value.id
+      this.productIdIsChosen ===
+      this.addProductForm.get('productName')?.value.id
     ) {
       this.productDoesntExist = false;
       this.productIsChosen = true;
