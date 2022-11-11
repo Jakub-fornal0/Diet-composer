@@ -20,8 +20,13 @@
         <span>{{ product.name }}</span>
       </mat-option>
     </mat-autocomplete>
-    <mat-hint *ngIf="productDoesntExist"
-      ><span class="mat-error">Wybierz produkt z listy!</span></mat-hint
+    <mat-hint
+      ><span *ngIf="productDoesntExist" class="mat-error"
+        >Wybierz produkt z listy!</span
+      >
+      <span *ngIf="productIsChosen" class="mat-error"
+        >Produkt został już wprowadzony!</span
+      ></mat-hint
     >
   </mat-form-field>
 

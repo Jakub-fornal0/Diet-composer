@@ -36,6 +36,7 @@ export class AddNewRecipeComponent implements OnInit {
   products: Product[] = [];
   productsEdit: Product[] = [];
   productsAreValid: boolean = false;
+  productIdIsChosen: number = -1;
 
   steps: RecipeStep[] = [];
   stepsAreValid: boolean = false;
@@ -176,11 +177,20 @@ export class AddNewRecipeComponent implements OnInit {
   }
 
   saveProductData(data: any, index: number) {
-    this.products[index].id = data.id;
-    this.products[index].name = data.name;
-    this.products[index].quantity = data.quantity;
-    this.products[index].measureUnit = data.measureUnit;
-    this.checkProducts();
+    if (data.id && data.quantity) {
+      let productExistInChosenProduct = this.products.find(
+        (product) => product.id === data.id
+      );
+      if (productExistInChosenProduct) {
+        this.productIdIsChosen = data.id;
+      } else {
+        this.products[index].id = data.id;
+        this.products[index].name = data.name;
+        this.products[index].quantity = data.quantity;
+        this.products[index].measureUnit = data.measureUnit;
+      }
+      this.checkProducts();
+    }
   }
 
   deleteProduct(index: number) {
@@ -257,7 +267,6 @@ export class AddNewRecipeComponent implements OnInit {
       };
 
       const recipeImage = this.mainRecipeDataFormGroup.get('image')?.value;
-
       this.recipeService
         .addRecipe(recipeImage, recipeAddData)
         .subscribe((res) => {

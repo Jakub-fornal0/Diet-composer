@@ -13,6 +13,7 @@ export class AddProductToRecipeComponent implements OnInit {
   products!: Product[];
 
   @Input() product?: Product;
+  @Input() productIdIsChosen?: number;
   @Output() returnProductData = new EventEmitter<Product>();
   @Output() productToDelete = new EventEmitter();
 
@@ -20,6 +21,7 @@ export class AddProductToRecipeComponent implements OnInit {
   filteredProducts?: Observable<Product[]>;
   inputMeasureUnit: string = '';
   productDoesntExist: boolean = false;
+  productIsChosen: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -83,6 +85,7 @@ export class AddProductToRecipeComponent implements OnInit {
   checkProductExist() {
     this.resetQuantityInput();
     this.productDoesntExist = false;
+    this.productIsChosen = false;
 
     const productName =
       typeof this.addProductForm.get('productName')?.value === 'string'
@@ -108,6 +111,15 @@ export class AddProductToRecipeComponent implements OnInit {
         this.resetQuantityInput();
       }
     });
+
+    if (
+      this.productIdIsChosen == this.addProductForm.get('productName')?.value.id
+    ) {
+      this.productDoesntExist = false;
+      this.productIsChosen = true;
+      this.inputMeasureUnit = '';
+      this.addProductForm.get('productQuantity')?.disable();
+    }
   }
 
   resetQuantityInput() {
