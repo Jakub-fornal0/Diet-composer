@@ -50,4 +50,11 @@ export class RecipeService {
   getRecipeDetail(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/recipe/${id}`, this.httpOptions);
   }
+
+  deleteRecipe(recipeId: string): Observable<any> {
+    return this.http.delete<any>(
+      `${this.apiURL}/recipes/${recipeId}`,
+      this.httpOptions
+    );
+  }
 }

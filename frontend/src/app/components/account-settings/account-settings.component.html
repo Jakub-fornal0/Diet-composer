@@ -99,7 +99,7 @@
       <div *ngIf="userData.recipes.length" class="user-recipes-container__list">
         <div
           class="user-recipes-container__recipe"
-          *ngFor="let recipe of userData.recipes"
+          *ngFor="let recipe of userData.recipes; let i = index"
         >
           <div class="user-recipes-container__recipe--inline">
             <img
@@ -123,7 +123,9 @@
               [routerLink]="['/recipes/edit', recipe.id]"
               >edit</mat-icon
             >
-            <mat-icon class="user-recipes-container__icon"
+            <mat-icon
+              class="user-recipes-container__icon"
+              (click)="deleteRecipe(i)"
               >delete_outline</mat-icon
             >
           </div>
