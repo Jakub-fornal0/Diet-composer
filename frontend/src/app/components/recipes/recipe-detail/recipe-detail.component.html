@@ -39,26 +39,28 @@
         </div>
       </div>
       <h2>Składniki:</h2>
-      <div
-        class="app-recipe-detail--product"
-        *ngFor="let product of recipe.products"
-      >
-        <span
-          >- {{ product.quantity }}{{ product.measureUnit }}
-          {{ product.name }}</span
+      <div class="app-recipe-detail--products">
+        <div
+          class="app-recipe-detail--product"
+          *ngFor="let product of recipe.products"
         >
-        <span class="app-recipe-detail--icon-to-right"
-          ><mat-icon
-            *ngIf="checkUserHaveProduct(product)"
-            class="app-recipe-detail--have-product-icon"
-            >done</mat-icon
+          <span
+            >- {{ product.quantity }}{{ product.measureUnit }}
+            {{ product.name }}</span
           >
-          <mat-icon
-            *ngIf="!checkUserHaveProduct(product)"
-            class="app-recipe-detail--havent-product-icon"
-            >close</mat-icon
-          ></span
-        >
+          <span class="app-recipe-detail--icon-to-right"
+            ><mat-icon
+              *ngIf="checkUserHaveProduct(product)"
+              class="app-recipe-detail--have-product-icon"
+              >done</mat-icon
+            >
+            <mat-icon
+              *ngIf="!checkUserHaveProduct(product)"
+              class="app-recipe-detail--havent-product-icon"
+              >close</mat-icon
+            ></span
+          >
+        </div>
       </div>
     </div>
     <div

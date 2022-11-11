@@ -111,6 +111,7 @@
   .user-recipes-container__recipe-name {
     margin: 15px 0;
     margin-left: 10px;
+    word-wrap: break-word;
     cursor: pointer;
 
     &:hover {
