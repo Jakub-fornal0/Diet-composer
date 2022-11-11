@@ -102,6 +102,11 @@ input[type="number"] {
     margin-bottom: 15px;
     min-height: 85vh;
 
+    .card__input-container--header {
+      text-align: center;
+      padding-bottom: 20px;
+    }
+
     .card__input-container {
       width: 100%;
       display: flex;
