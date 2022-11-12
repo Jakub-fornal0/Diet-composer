@@ -366,24 +366,85 @@
       <mat-step>
         <form>
           <ng-template matStepLabel>Gotowe!</ng-template>
-          <h2>Wszystko gotowe!</h2>
-          <p class="card__end-text">Możesz teraz opublikować swój przepis</p>
+          <h2 *ngIf="!processIsFinished">Wszystko gotowe!</h2>
+          <p
+            *ngIf="mode === 'create' && !processIsFinished"
+            class="card__end-text"
+          >
+            Możesz teraz opublikować swój przepis
+          </p>
+          <p
+            *ngIf="mode === 'edit' && !processIsFinished"
+            class="card__end-text"
+          >
+            Możesz teraz edytować swój przepis
+          </p>
+
+          <h2
+            *ngIf="
+              mode === 'create' &&
+              processIsFinished &&
+              processIsFinishedSuccessfully
+            "
+          >
+            Przepis został dodany pomyślnie!
+          </h2>
+          <h2
+            *ngIf="
+              mode === 'edit' &&
+              processIsFinished &&
+              processIsFinishedSuccessfully
+            "
+          >
+            Przepis został edytowany pomyślnie!
+          </h2>
+          <a
+            *ngIf="processIsFinished && processIsFinishedSuccessfully"
+            class="link"
+            routerLink="/recipes"
+          >
+            Zobacz przepisy
+          </a>
+
+          <h2 *ngIf="processIsFinished && !processIsFinishedSuccessfully">
+            Ups! Coś poszło nie tak...
+          </h2>
+          <p
+            *ngIf="processIsFinished && !processIsFinishedSuccessfully"
+            class="card__end-text"
+          >
+            Spróbuj ponownie.
+          </p>
+
           <button
-            *ngIf="mode === 'create'"
+            *ngIf="
+              mode === 'create' &&
+              (!processIsFinished || !processIsFinishedSuccessfully)
+            "
             class="card__share-button"
             (click)="addNewRecipe()"
           >
             Opublikuj
           </button>
           <button
-            *ngIf="mode === 'edit'"
+            *ngIf="
+              mode === 'edit' &&
+              (!processIsFinished || !processIsFinishedSuccessfully)
+            "
             class="card__share-button"
             (click)="addNewRecipe()"
           >
             Edytuj
           </button>
+
           <div>
-            <button mat-button matStepperPrevious>Powrót</button>
+            <button
+              *ngIf="!processIsFinished && !processIsFinishedSuccessfully"
+              mat-button
+              matStepperPrevious
+            >
+              Powrót
+            </button>
           </div>
         </form>
       </mat-step>

@@ -15,6 +15,8 @@ export class AddNewRecipeComponent implements OnInit {
   mode: string = 'create';
   imagePreview!: string;
   userName!: string;
+  processIsFinished: boolean = false;
+  processIsFinishedSuccessfully: boolean = false;
 
   mainRecipeDataFormGroup = this.formBuilder.group({
     name: ['', Validators.required],
@@ -286,8 +288,13 @@ export class AddNewRecipeComponent implements OnInit {
       this.recipeService
         .addRecipe(recipeImage, recipeAddData)
         .subscribe((res) => {
-          // zrobic nawigacje do konta
-          console.log(res);
+          if (res.message === 'Stworzono nowy przepis!') {
+            this.processIsFinished = true;
+            this.processIsFinishedSuccessfully = true;
+          } else {
+            this.processIsFinished = true;
+            this.processIsFinishedSuccessfully = false;
+          }
         });
     }
   }
