@@ -5,7 +5,11 @@ import {
   ScheduleConsts,
   ScheduleDetailsConsts,
 } from '../../consts/schedule-consts';
-import { Schedule, ScheduleDetails } from '../../interfaces/schedule.model';
+import {
+  Schedule,
+  ScheduleDetails,
+  SnackMealData,
+} from '../../interfaces/schedule.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddOtherMealToScheduleComponent } from './add-other-meal-to-schedule/add-other-meal-to-schedule.component';
 import { AccountService } from 'src/app/services/account.service';
@@ -184,7 +188,7 @@ export class ScheduleComponent implements OnInit {
         exitAnimationDuration,
       })
       .afterClosed()
-      .subscribe((snack) => {
+      .subscribe((snack: SnackMealData) => {
         if (snack) {
           this.addSnack(snack);
           this.schedule.snack.push(snack);
@@ -196,11 +200,11 @@ export class ScheduleComponent implements OnInit {
       });
   }
 
-  public addSnack(data: any): void {
-    this.scheduleDetails.eatenCalories += data.calories;
-    this.scheduleDetails.eatenCarbohydrates += data.carbohydrates;
-    this.scheduleDetails.eatenProteins += data.proteins;
-    this.scheduleDetails.eatenFats += data.fats;
+  public addSnack(snack: SnackMealData): void {
+    this.scheduleDetails.eatenCalories += snack.calories;
+    this.scheduleDetails.eatenCarbohydrates += snack.carbohydrates;
+    this.scheduleDetails.eatenProteins += snack.proteins;
+    this.scheduleDetails.eatenFats += snack.fats;
   }
 
   public deleteSnack(index: number): void {
