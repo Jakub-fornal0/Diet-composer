@@ -70,7 +70,7 @@
         <p class="details-container__data--dotted"></p>
         <p class="details-container__data--value">
           {{ scheduleDetails.eatenCalories }} /
-          {{ scheduleDetails.totalCalories }}
+          {{ scheduleDetails.totalCalories }} kcal
         </p>
       </div>
       <div class="details-container__data">
@@ -78,14 +78,14 @@
         <p class="details-container__data--dotted"></p>
         <p class="details-container__data--value">
           {{ scheduleDetails.eatenCarbohydrates }} /
-          {{ scheduleDetails.totalCarbohydrates }}
+          {{ scheduleDetails.totalCarbohydrates }} g
         </p>
       </div>
       <div class="details-container__data">
         <p class="details-container__data--name">Tłuszcze:</p>
         <p class="details-container__data--dotted"></p>
         <p class="details-container__data--value">
-          {{ scheduleDetails.eatenFats }} / {{ scheduleDetails.totalFats }}
+          {{ scheduleDetails.eatenFats }} / {{ scheduleDetails.totalFats }} g
         </p>
       </div>
       <div class="details-container__data">
@@ -93,9 +93,21 @@
         <p class="details-container__data--dotted"></p>
         <p class="details-container__data--value">
           {{ scheduleDetails.eatenProteins }} /
-          {{ scheduleDetails.totalProteins }}
+          {{ scheduleDetails.totalProteins }} g
         </p>
       </div>
+      <a
+        *ngIf="
+          !scheduleDetails.totalCalories &&
+          !scheduleDetails.totalCarbohydrates &&
+          !scheduleDetails.totalProteins &&
+          !scheduleDetails.totalFats
+        "
+        class="details-container__link link"
+        routerLink="/account/settings"
+        >Nie wprowadzono parametrów ciała. <br />
+        Zrób to teraz.</a
+      >
       <div class="details-container__buttons">
         <button (click)="clearSchedule()" class="white-button">Wyczyść</button>
         <button
