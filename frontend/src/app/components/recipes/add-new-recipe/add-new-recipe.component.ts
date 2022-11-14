@@ -1,10 +1,12 @@
+import { AuthService } from './../../../services/auth.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 import { RecipeAddData, RecipeStep } from '../../../interfaces/recipe.model';
 import { Product } from '../../../interfaces/product.model';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { RecipeService } from '../../../services/recipe.service';
 import { AccountService } from 'src/app/services/account.service';
+import { UserProfile } from 'src/app/interfaces/user.model';
 
 @Component({
   selector: 'app-add-new-recipe',
@@ -12,6 +14,7 @@ import { AccountService } from 'src/app/services/account.service';
   styleUrls: ['./add-new-recipe.component.scss'],
 })
 export class AddNewRecipeComponent implements OnInit {
+  userProfile?: UserProfile | null;
   mode: string = 'create';
   imagePreview!: string;
   userName!: string;
@@ -50,12 +53,18 @@ export class AddNewRecipeComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private changeDetectorRef: ChangeDetectorRef,
     private recipeService: RecipeService,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.accountService.getUserData().subscribe((res) => {
       this.userName = res.user.userName;
+    });
+
+    this.authService.userProfile.subscribe((data) => {
+      this.userProfile = data;
     });
 
     this.mainRecipeDataFormGroup.get('portions')?.disable();
@@ -70,71 +79,82 @@ export class AddNewRecipeComponent implements OnInit {
         this.mode = 'edit';
         const recipeId = paramMap.get('recipeId') || '';
 
-        // TU BEDZIE WYWOLANIE SERWISU KTORY POBIERZE DANE PRZEPISU PO ID I PRZYPISZE DO ZMIENNEJ
-        // ZROBIC SPRAWDZENIE JESLI ID USERA JEST ROZNE OD ID TWORCY PRZEPISU ZROBIC NAWIGACJE NA PRZEPISY
-        // JESLI NIE MA TAKIEGO ID PRZEPISU PRZENIESC NA STRONE 404 NOT FOUND
-        // JESLI ID SIE ZGADZAJA ZROBIC TO CO PONIZEJ
-        this.mainRecipeDataFormGroup.get('name')?.setValue('Makaron');
-        this.mainRecipeDataFormGroup
-          .get('description')
-          ?.setValue('Makaron Makaron Makaron Makaron Makaron Makaron');
-        this.mainRecipeDataFormGroup.get('portions')?.setValue(4);
-        this.mainRecipeDataFormGroup.get('cookingTime')?.setValue(50);
-        this.mainRecipeDataFormGroup.get('level')?.setValue('łatwy');
-        this.mainRecipeDataFormGroup.get('category')?.setValue('obiad');
-        this.mainRecipeDataFormGroup.get('dietType')?.setValue('inna');
-        this.mainRecipeDataFormGroup.get('image')?.setValue('assets/zdj.jpg');
-        this.imagePreview = 'assets/zdj.jpg';
-
-        this.nutrientsFormGroup.get('calories')?.setValue(150);
-        this.nutrientsFormGroup.get('carbohydrates')?.setValue(150);
-        this.nutrientsFormGroup.get('fats')?.setValue(150);
-        this.nutrientsFormGroup.get('proteins')?.setValue(150);
-
-        this.productsEdit = [
-          { id: 11, name: 'mleko 1,5%', measureUnit: 'l', quantity: 100 },
-          { id: 1, name: 'mleko 2%', measureUnit: 'l', quantity: 4 },
-          { id: 2, name: 'śmietana 12%', measureUnit: 'g', quantity: 400 },
-          { id: 3, name: 'mąka', measureUnit: 'kg', quantity: 23 },
-          { id: 4, name: 'jaja rozmiar M', measureUnit: 'szt', quantity: 10 },
-          { id: 5, name: 'pierś z kurczaka', measureUnit: 'kg', quantity: 2 },
-          { id: 6, name: 'makaron pióra', measureUnit: 'g', quantity: 450 },
-          { id: 7, name: 'pomidor', measureUnit: 'g', quantity: 200 },
-          { id: 8, name: 'ryż', measureUnit: 'g', quantity: 200 },
-        ];
-
-        this.products = [];
-        this.productsEdit.forEach((product) => {
-          this.products.push(product);
+        this.recipeService.getRecipeDetail(recipeId).subscribe({
+          error: (err) => {
+            if (err.status === 500) {
+              this.router.navigate(['/not-found']);
+            }
+          },
+          next: (res) => {
+            // ODKOMENTOWAC JAK ENDPOINT BEDZIE ZWRACAL ID USERA
+            // if (res.RecipeDetail.userId !== this.userProfile?.id) {
+            //   this.router.navigate(['/not-found']);
+            // }
+            console.log(res.RecipeDetail);
+            this.mainRecipeDataFormGroup.patchValue(res.RecipeDetail);
+          },
         });
-        this.checkProducts();
 
-        this.steps = [
-          {
-            id: 1,
-            name: 'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
-          },
-          { id: 2, name: 'Podsmaż je na oleju.' },
-          { id: 3, name: 'Ugotuj makaron na sposób al dente.' },
-          {
-            id: 4,
-            name: 'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
-          },
-          {
-            id: 5,
-            name: 'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
-          },
-          {
-            id: 6,
-            name: 'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
-          },
-          {
-            id: 7,
-            name: 'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
-          },
-        ];
+        // this.mainRecipeDataFormGroup.get('name')?.setValue('Makaron');
+        // this.mainRecipeDataFormGroup
+        //   .get('description')
+        //   ?.setValue('Makaron Makaron Makaron Makaron Makaron Makaron');
+        // this.mainRecipeDataFormGroup.get('portions')?.setValue(4);
+        // this.mainRecipeDataFormGroup.get('cookingTime')?.setValue(50);
+        // this.mainRecipeDataFormGroup.get('level')?.setValue('łatwy');
+        // this.mainRecipeDataFormGroup.get('category')?.setValue('obiad');
+        // this.mainRecipeDataFormGroup.get('dietType')?.setValue('inna');
+        // this.mainRecipeDataFormGroup.get('image')?.setValue('assets/zdj.jpg');
+        // this.imagePreview = 'assets/zdj.jpg';
+
+        // this.nutrientsFormGroup.get('calories')?.setValue(150);
+        // this.nutrientsFormGroup.get('carbohydrates')?.setValue(150);
+        // this.nutrientsFormGroup.get('fats')?.setValue(150);
+        // this.nutrientsFormGroup.get('proteins')?.setValue(150);
+
+        // this.productsEdit = [
+        //   { id: 11, name: 'mleko 1,5%', measureUnit: 'l', quantity: 100 },
+        //   { id: 1, name: 'mleko 2%', measureUnit: 'l', quantity: 4 },
+        //   { id: 2, name: 'śmietana 12%', measureUnit: 'g', quantity: 400 },
+        //   { id: 3, name: 'mąka', measureUnit: 'kg', quantity: 23 },
+        //   { id: 4, name: 'jaja rozmiar M', measureUnit: 'szt', quantity: 10 },
+        //   { id: 5, name: 'pierś z kurczaka', measureUnit: 'kg', quantity: 2 },
+        //   { id: 6, name: 'makaron pióra', measureUnit: 'g', quantity: 450 },
+        //   { id: 7, name: 'pomidor', measureUnit: 'g', quantity: 200 },
+        //   { id: 8, name: 'ryż', measureUnit: 'g', quantity: 200 },
+        // ];
+
+        // this.products = [];
+        // this.productsEdit.forEach((product) => {
+        //   this.products.push(product);
+        // });
+        // this.checkProducts();
+
+        // this.steps = [
+        //   {
+        //     id: 1,
+        //     name: 'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
+        //   },
+        //   { id: 2, name: 'Podsmaż je na oleju.' },
+        //   { id: 3, name: 'Ugotuj makaron na sposób al dente.' },
+        //   {
+        //     id: 4,
+        //     name: 'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
+        //   },
+        //   {
+        //     id: 5,
+        //     name: 'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
+        //   },
+        //   {
+        //     id: 6,
+        //     name: 'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
+        //   },
+        //   {
+        //     id: 7,
+        //     name: 'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
+        //   },
+        // ];
         this.changeDetectorRef.detectChanges();
-        ////////////////////////////////////////////////////////////////////////////////////////
       } else {
         this.mode = 'create';
         this.products = [{ id: 0, name: '', quantity: 0, measureUnit: '' }];
