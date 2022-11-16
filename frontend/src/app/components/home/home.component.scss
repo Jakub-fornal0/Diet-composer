@@ -1,0 +1,60 @@
+@import "../../utilities/variables";
+
+.home-container {
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.67),
+      rgba(255, 255, 255, 0.67)
+    ),
+    url(../../../assets/background.png);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  width: 100vw;
+  height: 100vh;
+}
+
+.main-section {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  color: #4f4f49;
+
+  .main-section__header {
+    font-size: 47px;
+    font-weight: bolder;
+    line-height: 1;
+  }
+
+  .main-section__subheader {
+    font-size: 23px;
+    font-weight: bolder;
+  }
+}
+
+@media (max-width: 992px) {
+  .main-section {
+    .main-section__header {
+      font-size: 40px;
+    }
+
+    .main-section__subheader {
+      font-size: 20px;
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .main-section {
+    .main-section__header {
+      font-size: 35px;
+    }
+
+    .main-section__subheader {
+      font-size: 15px;
+    }
+  }
+}

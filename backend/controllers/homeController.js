@@ -87,7 +87,6 @@ exports.signin = async (req, res) => {
 exports.getSelectRecipe = async (req, res) => {
   try {
     const recipeId = req.params.id;
-    console.log(recipeId);
     let data = await recipe.findOne({
       attributes: [
         "id",
@@ -96,6 +95,8 @@ exports.getSelectRecipe = async (req, res) => {
         "cookingTime",
         "portions",
         "level",
+        "dietType",
+        "category",
         "author",
         "calories",
         "fats",
@@ -117,7 +118,6 @@ exports.getSelectRecipe = async (req, res) => {
         },
       ],
     });
-    //console.log(data.image);
     data.image =
           "http://localhost:3000/imagesRecipe/" + data.image + ".png";
     

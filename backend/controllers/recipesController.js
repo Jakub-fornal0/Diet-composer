@@ -10,6 +10,7 @@ const recipeSteps = db.recipeSteps;
 const recipeProducts = db.recipeProducts;
 const recipe = db.recipes;
 const user = db.users;
+const products = db.products;
 
 exports.addRecipes = async (req, res) => {
   try {
@@ -311,6 +312,39 @@ exports.deleteRecipes = async (req, res) => {
         res.status(404).send({
           message: err.message || "Nie znaleziono przpisów użytkownika",
         });
+      });
+  } catch (error) {
+    res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
+  }
+};
+
+exports.getRecipeToUpdate = async (req, res) => {
+  try {
+    const userId = jwt.decode(req.headers["x-access-token"]).id;
+    const recipeId = req.params.recipeId;
+    await user.findOne({
+      where: {
+        id: userId,
+      }
+    }).then(async () => {
+      let data = await recipe.findOne({
+        where: {
+          id: recipeId,
+        },
+        include: [
+          {
+            model: products,
+            as: "products",
+          },
+          {
+            model: recipeSteps,
+            attributes: ["step", "name"],
+          },
+        ],
+      });
+      data.image =
+            "http://localhost:3000/imagesRecipe/" + data.image + ".png";
+      res.status(200).send({ RecipeDetail: data });
       });
   } catch (error) {
     res.status(500).send({ message: "Błąd wewnętrzny serwera!" });

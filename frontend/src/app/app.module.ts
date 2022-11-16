@@ -47,6 +47,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { SetUserImageDialogComponent } from './components/account-settings/set-user-image-dialog/set-user-image-dialog.component';
 import { AddOtherMealToScheduleComponent } from './components/schedule/add-other-meal-to-schedule/add-other-meal-to-schedule.component';
 import { DeleteRecipeDialogComponent } from './components/account-settings/delete-recipe-dialog/delete-recipe-dialog.component';
+import { HomeComponent } from './components/home/home.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { DeleteRecipeDialogComponent } from './components/account-settings/delet
     SetUserImageDialogComponent,
     AddOtherMealToScheduleComponent,
     DeleteRecipeDialogComponent,
+    HomeComponent,
   ],
   imports: [
     HttpClientModule,

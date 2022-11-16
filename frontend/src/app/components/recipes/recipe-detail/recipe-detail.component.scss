@@ -1,6 +1,4 @@
-$recipe-detail-background-color: #fafafa;
-$font-color: #616159;
-$add-to-schedule-button-color: #f7f6e6;
+@import "../../../utilities/variables";
 
 h2,
 h1,
@@ -20,157 +18,6 @@ mat-checkbox {
   align-items: center;
 }
 
-.app-recipe-detail {
-  background-color: $recipe-detail-background-color;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  margin-top: 90px;
-
-  .app-recipe-detail__card {
-    display: flex;
-    padding: 0;
-    width: 95%;
-    height: auto;
-    margin-bottom: 25px;
-
-    .app-recipe-detail--image-container {
-      padding: 15px;
-      position: relative;
-
-      .app-recipe-detail--image {
-        width: 100%;
-        height: 450px;
-        object-fit: cover;
-        border-radius: 10px;
-      }
-
-      .app-recipe-detail--image-button {
-        position: absolute;
-        bottom: 0;
-        right: 1%;
-        border: none;
-        outline: none;
-        padding: 10px 0;
-        margin-top: 30px;
-        border-radius: 20px;
-        width: 35%;
-        font-weight: 500;
-        font-size: 16px;
-        cursor: pointer;
-        transition: 0.5s ease-in-out;
-        background-color: $add-to-schedule-button-color;
-        color: $font-color;
-
-        &:hover {
-          background-color: $add-to-schedule-button-color;
-          transform: scale(1.01);
-        }
-      }
-    }
-
-    .app-recipe-detail--products-container {
-      padding: 15px 60px;
-
-      .app-recipe-detail--recipe-name {
-        margin: 0;
-        margin-bottom: 10px;
-        font-size: 2.5vw;
-        font-weight: 500;
-        word-wrap: break-word;
-      }
-
-      .app-recipe-detail--inline-icon {
-        display: flex;
-        padding-bottom: 40px;
-        .app-recipe-detail--center-icon {
-          width: 30%;
-          display: flex;
-          align-items: center;
-        }
-      }
-
-      .app-recipe-detail--products {
-        max-height: 285px;
-        overflow-x: auto;
-      }
-
-      .app-recipe-detail--product {
-        padding: 0;
-        margin: 0;
-        padding: 7px 0;
-        border-bottom: solid 1px #ccc;
-
-        .app-recipe-detail--icon-to-right {
-          float: right;
-
-          .app-recipe-detail--have-product-icon {
-            color: green;
-          }
-
-          .app-recipe-detail--havent-product-icon {
-            color: #ab1827;
-          }
-        }
-      }
-    }
-
-    .app-recipe-detail--nutrients-container {
-      padding: 25px 60px;
-
-      .app-recipe-detail--nutrient-container {
-        margin-bottom: 10px;
-        display: flex;
-        align-items: baseline;
-
-        .app-recipe-detail--nutrient-name {
-          font-weight: 500;
-        }
-        .app-recipe-detail--nutrient-dotted {
-          border-bottom: 1px dotted #aaa;
-          flex-grow: 1;
-          margin: 0 10px;
-        }
-        .app-recipe-detail--nutrient-value {
-          margin-left: auto;
-        }
-      }
-    }
-
-    .app-recipe-detail--recipe-container {
-      height: 50%;
-      padding: 25px;
-
-      .app-recipe-detail--recipe-step {
-        padding: 0;
-        margin: 0;
-        padding: 10px 0;
-        display: flex;
-        align-items: center;
-        border-bottom: solid 1px #ccc;
-
-        .app-recipe-detail--recipe-step-doing {
-          padding-left: 10px;
-          font-size: 16px;
-          font-weight: 500;
-        }
-
-        .app-recipe-detail--recipe-step-todo {
-          padding-left: 10px;
-        }
-
-        .app-recipe-detail--recipe-step-done {
-          padding-left: 10px;
-          font-weight: 400;
-          text-decoration: line-through;
-        }
-      }
-    }
-  }
-}
-
 ::ng-deep .mat-checkbox-checked.mat-accent .mat-checkbox-background {
   background-color: green !important;
 }
@@ -179,84 +26,215 @@ mat-checkbox {
   background-color: green !important;
 }
 
+.recipe-detail-container {
+  background-color: $background-color;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  margin-top: 90px;
+}
+
+.card-container {
+  display: flex;
+  padding: 0;
+  width: 95%;
+  height: auto;
+  margin-bottom: 25px;
+}
+
+.image-container {
+  padding: 15px;
+  position: relative;
+
+  .image-container__image {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 10px;
+  }
+
+  .image-container__button {
+    position: absolute;
+    bottom: -7px;
+    right: 1%;
+    border: none;
+    outline: none;
+    padding: 10px 0;
+    margin-top: 30px;
+    border-radius: 20px;
+    width: 35%;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.5s ease-in-out;
+    background-color: $button-color-1;
+    color: $font-color;
+
+    &:hover {
+      transform: scale(1.01);
+    }
+  }
+}
+
+.detail-container {
+  padding: 15px 60px;
+
+  .detail-container__name {
+    margin: 0;
+    margin-bottom: 10px;
+    font-size: 25px;
+    line-height: 1;
+    font-weight: 600;
+    word-wrap: break-word;
+  }
+
+  .detail-container__inline-icon {
+    display: flex;
+    padding-bottom: 40px;
+    .detail-container__center-icon {
+      width: 30%;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .detail-container__nutrient {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: baseline;
+
+    .detail-container__nutrient--name {
+      font-weight: 500;
+    }
+
+    .detail-container__nutrient--dotted {
+      border-bottom: 1px dotted #aaa;
+      flex-grow: 1;
+      margin: 0 10px;
+    }
+
+    .detail-container__nutrient--value {
+      margin-left: auto;
+    }
+  }
+}
+
+.products-container {
+  padding: 15px 40px;
+
+  .products-container__product {
+    padding: 0;
+    margin: 0;
+    padding: 7px 0;
+    border-bottom: solid 1px #ccc;
+
+    .products-container__product--icon-to-right {
+      float: right;
+
+      .products-container__product--have-product-icon {
+        color: green;
+      }
+
+      .products-container__product--havent-product-icon {
+        color: #ab1827;
+      }
+    }
+  }
+}
+
+.recipe-container {
+  height: 50%;
+  padding: 25px;
+
+  .recipe-container__step {
+    padding: 0;
+    margin: 0;
+    padding: 10px 0;
+    display: flex;
+    align-items: center;
+    border-bottom: solid 1px #ccc;
+
+    .recipe-container__step--doing {
+      padding-left: 10px;
+      font-size: 16px;
+      font-weight: 500;
+    }
+
+    .recipe-container__step--todo {
+      padding-left: 10px;
+    }
+
+    .recipe-container__step--done {
+      padding-left: 10px;
+      font-weight: 400;
+      text-decoration: line-through;
+    }
+  }
+}
+
 @media (max-width: 992px) {
-  .app-recipe-detail {
-    .app-recipe-detail__card {
-      .app-recipe-detail--image-container {
-        margin-bottom: 20px;
-        .app-recipe-detail--image {
-          height: 500px;
-        }
-        .app-recipe-detail--image-button {
-          font-size: 2vw;
-        }
-      }
-      .app-recipe-detail--nutrients-container {
-        padding: 15px 60px;
-      }
-      .app-recipe-detail--recipe-container {
-        padding: 15px 60px;
-      }
+  .image-container {
+    margin-bottom: 20px;
 
-      .app-recipe-detail--products-container {
-        .app-recipe-detail--recipe-name {
-          font-size: 5vw;
-          text-align: center;
-        }
+    .image-container__image {
+      height: 500px;
+    }
+    .image-container__button {
+      font-size: 2vw;
+    }
+  }
 
-        .app-recipe-detail--recipe-author {
-          text-align: center;
-        }
+  .products-container,
+  .recipe-container {
+    padding: 15px 60px;
+  }
 
-        .app-recipe-detail--inline-icon {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          .app-recipe-detail--center-icon {
-            width: auto;
-            padding-right: 5px;
-          }
-        }
+  .detail-container {
+    .detail-container__name {
+      font-size: 5vw;
+      text-align: center;
+    }
+
+    .detail-container__author {
+      text-align: center;
+    }
+
+    .detail-container__inline-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      .detail-container__center-icon {
+        width: auto;
+        padding-right: 15px;
       }
     }
   }
 }
 
 @media (max-width: 768px) {
-  .app-recipe-detail {
-    .app-recipe-detail__card {
-      .app-recipe-detail--products-container {
-        .app-recipe-detail--recipe-name {
-          font-size: 6vw;
-        }
-      }
-      .app-recipe-detail--products-container {
-        padding: 15px;
-      }
-      .app-recipe-detail--nutrients-container {
-        padding: 15px;
-      }
-      .app-recipe-detail--recipe-container {
-        padding: 15px;
-      }
+  .app-recipe-detail--products-container {
+    .app-recipe-detail--recipe-name {
+      font-size: 6vw;
     }
+  }
+
+  .products-container,
+  .recipe-container,
+  .detail-container {
+    padding: 15px;
   }
 }
 
 @media (max-width: 576px) {
-  .app-recipe-detail {
-    .app-recipe-detail__card {
-      .app-recipe-detail--image-container {
-        .app-recipe-detail--image {
-          height: 300px;
-        }
-        .app-recipe-detail--image-button {
-          font-size: 2.5vw;
-        }
-      }
-      .app-recipe-detail--products-container {
-        height: 50%;
-      }
+  .image-container {
+    .image-container__image {
+      height: 300px;
+    }
+    .image-container__button {
+      font-size: 2.5vw;
     }
   }
 }

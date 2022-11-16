@@ -1,74 +1,99 @@
-<div class="app-recipe-detail">
-  <mat-card class="app-recipe-detail__card row">
-    <div
-      class="app-recipe-detail--image-container col-lg-7 col-md-12 col-sm-12"
-    >
+<div class="recipe-detail-container">
+  <mat-card class="card-container row">
+    <div class="image-container col-lg-7 col-md-12 col-sm-12">
       <img
-        class="app-recipe-detail--image"
+        class="image-container__image"
         [src]="recipe.image"
         [alt]="recipe.name"
       />
       <button
         (click)="openAddtoScheduleDialog('0ms', '0ms')"
-        class="app-recipe-detail--image-button"
+        class="image-container__button"
         mat-button
       >
         Dodaj do harmonogramu
       </button>
     </div>
-    <div
-      class="app-recipe-detail--products-container col-lg-5 col-md-12 col-sm-12"
-    >
-      <h1 class="app-recipe-detail--recipe-name">{{ recipe.name }}</h1>
 
-      <p class="app-recipe-detail--recipe-author" *ngIf="recipe.author">
+    <div class="detail-container col-lg-5 col-md-12 col-sm-12">
+      <h1 class="detail-container__name">{{ recipe.name }}</h1>
+      <p class="detail-container__author" *ngIf="recipe.author">
         Autor: {{ recipe.author }}
       </p>
-      <div class="app-recipe-detail--inline-icon">
-        <div class="app-recipe-detail--center-icon">
+      <div class="detail-container__inline-icon">
+        <div class="detail-container__center-icon">
           <mat-icon>access_time</mat-icon>
           <span>{{ recipe.cookingTime }} min</span>
         </div>
-        <div class="app-recipe-detail--center-icon">
+        <div class="detail-container__center-icon">
           <mat-icon>signal_cellular_alt</mat-icon>
           <span>{{ recipe.level }}</span>
         </div>
-        <div class="app-recipe-detail--center-icon">
+        <div class="detail-container__center-icon">
           <mat-icon>person_outline</mat-icon>
           <span>{{ recipe.portions }}</span>
         </div>
       </div>
-      <h2>Składniki:</h2>
-      <div class="app-recipe-detail--products">
-        <div
-          class="app-recipe-detail--product"
-          *ngFor="let product of recipe.products"
+      <h2>Składniki odżywcze:</h2>
+      <p>Podane wartości odpowiadają jednej porcji.</p>
+      <div class="detail-container__nutrient">
+        <span class="detail-container__nutrient--name">Kalorie: </span>
+        <span class="detail-container__nutrient--dotted"></span>
+        <span class="detail-container__nutrient--value"
+          >{{ recipe.calories }} kcal</span
         >
-          <span
-            >- {{ product.quantity }}{{ product.measureUnit }}
-            {{ product.name }}</span
-          >
-          <span class="app-recipe-detail--icon-to-right"
-            ><mat-icon
-              *ngIf="checkUserHaveProduct(product)"
-              class="app-recipe-detail--have-product-icon"
-              >done</mat-icon
-            >
-            <mat-icon
-              *ngIf="!checkUserHaveProduct(product)"
-              class="app-recipe-detail--havent-product-icon"
-              >close</mat-icon
-            ></span
-          >
-        </div>
+      </div>
+      <div class="detail-container__nutrient">
+        <span class="detail-container__nutrient--name">Węglowodany: </span>
+        <span class="detail-container__nutrient--dotted"></span>
+        <span class="detail-container__nutrient--value"
+          >{{ recipe.carbohydrates }} g</span
+        >
+      </div>
+      <div class="detail-container__nutrient">
+        <span class="detail-container__nutrient--name">Białko: </span>
+        <span class="detail-container__nutrient--dotted"></span>
+        <span class="detail-container__nutrient--value"
+          >{{ recipe.proteins }} g</span
+        >
+      </div>
+      <div class="detail-container__nutrient">
+        <span class="detail-container__nutrient--name">Tłuszcze: </span>
+        <span class="detail-container__nutrient--dotted"></span>
+        <span class="detail-container__nutrient--value"
+          >{{ recipe.fats }} g</span
+        >
       </div>
     </div>
-    <div
-      class="app-recipe-detail--recipe-container col-lg-7 col-md-12 col-sm-12"
-    >
+
+    <div class="products-container col-lg-5 col-md-12 col-sm-12">
+      <h2>Składniki:</h2>
+      <div
+        class="products-container__product"
+        *ngFor="let product of recipe.products"
+      >
+        <span
+          >- {{ product.name }} {{ product.quantity }}{{ product.measureUnit }}
+        </span>
+        <span class="products-container__product--icon-to-right"
+          ><mat-icon
+            *ngIf="checkUserHaveProduct(product)"
+            class="products-container__product--have-product-icon"
+            >done</mat-icon
+          >
+          <mat-icon
+            *ngIf="!checkUserHaveProduct(product)"
+            class="products-container__product--havent-product-icon"
+            >close</mat-icon
+          ></span
+        >
+      </div>
+    </div>
+
+    <div class="recipe-container col-lg-7 col-md-12 col-sm-12">
       <h2>Przepis:</h2>
       <div
-        class="app-recipe-detail--recipe-step"
+        class="recipe-container__step"
         *ngFor="let recipe of recipe.recipeStep; let i = index"
       >
         <mat-checkbox
@@ -77,58 +102,24 @@
         ></mat-checkbox>
         <span
           *ngIf="recipeSteps[i] === 'doing'"
-          class="app-recipe-detail--recipe-step-doing"
+          class="recipe-container__step--doing"
         >
           {{ i + 1 }}. {{ recipe.name }}</span
         >
 
         <span
           *ngIf="recipeSteps[i] === 'toDo'"
-          class="app-recipe-detail--recipe-step-todo"
+          class="recipe-container__step--todo"
         >
           {{ i + 1 }}. {{ recipe.name }}</span
         >
         <span
           *ngIf="recipeSteps[i] === 'done'"
-          class="app-recipe-detail--recipe-step-done"
+          class="recipe-container__step--done"
         >
           {{ i + 1 }}. {{ recipe.name }}</span
         >
         <br />
-      </div>
-    </div>
-    <div
-      class="app-recipe-detail--nutrients-container col-lg-5 col-md-12 col-sm-12"
-    >
-      <h2>Składniki odżywcze:</h2>
-      <p>Podane wartości odpowiadają jednej porcji.</p>
-      <div class="app-recipe-detail--nutrient-container">
-        <span class="app-recipe-detail--nutrient-name">Kalorie: </span>
-        <span class="app-recipe-detail--nutrient-dotted"></span>
-        <span class="app-recipe-detail--nutrient-value"
-          >{{ recipe.calories }} kcal</span
-        >
-      </div>
-      <div class="app-recipe-detail--nutrient-container">
-        <span class="app-recipe-detail--nutrient-name">Węglowodany: </span>
-        <span class="app-recipe-detail--nutrient-dotted"></span>
-        <span class="app-recipe-detail--nutrient-value"
-          >{{ recipe.carbohydrates }} g</span
-        >
-      </div>
-      <div class="app-recipe-detail--nutrient-container">
-        <span class="app-recipe-detail--nutrient-name">Białko: </span>
-        <span class="app-recipe-detail--nutrient-dotted"></span>
-        <span class="app-recipe-detail--nutrient-value"
-          >{{ recipe.proteins }} g</span
-        >
-      </div>
-      <div class="app-recipe-detail--nutrient-container">
-        <span class="app-recipe-detail--nutrient-name">Tłuszcze: </span>
-        <span class="app-recipe-detail--nutrient-dotted"></span>
-        <span class="app-recipe-detail--nutrient-value"
-          >{{ recipe.fats }} g</span
-        >
       </div>
     </div>
   </mat-card>

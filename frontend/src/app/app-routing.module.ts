@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
+import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { ProductsComponent } from './components/products/products.component';
 import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-new-recipe.component';
@@ -65,6 +66,10 @@ const routes: Routes = [
   {
     path: 'not-found',
     component: NotFoundComponent,
+  },
+  {
+    path: '',
+    component: HomeComponent,
   },
   { path: '**', pathMatch: 'full', component: NotFoundComponent },
 ];
