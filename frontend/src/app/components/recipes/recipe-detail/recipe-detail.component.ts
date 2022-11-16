@@ -39,6 +39,7 @@ export class RecipeDetailComponent implements OnInit {
             }
           },
           next: (res) => {
+            console.log(res);
             let recipeSteps: RecipeStep[] = [];
             res.RecipeDetail.recipeSteps.forEach(
               (recipeStep: { step: number; name: string }) => {
