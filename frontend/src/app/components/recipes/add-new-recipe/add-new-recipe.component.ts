@@ -1,3 +1,4 @@
+import { RecipeDetail } from './../../../interfaces/recipe.model';
 import { AuthService } from './../../../services/auth.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
@@ -18,6 +19,7 @@ export class AddNewRecipeComponent implements OnInit {
   mode: string = 'create';
   imagePreview!: string;
   userName!: string;
+  recipeId!: string;
   processIsFinished: boolean = false;
   processIsFinishedSuccessfully: boolean = false;
 
@@ -79,82 +81,57 @@ export class AddNewRecipeComponent implements OnInit {
         this.mode = 'edit';
         const recipeId = paramMap.get('recipeId') || '';
 
-        this.recipeService.getRecipeDetail(recipeId).subscribe({
+        this.recipeService.getRecipeDetailEdit(recipeId).subscribe({
           error: (err) => {
             if (err.status === 500) {
               this.router.navigate(['/not-found']);
             }
           },
           next: (res) => {
-            // ODKOMENTOWAC JAK ENDPOINT BEDZIE ZWRACAL ID USERA
-            // if (res.RecipeDetail.userId !== this.userProfile?.id) {
-            //   this.router.navigate(['/not-found']);
-            // }
-            console.log(res.RecipeDetail);
-            this.mainRecipeDataFormGroup.patchValue(res.RecipeDetail);
+            if (res.RecipeDetail.userId !== this.userProfile?.id) {
+              this.router.navigate(['/not-found']);
+            } else {
+              let recipeSteps: RecipeStep[] = [];
+              res.RecipeDetail.recipeSteps.forEach(
+                (recipeStep: { step: number; name: string }) => {
+                  recipeSteps.push({
+                    id: recipeStep.step,
+                    name: recipeStep.name,
+                  });
+                }
+              );
+
+              let products: Product[] = [];
+              res.RecipeDetail.products.forEach(
+                (product: {
+                  id: number;
+                  name: string;
+                  recipeProduct: { quantity: number };
+                  measureUnit: string;
+                }) => {
+                  products.push({
+                    id: product.id,
+                    name: product.name,
+                    quantity: product.recipeProduct.quantity,
+                    measureUnit: product.measureUnit,
+                  });
+                }
+              );
+
+              delete res.RecipeDetail['products'];
+              delete res.RecipeDetail['recipeSteps'];
+              this.steps = recipeSteps;
+              this.products = products;
+              this.checkProducts();
+              this.recipeId = res.RecipeDetail.id;
+              this.imagePreview = res.RecipeDetail.image;
+              this.mainRecipeDataFormGroup.patchValue(res.RecipeDetail);
+              this.nutrientsFormGroup.patchValue(res.RecipeDetail);
+
+              this.changeDetectorRef.detectChanges();
+            }
           },
         });
-
-        // this.mainRecipeDataFormGroup.get('name')?.setValue('Makaron');
-        // this.mainRecipeDataFormGroup
-        //   .get('description')
-        //   ?.setValue('Makaron Makaron Makaron Makaron Makaron Makaron');
-        // this.mainRecipeDataFormGroup.get('portions')?.setValue(4);
-        // this.mainRecipeDataFormGroup.get('cookingTime')?.setValue(50);
-        // this.mainRecipeDataFormGroup.get('level')?.setValue('łatwy');
-        // this.mainRecipeDataFormGroup.get('category')?.setValue('obiad');
-        // this.mainRecipeDataFormGroup.get('dietType')?.setValue('inna');
-        // this.mainRecipeDataFormGroup.get('image')?.setValue('assets/zdj.jpg');
-        // this.imagePreview = 'assets/zdj.jpg';
-
-        // this.nutrientsFormGroup.get('calories')?.setValue(150);
-        // this.nutrientsFormGroup.get('carbohydrates')?.setValue(150);
-        // this.nutrientsFormGroup.get('fats')?.setValue(150);
-        // this.nutrientsFormGroup.get('proteins')?.setValue(150);
-
-        // this.productsEdit = [
-        //   { id: 11, name: 'mleko 1,5%', measureUnit: 'l', quantity: 100 },
-        //   { id: 1, name: 'mleko 2%', measureUnit: 'l', quantity: 4 },
-        //   { id: 2, name: 'śmietana 12%', measureUnit: 'g', quantity: 400 },
-        //   { id: 3, name: 'mąka', measureUnit: 'kg', quantity: 23 },
-        //   { id: 4, name: 'jaja rozmiar M', measureUnit: 'szt', quantity: 10 },
-        //   { id: 5, name: 'pierś z kurczaka', measureUnit: 'kg', quantity: 2 },
-        //   { id: 6, name: 'makaron pióra', measureUnit: 'g', quantity: 450 },
-        //   { id: 7, name: 'pomidor', measureUnit: 'g', quantity: 200 },
-        //   { id: 8, name: 'ryż', measureUnit: 'g', quantity: 200 },
-        // ];
-
-        // this.products = [];
-        // this.productsEdit.forEach((product) => {
-        //   this.products.push(product);
-        // });
-        // this.checkProducts();
-
-        // this.steps = [
-        //   {
-        //     id: 1,
-        //     name: 'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
-        //   },
-        //   { id: 2, name: 'Podsmaż je na oleju.' },
-        //   { id: 3, name: 'Ugotuj makaron na sposób al dente.' },
-        //   {
-        //     id: 4,
-        //     name: 'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
-        //   },
-        //   {
-        //     id: 5,
-        //     name: 'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
-        //   },
-        //   {
-        //     id: 6,
-        //     name: 'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
-        //   },
-        //   {
-        //     id: 7,
-        //     name: 'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
-        //   },
-        // ];
-        this.changeDetectorRef.detectChanges();
       } else {
         this.mode = 'create';
         this.products = [{ id: 0, name: '', quantity: 0, measureUnit: '' }];
@@ -277,34 +254,43 @@ export class AddNewRecipeComponent implements OnInit {
   }
 
   addNewRecipe() {
+    this.products.forEach((product) => {
+      delete product['measureUnit'];
+    });
+
+    let recipeAddData: RecipeAddData = {
+      name: this.mainRecipeDataFormGroup.get('name')?.value || '',
+      description: this.mainRecipeDataFormGroup.get('description')?.value || '',
+      cookingTime: this.mainRecipeDataFormGroup.get('cookingTime')?.value || 1,
+      portions: this.mainRecipeDataFormGroup.get('portions')?.value || 1,
+      level: this.mainRecipeDataFormGroup.get('level')?.value || 'łatwy',
+      category:
+        this.mainRecipeDataFormGroup.get('category')?.value || 'śniadanie',
+      dietType: this.mainRecipeDataFormGroup.get('dietType')?.value || 'inna',
+      author: this.userName,
+      calories: this.nutrientsFormGroup.get('calories')?.value || 1,
+      fats: this.nutrientsFormGroup.get('fats')?.value || 1,
+      proteins: this.nutrientsFormGroup.get('proteins')?.value || 1,
+      carbohydrates: this.nutrientsFormGroup.get('carbohydrates')?.value || 1,
+      products: JSON.stringify(this.products),
+      steps: JSON.stringify(this.steps),
+    };
+    const recipeImage = this.mainRecipeDataFormGroup.get('image')?.value;
+
     if (this.mode === 'edit') {
-      //WYWOLAC ENDPOINT Z EDIT
+      recipeAddData = { id: this.recipeId, ...recipeAddData };
+      this.recipeService
+        .updateRecipe(recipeImage, recipeAddData)
+        .subscribe((res) => {
+          if (res.message === 'Zaktualizowano wybrany przepis!') {
+            this.processIsFinished = true;
+            this.processIsFinishedSuccessfully = true;
+          } else {
+            this.processIsFinished = true;
+            this.processIsFinishedSuccessfully = false;
+          }
+        });
     } else {
-      this.products.forEach((product) => {
-        delete product['measureUnit'];
-      });
-
-      const recipeAddData: RecipeAddData = {
-        name: this.mainRecipeDataFormGroup.get('name')?.value || '',
-        description:
-          this.mainRecipeDataFormGroup.get('description')?.value || '',
-        cookingTime:
-          this.mainRecipeDataFormGroup.get('cookingTime')?.value || 1,
-        portions: this.mainRecipeDataFormGroup.get('portions')?.value || 1,
-        level: this.mainRecipeDataFormGroup.get('level')?.value || 'łatwy',
-        category:
-          this.mainRecipeDataFormGroup.get('category')?.value || 'śniadanie',
-        dietType: this.mainRecipeDataFormGroup.get('dietType')?.value || 'inna',
-        author: this.userName,
-        calories: this.nutrientsFormGroup.get('calories')?.value || 1,
-        fats: this.nutrientsFormGroup.get('fats')?.value || 1,
-        proteins: this.nutrientsFormGroup.get('proteins')?.value || 1,
-        carbohydrates: this.nutrientsFormGroup.get('carbohydrates')?.value || 1,
-        products: JSON.stringify(this.products),
-        steps: JSON.stringify(this.steps),
-      };
-
-      const recipeImage = this.mainRecipeDataFormGroup.get('image')?.value;
       this.recipeService
         .addRecipe(recipeImage, recipeAddData)
         .subscribe((res) => {

@@ -165,7 +165,7 @@ exports.updateRecipes = async (req, res) => {
         carbohydrates,
         steps,
         products,
-      } = newData;
+      } = req.body;
 
       steps = JSON.parse(steps);
       products = JSON.parse(products);

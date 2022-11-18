@@ -29,6 +29,7 @@ export interface RecipeDetail {
 }
 
 export interface RecipeAddData {
+  id?: string;
   name: string;
   description: string;
   cookingTime: number;
