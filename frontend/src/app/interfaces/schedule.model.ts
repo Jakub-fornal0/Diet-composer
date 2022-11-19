@@ -15,7 +15,7 @@ export interface Schedule {
   lunch: MealData;
   tea: MealData;
   dinner: MealData;
-  snack: SnackMealData[];
+  snacks: SnackMealData[];
 }
 
 export interface ScheduleDetails {
@@ -30,7 +30,7 @@ export interface ScheduleDetails {
 }
 
 export interface SnackMealData {
-  mealName: string;
+  snackName: string;
   calories: number;
   fats: number;
   proteins: number;

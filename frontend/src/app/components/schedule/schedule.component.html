@@ -120,18 +120,18 @@
       <div class="snack-container">
         <h2 class="snack-container__header text">Przekąski</h2>
         <p
-          *ngIf="!schedule.snack.length"
+          *ngIf="!schedule.snacks.length"
           class="snack-container__subheader text"
         >
           Nie dodano przekąsek.
         </p>
         <div class="snack-container__snacks">
           <div
-            *ngFor="let snack of schedule.snack; let i = index"
+            *ngFor="let snack of schedule.snacks; let i = index"
             class="snack-container__snack"
           >
             <span class="snack-container__snack--name text">{{
-              snack.mealName
+              snack.snackName
             }}</span>
             <button
               mat-button

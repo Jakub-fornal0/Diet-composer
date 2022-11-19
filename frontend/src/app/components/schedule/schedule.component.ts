@@ -103,8 +103,8 @@ export class ScheduleComponent implements OnInit {
   }
 
   private setSnacks(): void {
-    this.schedule.snack.forEach((meal) => {
-      this.addSnack(meal);
+    this.schedule.snacks.forEach((snack) => {
+      this.addSnack(snack);
     });
   }
 
@@ -191,7 +191,7 @@ export class ScheduleComponent implements OnInit {
       .subscribe((snack: SnackMealData) => {
         if (snack) {
           this.addSnack(snack);
-          this.schedule.snack.push(snack);
+          this.schedule.snacks.push(snack);
           this.localStorageService.setItemToLocalStorage(
             LocalStorageConsts.SCHEDULE,
             this.schedule
@@ -208,13 +208,13 @@ export class ScheduleComponent implements OnInit {
   }
 
   public deleteSnack(index: number): void {
-    this.scheduleDetails.eatenCalories -= this.schedule.snack[index].calories;
+    this.scheduleDetails.eatenCalories -= this.schedule.snacks[index].calories;
     this.scheduleDetails.eatenCarbohydrates -=
-      this.schedule.snack[index].carbohydrates;
-    this.scheduleDetails.eatenProteins -= this.schedule.snack[index].proteins;
-    this.scheduleDetails.eatenFats -= this.schedule.snack[index].fats;
+      this.schedule.snacks[index].carbohydrates;
+    this.scheduleDetails.eatenProteins -= this.schedule.snacks[index].proteins;
+    this.scheduleDetails.eatenFats -= this.schedule.snacks[index].fats;
 
-    this.schedule.snack.splice(index, 1);
+    this.schedule.snacks.splice(index, 1);
     this.localStorageService.setItemToLocalStorage(
       LocalStorageConsts.SCHEDULE,
       this.schedule

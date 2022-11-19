@@ -15,7 +15,7 @@ export class AddOtherMealToScheduleComponent implements OnInit {
     private dialogRef: MatDialogRef<AddOtherMealToScheduleComponent>
   ) {
     this.snackMealForm = this.formBuilder.group({
-      mealName: ['', [Validators.required]],
+      snackName: ['', [Validators.required]],
       calories: ['', [Validators.required]],
       fats: ['', [Validators.required]],
       carbohydrates: ['', [Validators.required]],
