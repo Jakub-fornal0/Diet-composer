@@ -79,12 +79,22 @@ $products-delete-icon-color: #ab1818;
 
       .app-products__card--products-list-box {
         width: 100%;
-        max-height: 65vh;
+        max-height: 63vh;
         min-height: 57px;
         border: solid 1px #ccc;
         display: block;
         border-radius: 4px;
         overflow: auto;
+      }
+
+      .app-products__card--products-delete-all {
+        margin: 0;
+        padding: 5px 0;
+        padding-right: 2px;
+        text-align: end;
+        cursor: pointer;
+        font-weight: 500;
+        color: $products-text-main-color;
       }
 
       .app-products__card--products-list {
@@ -103,10 +113,12 @@ $products-delete-icon-color: #ab1818;
           width: 40%;
           font-size: 14px;
           font-weight: 500;
+          color: $products-text-main-color;
         }
         .app-products__card--quantity-span {
           width: 30%;
           font-size: 14px;
+          color: $products-text-main-color;
         }
 
         .app-products__card--delete-icon {

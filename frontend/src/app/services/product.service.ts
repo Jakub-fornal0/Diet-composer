@@ -44,4 +44,11 @@ export class ProductService {
       this.httpOptions
     );
   }
+
+  public deleteAllUserProducts(): Observable<any> {
+    return this.http.delete<any>(
+      `${this.apiURL}/product/user/all/delete`,
+      this.httpOptions
+    );
+  }
 }

@@ -5,6 +5,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { map, Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from 'src/app/services/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteAllProductsDialogComponent } from './delete-all-products-dialog/delete-all-products-dialog.component';
 
 @Component({
   selector: 'app-products',
@@ -24,7 +26,8 @@ export class ProductsComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private productService: ProductService
+    private productService: ProductService,
+    private dialog: MatDialog
   ) {
     this.productForm = this.formBuilder.group({
       product: [''],
@@ -60,6 +63,7 @@ export class ProductsComponent implements OnInit {
   }
 
   private getAllUserProducts(): void {
+    this.chosenProducts = [];
     this.productService.getAllUserProducts().subscribe((res) => {
       res.Products.forEach((product: any) => {
         this.chosenProducts.push({
@@ -167,5 +171,24 @@ export class ProductsComponent implements OnInit {
       event.previousIndex,
       event.currentIndex
     );
+  }
+
+  public deleteAllUserProducts(): void {
+    this.dialog
+      .open(DeleteAllProductsDialogComponent, {
+        width: '500px',
+        enterAnimationDuration: '0ms',
+        exitAnimationDuration: '0ms',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          this.productService.deleteAllUserProducts().subscribe((res) => {
+            setTimeout(() => {
+              this.getAllUserProducts();
+            }, 1);
+          });
+        }
+      });
   }
 }

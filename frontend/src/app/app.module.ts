@@ -48,6 +48,7 @@ import { SetUserImageDialogComponent } from './components/account-settings/set-u
 import { AddOtherMealToScheduleComponent } from './components/schedule/add-other-meal-to-schedule/add-other-meal-to-schedule.component';
 import { DeleteRecipeDialogComponent } from './components/account-settings/delete-recipe-dialog/delete-recipe-dialog.component';
 import { HomeComponent } from './components/home/home.component';
+import { DeleteAllProductsDialogComponent } from './components/products/delete-all-products-dialog/delete-all-products-dialog.component';
 
 @NgModule({
   declarations: [
@@ -72,6 +73,7 @@ import { HomeComponent } from './components/home/home.component';
     AddOtherMealToScheduleComponent,
     DeleteRecipeDialogComponent,
     HomeComponent,
+    DeleteAllProductsDialogComponent,
   ],
   imports: [
     HttpClientModule,
