@@ -26,6 +26,8 @@ export interface RecipeDetail {
   fats: number;
   proteins: number;
   carbohydrates: number;
+  category?: string;
+  dietType?: string;
 }
 
 export interface RecipeAddData {

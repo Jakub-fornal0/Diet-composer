@@ -37,7 +37,9 @@
           <span>{{ recipe.portions }}</span>
         </div>
       </div>
-      <h2>Składniki odżywcze:</h2>
+      <div class="parallelogram-header">
+        <h2>Składniki odżywcze:</h2>
+      </div>
       <p>Podane wartości odpowiadają jednej porcji.</p>
       <div class="detail-container__nutrient">
         <span class="detail-container__nutrient--name">Kalorie: </span>
@@ -67,10 +69,16 @@
           >{{ recipe.fats }} g</span
         >
       </div>
+      <div class="detail-container__chips">
+        <span class="detail-container__chip">{{ recipe.category }}</span>
+        <span class="detail-container__chip">dieta {{ recipe.dietType }}</span>
+      </div>
     </div>
 
     <div class="products-container col-lg-5 col-md-12 col-sm-12">
-      <h2>Składniki:</h2>
+      <div class="parallelogram-header">
+        <h2>Składniki:</h2>
+      </div>
       <div
         class="products-container__product"
         *ngFor="let product of recipe.products"
@@ -96,7 +104,9 @@
     </div>
 
     <div class="recipe-container col-lg-7 col-md-12 col-sm-12">
-      <h2>Przepis:</h2>
+      <div class="parallelogram-header">
+        <h2>Przepis:</h2>
+      </div>
       <div
         class="recipe-container__step"
         *ngFor="let recipe of recipe.recipeStep; let i = index"
