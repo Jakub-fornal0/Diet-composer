@@ -10,10 +10,10 @@ import { loginData } from '../../interfaces/login.model';
   styleUrls: ['./signin.component.scss'],
 })
 export class SigninComponent implements OnInit {
-  loginForm: FormGroup;
-  passwordIsHide: boolean = true;
-  loginData: loginData = { email: '', password: '' };
-  error: string = '';
+  public loginForm: FormGroup;
+  public passwordIsHide: boolean = true;
+  public loginData: loginData = { email: '', password: '' };
+  public error: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -28,7 +28,7 @@ export class SigninComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  login() {
+  public login(): void {
     this.error = '';
     if (!this.loginForm.valid) {
       this.loginForm.markAllAsTouched();

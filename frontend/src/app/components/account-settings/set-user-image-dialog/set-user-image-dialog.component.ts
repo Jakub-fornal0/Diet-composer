@@ -8,9 +8,8 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./set-user-image-dialog.component.scss'],
 })
 export class SetUserImageDialogComponent implements OnInit {
-  imagePreview!: string;
-
-  userImageFormGroup = this.formBuilder.group({
+  public imagePreview!: string;
+  public userImageFormGroup = this.formBuilder.group({
     userImage: new FormControl(),
   });
 
@@ -21,7 +20,7 @@ export class SetUserImageDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  processFile(event: Event) {
+  public processFile(event: Event): void {
     const file = (event.target as HTMLInputElement).files;
     this.userImageFormGroup.get('userImage')?.setValue(file![0]);
     const reader = new FileReader();
@@ -31,7 +30,7 @@ export class SetUserImageDialogComponent implements OnInit {
     reader.readAsDataURL(file![0]);
   }
 
-  saveUserImage() {
+  public saveUserImage(): void {
     this.dialogRef.close({
       file: this.userImageFormGroup.value,
       preview: this.imagePreview,

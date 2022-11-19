@@ -10,9 +10,9 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  authListenerSubs?: Subscription;
-  userIsAuthenticated: boolean = true;
-  mobileMenuIsOpen: boolean = false;
+  public authListenerSubs?: Subscription;
+  public userIsAuthenticated: boolean = true;
+  public mobileMenuIsOpen: boolean = false;
 
   constructor(
     private authService: AuthService,
@@ -20,18 +20,22 @@ export class NavbarComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkUserIsAuth();
+  }
+
+  public logout(): void {
+    this.localStorageService.removeItemFromLocalStorage(
+      LocalStorageConsts.TOKEN
+    );
+    window.location.reload();
+  }
+
+  private checkUserIsAuth(): void {
     this.userIsAuthenticated = this.authService.userIsAuth();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe((isAuth) => {
         this.userIsAuthenticated = isAuth;
       });
-  }
-
-  logout() {
-    this.localStorageService.removeItemFromLocalStorage(
-      LocalStorageConsts.TOKEN
-    );
-    window.location.reload();
   }
 }

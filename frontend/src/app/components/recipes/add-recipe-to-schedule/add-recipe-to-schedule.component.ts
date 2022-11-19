@@ -13,10 +13,10 @@ import { RecipeDetail } from '../../../interfaces/recipe.model';
   styleUrls: ['./add-recipe-to-schedule.component.scss'],
 })
 export class AddRecipeToScheduleComponent implements OnInit {
-  typeOfMeal = new FormControl('');
-  recipe?: RecipeDetail;
-  schedule: Schedule = ScheduleConsts;
-  typeOfMealIsChosen: boolean = false;
+  public typeOfMeal = new FormControl('');
+  public recipe?: RecipeDetail;
+  public schedule: Schedule = ScheduleConsts;
+  public typeOfMealIsChosen: boolean = false;
 
   constructor(
     private dialogRef: MatDialogRef<AddRecipeToScheduleComponent>,
@@ -51,14 +51,14 @@ export class AddRecipeToScheduleComponent implements OnInit {
     });
   }
 
-  checkTypeIsSelected(): boolean {
+  public checkTypeIsSelected(): boolean {
     if (this.typeOfMeal.value) {
       return true;
     }
     return false;
   }
 
-  saveMealToSchedule() {
+  public saveMealToSchedule(): void {
     const type = this.typeOfMeal.value;
     if (
       (type === 'breakfast' ||

@@ -12,14 +12,14 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  productForm: FormGroup;
-  filteredProducts?: Observable<Product[]>;
-  inputMeasureUnit: string = '';
-  chosenProducts: Product[] = [];
-  chosenproductId?: number;
-  productIsChosen: boolean = false;
-  productDoesntExist: boolean = false;
-  products!: Product[];
+  public productForm: FormGroup;
+  public filteredProducts?: Observable<Product[]>;
+  public inputMeasureUnit: string = '';
+  public chosenProducts: Product[] = [];
+  public chosenproductId?: number;
+  public productIsChosen: boolean = false;
+  public productDoesntExist: boolean = false;
+  public products!: Product[];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,6 +31,16 @@ export class ProductsComponent implements OnInit {
       quantity: [''],
     });
 
+    this.getFilteredProducts();
+  }
+
+  ngOnInit(): void {
+    this.getAllProducts();
+    this.getAllUserProducts();
+    this.productForm.get('quantity')?.disable();
+  }
+
+  private getFilteredProducts(): void {
     this.filteredProducts = this.productForm.get('product')?.valueChanges.pipe(
       map((product: Product) => {
         const name = typeof product === 'string' ? product : product?.name;
@@ -43,11 +53,13 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
+  private getAllProducts(): void {
     this.productService.getAllProducts().subscribe((res) => {
       this.products = res.data.allProducts;
     });
+  }
 
+  private getAllUserProducts(): void {
     this.productService.getAllUserProducts().subscribe((res) => {
       res.Products.forEach((product: any) => {
         this.chosenProducts.push({
@@ -58,11 +70,9 @@ export class ProductsComponent implements OnInit {
         });
       });
     });
-
-    this.productForm.get('quantity')?.disable();
   }
 
-  checkProductExist() {
+  public checkProductExist(): void {
     this.resetQuantityInput();
     this.productIsChosen = false;
     this.productDoesntExist = false;
@@ -103,7 +113,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  addProduct() {
+  public addProduct(): void {
     const product: Product = {
       id: this.chosenproductId,
       name: this.productForm.get('product')?.value.name,
@@ -120,7 +130,7 @@ export class ProductsComponent implements OnInit {
     this.resetQuantityInput();
   }
 
-  deleteProduct(index: number) {
+  public deleteProduct(index: number): void {
     this.productService
       .deleteUserProduct(this.chosenProducts[index].id!)
       .subscribe(() => {
@@ -130,7 +140,7 @@ export class ProductsComponent implements OnInit {
     this.snackBar.open('Usunięto produkt.', '', { duration: 1500 });
   }
 
-  checkValidation(): boolean {
+  public checkValidation(): boolean {
     if (
       this.productForm.get('quantity')?.value &&
       this.productForm.get('quantity')?.value > 0 &&
@@ -141,17 +151,17 @@ export class ProductsComponent implements OnInit {
     return false;
   }
 
-  getProductName(product: Product) {
+  public getProductName(product: Product): string {
     return product.name;
   }
 
-  resetQuantityInput() {
+  private resetQuantityInput(): void {
     this.productForm.get('quantity')?.reset();
     this.productForm.get('quantity')?.disable();
     this.inputMeasureUnit = '';
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  public drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(
       this.chosenProducts,
       event.previousIndex,

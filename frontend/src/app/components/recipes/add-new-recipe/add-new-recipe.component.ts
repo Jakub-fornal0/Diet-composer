@@ -15,15 +15,23 @@ import { UserProfile } from 'src/app/interfaces/user.model';
   styleUrls: ['./add-new-recipe.component.scss'],
 })
 export class AddNewRecipeComponent implements OnInit {
-  userProfile?: UserProfile | null;
-  mode: string = 'create';
-  imagePreview!: string;
-  userName!: string;
-  recipeId!: string;
-  processIsFinished: boolean = false;
-  processIsFinishedSuccessfully: boolean = false;
+  public userProfile?: UserProfile | null;
+  public mode: string = 'create';
+  public imagePreview!: string;
+  public processIsFinished: boolean = false;
+  public processIsFinishedSuccessfully: boolean = false;
+  public products: Product[] = [];
+  public productsEdit: Product[] = [];
+  public productsAreValid: boolean = false;
+  public productIdIsChosen: number = -1;
+  public productExistInChosenProduct: boolean = false;
+  public steps: RecipeStep[] = [];
+  public stepsAreValid: boolean = false;
 
-  mainRecipeDataFormGroup = this.formBuilder.group({
+  private userName!: string;
+  private recipeId!: string;
+
+  public mainRecipeDataFormGroup = this.formBuilder.group({
     name: ['', Validators.required],
     description: ['', Validators.required],
     portions: [1, Validators.required],
@@ -34,21 +42,12 @@ export class AddNewRecipeComponent implements OnInit {
     image: new FormControl(),
   });
 
-  nutrientsFormGroup = this.formBuilder.group({
+  public nutrientsFormGroup = this.formBuilder.group({
     calories: [0, Validators.required],
     carbohydrates: [0, Validators.required],
     fats: [0, Validators.required],
     proteins: [0, Validators.required],
   });
-
-  products: Product[] = [];
-  productsEdit: Product[] = [];
-  productsAreValid: boolean = false;
-  productIdIsChosen: number = -1;
-  productExistInChosenProduct: boolean = false;
-
-  steps: RecipeStep[] = [];
-  stepsAreValid: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -61,6 +60,12 @@ export class AddNewRecipeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.getUserData();
+    this.resetInputs();
+    this.checkEditOrCreate();
+  }
+
+  private getUserData(): void {
     this.accountService.getUserData().subscribe((res) => {
       this.userName = res.user.userName;
     });
@@ -68,14 +73,18 @@ export class AddNewRecipeComponent implements OnInit {
     this.authService.userProfile.subscribe((data) => {
       this.userProfile = data;
     });
+  }
 
+  private resetInputs(): void {
     this.mainRecipeDataFormGroup.get('portions')?.disable();
     this.mainRecipeDataFormGroup.get('cookingTime')?.reset();
     this.nutrientsFormGroup.get('calories')?.reset();
     this.nutrientsFormGroup.get('carbohydrates')?.reset();
     this.nutrientsFormGroup.get('fats')?.reset();
     this.nutrientsFormGroup.get('proteins')?.reset();
+  }
 
+  private checkEditOrCreate(): void {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('recipeId')) {
         this.mode = 'edit';
@@ -140,7 +149,7 @@ export class AddNewRecipeComponent implements OnInit {
     });
   }
 
-  increasePersonCount() {
+  public increasePersonCount(): void {
     const currentPersonCount =
       this.mainRecipeDataFormGroup.get('portions')?.value;
     if (currentPersonCount) {
@@ -150,7 +159,7 @@ export class AddNewRecipeComponent implements OnInit {
     }
   }
 
-  decreasePersonCount() {
+  public decreasePersonCount(): void {
     const currentPersonCount =
       this.mainRecipeDataFormGroup.get('portions')?.value;
     if (currentPersonCount && currentPersonCount !== 1) {
@@ -161,7 +170,7 @@ export class AddNewRecipeComponent implements OnInit {
     }
   }
 
-  processFile(event: Event) {
+  public processFile(event: Event): void {
     const file = (event.target as HTMLInputElement).files;
     this.mainRecipeDataFormGroup.get('image')?.setValue(file![0]);
     const reader = new FileReader();
@@ -171,7 +180,7 @@ export class AddNewRecipeComponent implements OnInit {
     reader.readAsDataURL(file![0]);
   }
 
-  addAnotherProduct() {
+  public addAnotherProduct(): void {
     this.products.push({
       id: 0,
       name: '',
@@ -181,7 +190,7 @@ export class AddNewRecipeComponent implements OnInit {
     this.checkProducts();
   }
 
-  saveProductData(data: any, index: number) {
+  public saveProductData(data: any, index: number): void {
     this.products[index].id = data.id;
     this.products[index].name = data.name;
     this.products[index].quantity = data.quantity;
@@ -189,12 +198,12 @@ export class AddNewRecipeComponent implements OnInit {
     this.checkProducts();
   }
 
-  deleteProduct(index: number) {
+  public deleteProduct(index: number): void {
     this.products.splice(index, 1);
     this.checkProducts();
   }
 
-  checkProducts() {
+  private checkProducts(): void {
     this.productsAreValid = true;
     this.productIdIsChosen = -1;
     this.productExistInChosenProduct = false;
@@ -228,23 +237,23 @@ export class AddNewRecipeComponent implements OnInit {
     });
   }
 
-  addAnotherRecipeStep() {
+  public addAnotherRecipeStep(): void {
     this.steps.push({ id: 0, name: '' });
     this.checkRecipeStep();
   }
 
-  saveRecipeStepData(data: any, index: number) {
+  public saveRecipeStepData(data: any, index: number): void {
     this.steps[index].id = index;
     this.steps[index].name = data.name;
     this.checkRecipeStep();
   }
 
-  deleteRecipeStep(index: number) {
+  public deleteRecipeStep(index: number): void {
     this.steps.splice(index, 1);
     this.checkRecipeStep();
   }
 
-  checkRecipeStep() {
+  private checkRecipeStep(): void {
     this.stepsAreValid = true;
     this.steps.forEach((recipeStep) => {
       if (!recipeStep.name) {
@@ -253,7 +262,7 @@ export class AddNewRecipeComponent implements OnInit {
     });
   }
 
-  addNewRecipe() {
+  public addNewRecipe(): void {
     this.products.forEach((product) => {
       delete product['measureUnit'];
     });

@@ -19,7 +19,10 @@ export class RecipeService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  addRecipe(recipeImage: File, recipeAddData: RecipeAddData): Observable<any> {
+  public addRecipe(
+    recipeImage: File,
+    recipeAddData: RecipeAddData
+  ): Observable<any> {
     const newRecipeData = new FormData();
     newRecipeData.append('image', recipeImage);
     newRecipeData.append('name', recipeAddData.name);
@@ -47,22 +50,22 @@ export class RecipeService {
     );
   }
 
-  getRecipeDetail(id: string): Observable<any> {
+  public getRecipeDetail(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/recipe/${id}`, this.httpOptions);
   }
 
-  getRecipeDetailEdit(id: string): Observable<any> {
+  public getRecipeDetailEdit(id: string): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/recipes/${id}`, this.httpOptions);
   }
 
-  deleteRecipe(recipeId: string): Observable<any> {
+  public deleteRecipe(recipeId: string): Observable<any> {
     return this.http.delete<any>(
       `${this.apiURL}/recipes/${recipeId}`,
       this.httpOptions
     );
   }
 
-  updateRecipe(
+  public updateRecipe(
     recipeImage: File,
     recipeAddData: RecipeAddData
   ): Observable<any> {

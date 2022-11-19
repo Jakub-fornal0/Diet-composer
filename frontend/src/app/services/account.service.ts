@@ -18,7 +18,7 @@ export class AccountService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  calculateUserDemands(userParameters: {
+  public calculateUserDemands(userParameters: {
     id: string;
     age: number;
     gender: string;
@@ -34,11 +34,11 @@ export class AccountService {
     );
   }
 
-  getUserData(): Observable<any> {
+  public getUserData(): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/user/All`, this.httpOptions);
   }
 
-  setUserImage(image: File): Observable<any> {
+  public setUserImage(image: File): Observable<any> {
     const uploadImageData = new FormData();
     uploadImageData.append('image', image);
     return this.http.post<any>(

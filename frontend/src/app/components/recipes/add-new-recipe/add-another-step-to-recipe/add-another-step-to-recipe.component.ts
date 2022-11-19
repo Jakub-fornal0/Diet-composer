@@ -8,7 +8,7 @@ import { RecipeStep } from '../../../../interfaces/recipe.model';
   styleUrls: ['./add-another-step-to-recipe.component.scss'],
 })
 export class AddAnotherStepToRecipeComponent implements OnInit {
-  recipeStepForm: FormGroup;
+  public recipeStepForm: FormGroup;
 
   @Input() index: number = 0;
   @Input() recipeStep: RecipeStep = { id: 0, name: '' };
@@ -29,7 +29,7 @@ export class AddAnotherStepToRecipeComponent implements OnInit {
     this.recipeStepForm.get('name')?.setValue(this.recipeStep.name);
   }
 
-  deleteRecipeStep() {
+  public deleteRecipeStep(): void {
     this.recipeStepToDelete.emit();
   }
 }

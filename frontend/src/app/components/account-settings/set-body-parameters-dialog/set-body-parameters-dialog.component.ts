@@ -8,7 +8,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
   styleUrls: ['./set-body-parameters-dialog.component.scss'],
 })
 export class SetBodyParametersDialogComponent implements OnInit {
-  bodyParametersForm: FormGroup;
+  public bodyParametersForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -33,7 +33,7 @@ export class SetBodyParametersDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  saveBodyParameters() {
+  public saveBodyParameters(): void {
     this.dialogRef.close(this.bodyParametersForm.value);
   }
 }

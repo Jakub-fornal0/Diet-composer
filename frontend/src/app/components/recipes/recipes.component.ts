@@ -13,12 +13,12 @@ import { AuthService } from '../../services/auth.service';
   styleUrls: ['./recipes.component.scss'],
 })
 export class RecipesComponent implements OnInit {
-  authListenerSubs?: Subscription;
-  userIsAuthenticated: boolean = true;
-  products: Product[] = [];
-  currentPage: number = 1;
-  countOfRecipes: number = 0;
-  countOfPages: number = 0;
+  public authListenerSubs?: Subscription;
+  public userIsAuthenticated: boolean = true;
+  public products: Product[] = [];
+  public currentPage: number = 1;
+  public countOfRecipes: number = 0;
+  public countOfPages: number = 0;
 
   // MOCKUP USUNAC POTEM//
   recipes: Recipe[] = [
@@ -176,24 +176,10 @@ export class RecipesComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.userIsAuthenticated = this.authService.userIsAuth();
-    this.authListenerSubs = this.authService
-      .getAuthStatusListener()
-      .subscribe((isAuth) => {
-        this.userIsAuthenticated = isAuth;
-      });
+    this.checkUserIsAuth();
 
     if (this.userIsAuthenticated) {
-      this.productService.getAllUserProducts().subscribe((res) => {
-        res.Products.forEach((product: any) => {
-          this.products.push({
-            id: product.product.id,
-            name: product.product.name,
-            measureUnit: product.product.measureUnit,
-            quantity: product.quantity,
-          });
-        });
-      });
+      this.getUserProducts();
     }
 
     //WYWOLAC ENDPOINT KTORY ZWRACA LICZBE PASUJACYCH PRZEPISOW
@@ -202,7 +188,29 @@ export class RecipesComponent implements OnInit {
     //JAK BEDZIE BACKEND TO WYWOLAC ENDPOINT PO PRZEPISY Z CURRENTPAGE
   }
 
-  deleteProduct(index: number) {
+  private checkUserIsAuth(): void {
+    this.userIsAuthenticated = this.authService.userIsAuth();
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuth) => {
+        this.userIsAuthenticated = isAuth;
+      });
+  }
+
+  private getUserProducts(): void {
+    this.productService.getAllUserProducts().subscribe((res) => {
+      res.Products.forEach((product: any) => {
+        this.products.push({
+          id: product.product.id,
+          name: product.product.name,
+          measureUnit: product.product.measureUnit,
+          quantity: product.quantity,
+        });
+      });
+    });
+  }
+
+  public deleteProduct(index: number): void {
     this.productService
       .deleteUserProduct(this.products[index].id!)
       .subscribe(() => {
@@ -210,7 +218,7 @@ export class RecipesComponent implements OnInit {
       });
   }
 
-  openFiltersDialog(
+  public openFiltersDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
@@ -222,7 +230,7 @@ export class RecipesComponent implements OnInit {
     });
   }
 
-  getRecipes(action: string) {
+  public getRecipes(action: string): void {
     if (action === 'next') {
       this.currentPage++;
     } else {
@@ -231,8 +239,8 @@ export class RecipesComponent implements OnInit {
     //TU WYWOLAC ENDPOINT DLA POBRANIA PRZEPISOW NA PAGE
   }
 
-  setAsCurrentPage(numberOfPages: number) {
-    this.currentPage = numberOfPages;
+  public setAsCurrentPage(numberOfSelectedPage: number): void {
+    this.currentPage = numberOfSelectedPage;
     //TU WYWOLAC ENDPOINT DLA POBRANIA PRZEPISOW NA PAGE
   }
 }

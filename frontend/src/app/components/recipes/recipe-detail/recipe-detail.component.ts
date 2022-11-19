@@ -18,11 +18,11 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./recipe-detail.component.scss'],
 })
 export class RecipeDetailComponent implements OnInit {
-  products: Product[] = [];
-  recipeSteps: string[] = [];
-  recipe: RecipeDetail = RecipeDetailConsts;
-  authListenerSubs?: Subscription;
-  userIsAuthenticated: boolean = false;
+  public products: Product[] = [];
+  public recipeSteps: string[] = [];
+  public recipe: RecipeDetail = RecipeDetailConsts;
+  public authListenerSubs?: Subscription;
+  public userIsAuthenticated: boolean = false;
 
   constructor(
     private snackBar: MatSnackBar,
@@ -35,13 +35,24 @@ export class RecipeDetailComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkUserIsAuth();
+    this.getRecipeData();
+
+    if (this.userIsAuthenticated) {
+      this.getUserProducts();
+    }
+  }
+
+  private checkUserIsAuth(): void {
     this.userIsAuthenticated = this.authService.userIsAuth();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe((isAuth) => {
         this.userIsAuthenticated = isAuth;
       });
+  }
 
+  private getRecipeData(): void {
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('recipeId')) {
         const recipeId = paramMap.get('recipeId') || '';
@@ -108,22 +119,22 @@ export class RecipeDetailComponent implements OnInit {
         });
       }
     });
-
-    if (this.userIsAuthenticated) {
-      this.productService.getAllUserProducts().subscribe((res) => {
-        res.Products.forEach((product: any) => {
-          this.products.push({
-            id: product.product.id,
-            name: product.product.name,
-            measureUnit: product.product.measureUnit,
-            quantity: product.quantity,
-          });
-        });
-      });
-    }
   }
 
-  checkUserHaveProduct(recipeProduct: Product): boolean {
+  private getUserProducts(): void {
+    this.productService.getAllUserProducts().subscribe((res) => {
+      res.Products.forEach((product: any) => {
+        this.products.push({
+          id: product.product.id,
+          name: product.product.name,
+          measureUnit: product.product.measureUnit,
+          quantity: product.quantity,
+        });
+      });
+    });
+  }
+
+  public checkUserHaveProduct(recipeProduct: Product): boolean {
     const foundProduct = this.products.find(
       (userProduct: Product) => userProduct.id === recipeProduct.id
     );
@@ -138,7 +149,7 @@ export class RecipeDetailComponent implements OnInit {
     return false;
   }
 
-  checkDisabled(i: number): boolean {
+  public checkDisabled(i: number): boolean {
     if (this.recipeSteps[i + 1] === RecipeStepConsts.DONE) {
       return true;
     }
@@ -150,7 +161,7 @@ export class RecipeDetailComponent implements OnInit {
     return true;
   }
 
-  makeStepAsDone(i: number) {
+  public makeStepAsDone(i: number): void {
     const doingIndex = this.recipeSteps.indexOf(RecipeStepConsts.DOING);
     const doingIndexDifferenceI: number = doingIndex - i;
     let indexSmallerThanDoingIndex: boolean = false;
@@ -170,7 +181,7 @@ export class RecipeDetailComponent implements OnInit {
     }
   }
 
-  openAddtoScheduleDialog(
+  public openAddtoScheduleDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {

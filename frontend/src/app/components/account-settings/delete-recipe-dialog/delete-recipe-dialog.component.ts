@@ -14,7 +14,7 @@ export class DeleteRecipeDialogComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  deleteRecipe() {
+  public deleteRecipe(): void {
     this.dialogRef.close(true);
   }
 }

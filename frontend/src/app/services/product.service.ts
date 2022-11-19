@@ -19,25 +19,25 @@ export class ProductService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
-  getAllProducts(): Observable<any> {
+  public getAllProducts(): Observable<any> {
     return this.http.get<any>(`${this.apiURL}/product/all`, this.httpOptions);
   }
 
-  getAllUserProducts(): Observable<any> {
+  public getAllUserProducts(): Observable<any> {
     return this.http.get<any>(
       `${this.apiURL}/product/user/all`,
       this.httpOptions
     );
   }
 
-  deleteUserProduct(productId: number): Observable<any> {
+  public deleteUserProduct(productId: number): Observable<any> {
     return this.http.delete<any>(
       `${this.apiURL}/product/user/delete/${productId}`,
       this.httpOptions
     );
   }
 
-  addUserProduct(product: Product): Observable<any> {
+  public addUserProduct(product: Product): Observable<any> {
     return this.http.post<any>(
       `${this.apiURL}/product/user/add`,
       product,
