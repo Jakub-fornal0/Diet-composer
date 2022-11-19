@@ -37,6 +37,11 @@
           <span>{{ recipe.portions }}</span>
         </div>
       </div>
+      <div class="detail-container__chips">
+        <span class="detail-container__chip-header">Tagi: </span>
+        <span class="detail-container__chip">{{ recipe.category }}</span>
+        <span class="detail-container__chip">dieta {{ recipe.dietType }}</span>
+      </div>
       <div class="parallelogram-header">
         <h2>Składniki odżywcze:</h2>
       </div>
@@ -68,10 +73,6 @@
         <span class="detail-container__nutrient--value"
           >{{ recipe.fats }} g</span
         >
-      </div>
-      <div class="detail-container__chips">
-        <span class="detail-container__chip">{{ recipe.category }}</span>
-        <span class="detail-container__chip">dieta {{ recipe.dietType }}</span>
       </div>
     </div>
 

@@ -47,7 +47,7 @@ mat-checkbox {
 
   h2 {
     margin: 0;
-    font-weight: 600;
+    font-weight: 500;
     padding-left: 20px;
     padding-top: 5px;
     transform: skew(40deg);
@@ -102,7 +102,7 @@ mat-checkbox {
 
   .detail-container__inline-icon {
     display: flex;
-    padding-bottom: 40px;
+    padding-bottom: 20px;
     .detail-container__center-icon {
       width: 30%;
       display: flex;
@@ -133,18 +133,21 @@ mat-checkbox {
   .detail-container__chips {
     display: flex;
     align-items: center;
-    justify-content: center;
-    padding-top: 25px;
+    padding-bottom: 40px;
+  }
+
+  .detail-container__chip-header {
+    font-weight: 500;
+    padding-right: 10px;
   }
 
   .detail-container__chip {
-    width: 45%;
+    width: 40%;
     text-align: center;
     border-radius: 20%;
-    background-color: rgba($color: $navbar-background-color, $alpha: 0.5);
-    padding: 10px 5px;
+    background-color: rgba($color: $navbar-background-color, $alpha: 0.3);
+    padding: 5px 2px;
     margin: 0 5px;
-    font-weight: 500;
   }
 }
 
@@ -217,6 +220,16 @@ mat-checkbox {
     }
     .image-container__button {
       font-size: 2vw;
+    }
+  }
+
+  .detail-container {
+    .detail-container__chips {
+      justify-content: center;
+    }
+
+    .detail-container__chip {
+      width: 20%;
     }
   }
 
