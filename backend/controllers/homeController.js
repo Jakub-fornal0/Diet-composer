@@ -5,6 +5,10 @@ const jwt = require("jsonwebtoken");
 
 const Op = Sequelize.Op;
 const user = db.users;
+const recipe = db.recipes;
+const recipeProducts = db.recipeProducts;
+const recipeSteps = db.recipeSteps;
+const products = db.products;
 let ActiveUserTokens = [];
 
 exports.homePage = (req, res, next) => {
@@ -75,6 +79,49 @@ exports.signin = async (req, res) => {
       tokenToRefresh: refreshToken,
       message: "Zalogowano!",
     });
+  } catch (error) {
+    res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
+  }
+};
+
+exports.getSelectRecipe = async (req, res) => {
+  try {
+    const recipeId = req.params.id;
+    let data = await recipe.findOne({
+      attributes: [
+        "id",
+        "image",
+        "name",
+        "cookingTime",
+        "portions",
+        "level",
+        "dietType",
+        "category",
+        "author",
+        "calories",
+        "fats",
+        "proteins",
+        "carbohydrates",
+      ],
+      where: {
+        id: recipeId,
+      },
+      include: [
+        {
+          model: products,
+          as: "products",
+        },
+        {
+          model: recipeSteps,
+
+          attributes: ["step", "name"],
+        },
+      ],
+    });
+    data.image =
+          "http://localhost:3000/imagesRecipe/" + data.image + ".png";
+    
+    res.status(200).send({ RecipeDetail: data });
   } catch (error) {
     res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
   }

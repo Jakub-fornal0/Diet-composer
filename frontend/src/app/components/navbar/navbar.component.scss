@@ -14,8 +14,10 @@ $navbar-main-link-color: #616159;
 
   .app-navbar__logo {
     text-decoration: none;
-    color: $navbar-main-link-color;
-    font-size: 25px;
+    cursor: pointer;
+    margin-top: 5px;
+    width: 200px;
+    height: 65px;
   }
 
   .app-navbar__spacer {

@@ -5,6 +5,8 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { map, Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ProductService } from 'src/app/services/product.service';
+import { MatDialog } from '@angular/material/dialog';
+import { DeleteAllProductsDialogComponent } from './delete-all-products-dialog/delete-all-products-dialog.component';
 
 @Component({
   selector: 'app-products',
@@ -12,25 +14,36 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./products.component.scss'],
 })
 export class ProductsComponent implements OnInit {
-  productForm: FormGroup;
-  filteredProducts?: Observable<Product[]>;
-  inputMeasureUnit: string = '';
-  chosenProducts: Product[] = [];
-  chosenproductId?: number;
-  productIsChosen: boolean = false;
-  productDoesntExist: boolean = false;
-  products!: Product[];
+  public productForm: FormGroup;
+  public filteredProducts?: Observable<Product[]>;
+  public inputMeasureUnit: string = '';
+  public chosenProducts: Product[] = [];
+  public chosenproductId?: number;
+  public productIsChosen: boolean = false;
+  public productDoesntExist: boolean = false;
+  public products!: Product[];
 
   constructor(
     private formBuilder: FormBuilder,
     private snackBar: MatSnackBar,
-    private productService: ProductService
+    private productService: ProductService,
+    private dialog: MatDialog
   ) {
     this.productForm = this.formBuilder.group({
       product: [''],
       quantity: [''],
     });
 
+    this.getFilteredProducts();
+  }
+
+  ngOnInit(): void {
+    this.getAllProducts();
+    this.getAllUserProducts();
+    this.productForm.get('quantity')?.disable();
+  }
+
+  private getFilteredProducts(): void {
     this.filteredProducts = this.productForm.get('product')?.valueChanges.pipe(
       map((product: Product) => {
         const name = typeof product === 'string' ? product : product?.name;
@@ -43,11 +56,14 @@ export class ProductsComponent implements OnInit {
     );
   }
 
-  ngOnInit(): void {
+  private getAllProducts(): void {
     this.productService.getAllProducts().subscribe((res) => {
       this.products = res.data.allProducts;
     });
+  }
 
+  private getAllUserProducts(): void {
+    this.chosenProducts = [];
     this.productService.getAllUserProducts().subscribe((res) => {
       res.Products.forEach((product: any) => {
         this.chosenProducts.push({
@@ -58,11 +74,9 @@ export class ProductsComponent implements OnInit {
         });
       });
     });
-
-    this.productForm.get('quantity')?.disable();
   }
 
-  checkProductExist() {
+  public checkProductExist(): void {
     this.resetQuantityInput();
     this.productIsChosen = false;
     this.productDoesntExist = false;
@@ -72,19 +86,20 @@ export class ProductsComponent implements OnInit {
         ? this.productForm.get('product')?.value
         : this.productForm.get('product')?.value.name;
 
+    const productIdExistInChosenProducts = this.chosenProducts.find(
+      (product) => product.id === this.productForm.get('product')?.value.id
+    );
+
+    if (productIdExistInChosenProducts) {
+      this.productIsChosen = true;
+    }
+
     this.products.forEach((product: Product) => {
-      const productIdExistInChosenProducts = this.chosenProducts.find(
-        (product) => product.id === this.productForm.get('product')?.value.id
-      );
-
-      if (productIdExistInChosenProducts) {
-        this.productIsChosen = true;
-      }
-
       if (
         product.name.toLowerCase() === productName.toLowerCase() &&
-        product.id &&
-        !this.productIsChosen
+        this.productForm.get('product')?.value.id &&
+        !this.productIsChosen &&
+        product.measureUnit
       ) {
         this.productDoesntExist = false;
         this.inputMeasureUnit = product.measureUnit;
@@ -102,7 +117,7 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  addProduct() {
+  public addProduct(): void {
     const product: Product = {
       id: this.chosenproductId,
       name: this.productForm.get('product')?.value.name,
@@ -119,7 +134,7 @@ export class ProductsComponent implements OnInit {
     this.resetQuantityInput();
   }
 
-  deleteProduct(index: number) {
+  public deleteProduct(index: number): void {
     this.productService
       .deleteUserProduct(this.chosenProducts[index].id!)
       .subscribe(() => {
@@ -129,7 +144,7 @@ export class ProductsComponent implements OnInit {
     this.snackBar.open('Usunięto produkt.', '', { duration: 1500 });
   }
 
-  checkValidation(): boolean {
+  public checkValidation(): boolean {
     if (
       this.productForm.get('quantity')?.value &&
       this.productForm.get('quantity')?.value > 0 &&
@@ -140,21 +155,40 @@ export class ProductsComponent implements OnInit {
     return false;
   }
 
-  getProductName(product: Product) {
+  public getProductName(product: Product): string {
     return product.name;
   }
 
-  resetQuantityInput() {
+  private resetQuantityInput(): void {
     this.productForm.get('quantity')?.reset();
     this.productForm.get('quantity')?.disable();
     this.inputMeasureUnit = '';
   }
 
-  drop(event: CdkDragDrop<string[]>) {
+  public drop(event: CdkDragDrop<string[]>): void {
     moveItemInArray(
       this.chosenProducts,
       event.previousIndex,
       event.currentIndex
     );
+  }
+
+  public deleteAllUserProducts(): void {
+    this.dialog
+      .open(DeleteAllProductsDialogComponent, {
+        width: '500px',
+        enterAnimationDuration: '0ms',
+        exitAnimationDuration: '0ms',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          this.productService.deleteAllUserProducts().subscribe((res) => {
+            setTimeout(() => {
+              this.getAllUserProducts();
+            }, 1);
+          });
+        }
+      });
   }
 }

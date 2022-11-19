@@ -19,8 +19,8 @@ export interface User {
 
 export interface UserRecipe {
   id?: string;
-  recipeImage: string;
-  recipeName: string;
+  image: string;
+  name: string;
 }
 
 export interface UserProfile {

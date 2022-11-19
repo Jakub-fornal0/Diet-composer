@@ -5,9 +5,14 @@ import {
   ScheduleConsts,
   ScheduleDetailsConsts,
 } from '../../consts/schedule-consts';
-import { Schedule, ScheduleDetails } from '../../interfaces/schedule.model';
+import {
+  Schedule,
+  ScheduleDetails,
+  SnackMealData,
+} from '../../interfaces/schedule.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddOtherMealToScheduleComponent } from './add-other-meal-to-schedule/add-other-meal-to-schedule.component';
+import { AccountService } from 'src/app/services/account.service';
 
 @Component({
   selector: 'app-schedule',
@@ -15,23 +20,23 @@ import { AddOtherMealToScheduleComponent } from './add-other-meal-to-schedule/ad
   styleUrls: ['./schedule.component.scss'],
 })
 export class ScheduleComponent implements OnInit {
-  time = new Date();
-  date = new Date().toLocaleDateString('pl', {
+  public time = new Date();
+  public date = new Date().toLocaleDateString('pl', {
     year: 'numeric',
     day: '2-digit',
     month: '2-digit',
   });
 
-  scheduleDetails: ScheduleDetails = ScheduleDetailsConsts;
-  schedule: Schedule = ScheduleConsts;
-  typesOfMealPL: string[] = [
+  public scheduleDetails: ScheduleDetails = ScheduleDetailsConsts;
+  public schedule: Schedule = ScheduleConsts;
+  public typesOfMealPL: string[] = [
     'Śniadanie',
     'II śniadanie',
     'Obiad',
     'Podwieczorek',
     'Kolacja',
   ];
-  typesOfMealENG: string[] = [
+  public typesOfMealENG: string[] = [
     'breakfast',
     'secondBreakfast',
     'lunch',
@@ -41,10 +46,33 @@ export class ScheduleComponent implements OnInit {
 
   constructor(
     private localStorageService: LocalStorageService,
+    private accountService: AccountService,
     private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
+    setInterval(() => {
+      this.time = new Date();
+    }, 1000);
+
+    this.getUserNutrientsDemand();
+    this.getScheduleData();
+    this.clearScheduleDetails();
+    this.setEatenNutrients();
+    this.setSnacks();
+  }
+
+  private getUserNutrientsDemand(): void {
+    this.accountService.getUserData().subscribe((res) => {
+      this.scheduleDetails.totalCalories = res.user.caloricDemand;
+      this.scheduleDetails.totalCarbohydrates = res.user.carbohydratesDemand;
+      this.scheduleDetails.totalProteins = res.user.proteinsDemand;
+      this.scheduleDetails.totalFats = res.user.fatsDemand;
+    });
+  }
+
+  private getScheduleData(): void {
+    //PRZEROBIC POTEM NA POBIERANIE Z SERWERA
     const dataFromLocalStorage =
       this.localStorageService.getItemFromLocalStorage<Schedule>(
         LocalStorageConsts.SCHEDULE
@@ -52,13 +80,9 @@ export class ScheduleComponent implements OnInit {
     if (dataFromLocalStorage) {
       this.schedule = dataFromLocalStorage;
     }
+  }
 
-    setInterval(() => {
-      this.time = new Date();
-    }, 1000);
-
-    this.clearScheduleDetails();
-
+  private setEatenNutrients(): void {
     Object.entries(this.schedule).forEach(([key, val]) => {
       if (
         key === 'breakfast' ||
@@ -67,12 +91,6 @@ export class ScheduleComponent implements OnInit {
         key === 'tea' ||
         key === 'dinner'
       ) {
-        this.scheduleDetails.totalCalories += this.schedule[key].calories;
-        this.scheduleDetails.totalCarbohydrates +=
-          this.schedule[key].carbohydrates;
-        this.scheduleDetails.totalProteins += this.schedule[key].proteins;
-        this.scheduleDetails.totalFats += this.schedule[key].fats;
-
         if (this.schedule[key].eaten) {
           this.scheduleDetails.eatenCalories += this.schedule[key].calories;
           this.scheduleDetails.eatenCarbohydrates +=
@@ -82,13 +100,15 @@ export class ScheduleComponent implements OnInit {
         }
       }
     });
+  }
 
-    this.schedule.snack.forEach((meal) => {
-      this.addSnack(meal);
+  private setSnacks(): void {
+    this.schedule.snacks.forEach((snack) => {
+      this.addSnack(snack);
     });
   }
 
-  setMealAsEaten(mealType: string) {
+  public setMealAsEaten(mealType: string): void {
     if (
       mealType === 'breakfast' ||
       mealType === 'secondBreakfast' ||
@@ -118,7 +138,7 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  deleteMealFromSchedule(mealType: string) {
+  public deleteMealFromSchedule(mealType: string): void {
     if (
       mealType === 'breakfast' ||
       mealType === 'secondBreakfast' ||
@@ -133,12 +153,6 @@ export class ScheduleComponent implements OnInit {
         this.scheduleDetails.eatenProteins -= this.schedule[mealType].proteins;
         this.scheduleDetails.eatenFats -= this.schedule[mealType].fats;
       }
-
-      this.scheduleDetails.totalCalories -= this.schedule[mealType].calories;
-      this.scheduleDetails.totalCarbohydrates -=
-        this.schedule[mealType].carbohydrates;
-      this.scheduleDetails.totalProteins -= this.schedule[mealType].proteins;
-      this.scheduleDetails.totalFats -= this.schedule[mealType].fats;
 
       this.schedule[mealType].recipeId = '';
       this.schedule[mealType].recipeName = '';
@@ -156,18 +170,14 @@ export class ScheduleComponent implements OnInit {
     }
   }
 
-  clearScheduleDetails() {
-    this.scheduleDetails.totalCalories = 0;
-    this.scheduleDetails.totalCarbohydrates = 0;
-    this.scheduleDetails.totalProteins = 0;
-    this.scheduleDetails.totalFats = 0;
+  public clearScheduleDetails(): void {
     this.scheduleDetails.eatenCalories = 0;
     this.scheduleDetails.eatenCarbohydrates = 0;
     this.scheduleDetails.eatenProteins = 0;
     this.scheduleDetails.eatenFats = 0;
   }
 
-  openAddOtherMealDialog(
+  public openAddOtherMealDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
@@ -178,10 +188,10 @@ export class ScheduleComponent implements OnInit {
         exitAnimationDuration,
       })
       .afterClosed()
-      .subscribe((snack) => {
+      .subscribe((snack: SnackMealData) => {
         if (snack) {
           this.addSnack(snack);
-          this.schedule.snack.push(snack);
+          this.schedule.snacks.push(snack);
           this.localStorageService.setItemToLocalStorage(
             LocalStorageConsts.SCHEDULE,
             this.schedule
@@ -190,28 +200,28 @@ export class ScheduleComponent implements OnInit {
       });
   }
 
-  addSnack(data: any) {
-    this.scheduleDetails.eatenCalories += data.calories;
-    this.scheduleDetails.eatenCarbohydrates += data.carbohydrates;
-    this.scheduleDetails.eatenProteins += data.proteins;
-    this.scheduleDetails.eatenFats += data.fats;
+  public addSnack(snack: SnackMealData): void {
+    this.scheduleDetails.eatenCalories += snack.calories;
+    this.scheduleDetails.eatenCarbohydrates += snack.carbohydrates;
+    this.scheduleDetails.eatenProteins += snack.proteins;
+    this.scheduleDetails.eatenFats += snack.fats;
   }
 
-  deleteSnack(index: number) {
-    this.scheduleDetails.eatenCalories -= this.schedule.snack[index].calories;
+  public deleteSnack(index: number): void {
+    this.scheduleDetails.eatenCalories -= this.schedule.snacks[index].calories;
     this.scheduleDetails.eatenCarbohydrates -=
-      this.schedule.snack[index].carbohydrates;
-    this.scheduleDetails.eatenProteins -= this.schedule.snack[index].proteins;
-    this.scheduleDetails.eatenFats -= this.schedule.snack[index].fats;
+      this.schedule.snacks[index].carbohydrates;
+    this.scheduleDetails.eatenProteins -= this.schedule.snacks[index].proteins;
+    this.scheduleDetails.eatenFats -= this.schedule.snacks[index].fats;
 
-    this.schedule.snack.splice(index, 1);
+    this.schedule.snacks.splice(index, 1);
     this.localStorageService.setItemToLocalStorage(
       LocalStorageConsts.SCHEDULE,
       this.schedule
     );
   }
 
-  clearSchedule() {
+  public clearSchedule(): void {
     this.localStorageService.removeItemFromLocalStorage(
       LocalStorageConsts.SCHEDULE
     );

@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Schedule } from '../../../interfaces/schedule.model';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { LocalStorageConsts } from '../../../consts/localstorage-consts';
@@ -13,12 +13,13 @@ import { RecipeDetail } from '../../../interfaces/recipe.model';
   styleUrls: ['./add-recipe-to-schedule.component.scss'],
 })
 export class AddRecipeToScheduleComponent implements OnInit {
-  typeOfMeal = new FormControl('');
-  recipe?: RecipeDetail;
-  schedule: Schedule = ScheduleConsts;
-  typeOfMealIsChosen: boolean = false;
+  public typeOfMeal = new FormControl('');
+  public recipe?: RecipeDetail;
+  public schedule: Schedule = ScheduleConsts;
+  public typeOfMealIsChosen: boolean = false;
 
   constructor(
+    private dialogRef: MatDialogRef<AddRecipeToScheduleComponent>,
     private localStorageService: LocalStorageService,
     @Inject(MAT_DIALOG_DATA) public data: RecipeDetail
   ) {
@@ -50,14 +51,14 @@ export class AddRecipeToScheduleComponent implements OnInit {
     });
   }
 
-  checkTypeIsSelected(): boolean {
+  public checkTypeIsSelected(): boolean {
     if (this.typeOfMeal.value) {
       return true;
     }
     return false;
   }
 
-  saveMealToSchedule() {
+  public saveMealToSchedule(): void {
     const type = this.typeOfMeal.value;
     if (
       (type === 'breakfast' ||
@@ -80,5 +81,7 @@ export class AddRecipeToScheduleComponent implements OnInit {
       LocalStorageConsts.SCHEDULE,
       this.schedule
     );
+
+    this.dialogRef.close(true);
   }
 }

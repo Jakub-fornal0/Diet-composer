@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { LocalStorageConsts } from 'src/app/consts/localstorage-consts';
 import { AuthService } from 'src/app/services/auth.service';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-navbar',
@@ -8,13 +10,27 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./navbar.component.scss'],
 })
 export class NavbarComponent implements OnInit {
-  authListenerSubs?: Subscription;
-  userIsAuthenticated: boolean = true;
-  mobileMenuIsOpen: boolean = false;
+  public authListenerSubs?: Subscription;
+  public userIsAuthenticated: boolean = true;
+  public mobileMenuIsOpen: boolean = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private localStorageService: LocalStorageService
+  ) {}
 
   ngOnInit(): void {
+    this.checkUserIsAuth();
+  }
+
+  public logout(): void {
+    this.localStorageService.removeItemFromLocalStorage(
+      LocalStorageConsts.TOKEN
+    );
+    window.location.reload();
+  }
+
+  private checkUserIsAuth(): void {
     this.userIsAuthenticated = this.authService.userIsAuth();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()

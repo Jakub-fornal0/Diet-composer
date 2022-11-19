@@ -10,7 +10,7 @@ import { LocalStorageConsts } from '../consts/localstorage-consts';
 export class AuthInterceptor implements HttpInterceptor {
   constructor() {}
 
-  intercept(req: HttpRequest<any>, next: HttpHandler) {
+  public intercept(req: HttpRequest<any>, next: HttpHandler) {
     const authToken = localStorage.getItem(LocalStorageConsts.TOKEN);
     const authRequest = req.clone({
       headers: req.headers.set('Authorization', 'Bearer ' + authToken),

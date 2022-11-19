@@ -1,6 +1,6 @@
 <mat-toolbar class="app-navbar">
   <span>
-    <a class="app-navbar__logo" routerLink="/">DietComposer</a>
+    <img class="app-navbar__logo" src="/assets/logo.png" routerLink="/" />
   </span>
   <span class="app-navbar__spacer"></span>
   <ul class="app-navbar__desktop">
@@ -38,7 +38,9 @@
       </a>
     </li>
     <li *ngIf="userIsAuthenticated">
-      <a class="app-navbar__desktop--logout"><mat-icon>input</mat-icon> </a>
+      <a class="app-navbar__desktop--logout" (click)="logout()"
+        ><mat-icon>input</mat-icon>
+      </a>
     </li>
 
     <li *ngIf="!userIsAuthenticated">
@@ -108,7 +110,9 @@
       >
       <a
         *ngIf="userIsAuthenticated"
-        (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
+        (click)="
+          sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen; logout()
+        "
         class="app-navbar__desktop--mobile-link"
         >Wyloguj się</a
       >

@@ -3,6 +3,7 @@ const { Sequelize } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const multer = require("multer");
 const crypto = require("crypto");
+const fs = require("fs");
 
 const Op = Sequelize.Op;
 const user = db.users;
@@ -37,6 +38,57 @@ exports.logout = (req, res) => {
   const { token } = req.body;
   ActiveUserTokens = ActiveUserTokens.filter((x) => x !== token);
   res.status(204).send({ message: "Wylogowano!" });
+};
+
+exports.deleteUser = async (req, res) => {
+  try {
+    await user
+      .findOne({
+        attributes:['id','userImage'],
+        where: {
+          id: jwt.decode(req.headers["x-access-token"]).id,
+        },
+      })
+      .then(async (userData) => {
+        if (userData.userImage != "defaultUser") {
+          const path = "./images/" + userData.userImage + ".png";
+          fs.unlink(path, (err) => {
+            if (err) {
+              console.error(err);
+              return;
+            }
+            user
+              .destroy({
+                where: {
+                  id: userData.id,
+                },
+              })
+              .then(
+                res
+                  .status(200)
+                  .send({ message: "Konto użytkownika zostało usunięte" })
+              );
+          });
+        } else {
+          user
+            .destroy({
+              where: {
+                id: userData.id,
+              },
+            })
+            .then(
+              res
+                .status(200)
+                .send({ message: "Konto użytkownika zostało usunięte" })
+            );
+        }
+      })
+      .catch((err) => {
+        res.status(500).send({ message: "Nie znaleziono użytkownika" });
+      });
+  } catch (error) {
+    res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
+  }
 };
 
 exports.uploadImage = async (req, res) => {
@@ -173,25 +225,29 @@ exports.BMI = async (req, res) => {
 exports.All = async (req, res) => {
   try {
     const idFromToken = jwt.decode(req.headers["x-access-token"]).id;
-    const getUserRecipes = await recipes.findAll({
-      attributes: ['id', 'image', 'name'],
-      where:{
+    let getUserRecipes = await recipes.findAll({
+      attributes: ["id", "image", "name"],
+      where: {
         userId: idFromToken,
-      }
+      },
     });
     await user
       .findOne({
-        attributes: {exclude: ['password', 'id']},
+        attributes: { exclude: ["password", "id"] },
         where: {
           id: idFromToken,
         },
       })
-      .then(function (userData) {
+      .then((userData) => {
         userData.userImage =
           "http://localhost:3000/images/" + userData.userImage + ".png";
-        res.status(200).send({ user: userData, recipes: getUserRecipes});
+          getUserRecipes.forEach((array) => {
+            JSON.stringify(array);
+            array.image="http://localhost:3000/imagesRecipe/" + array.image + ".png";
+          });
+        res.status(200).send({ user: userData, recipes: getUserRecipes });
       })
-      .catch(function (err) {
+      .catch((err) => {
         res.status(500).send({ message: "Nie znaleziono użytkownika" });
       });
   } catch (error) {

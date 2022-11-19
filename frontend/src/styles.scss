@@ -20,6 +20,15 @@ body {
   padding: 0;
 }
 
+.link {
+  color: $font-color;
+  font-weight: 500;
+
+  &:hover {
+    color: $font-color;
+  }
+}
+
 h1,
 h2,
 h3,
@@ -81,4 +90,31 @@ input[type="number"] {
 
 .close-delete-icon {
   color: $close-delete-icon-color;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #b0aeae;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #b0aeae;
+}
+
+@media (max-width: 576px) {
+  /* width */
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
 }

@@ -35,7 +35,7 @@
               class="card__input-container--input"
             >
               <mat-label>Nazwa</mat-label>
-              <input matInput formControlName="recipeName" maxlength="65" />
+              <input matInput formControlName="name" maxlength="60" />
               <mat-error>To pole jest wymagane.</mat-error>
             </mat-form-field>
           </div>
@@ -48,13 +48,12 @@
               <textarea
                 matInput
                 class="card__input-container--input-description"
-                formControlName="recipeDescription"
+                formControlName="description"
                 maxlength="350"
               ></textarea>
               <mat-hint align="end"
                 >{{
-                  mainRecipeDataFormGroup.get("recipeDescription")?.value
-                    ?.length
+                  mainRecipeDataFormGroup.get("description")?.value?.length
                 }}
                 / 350</mat-hint
               >
@@ -69,7 +68,7 @@
               <mat-label>Czas</mat-label>
               <input
                 matInput
-                formControlName="recipeTime"
+                formControlName="cookingTime"
                 type="number"
                 max="6000"
                 min="1"
@@ -79,7 +78,7 @@
               <mat-error>To pole jest wymagane.</mat-error>
             </mat-form-field>
           </div>
-          <p>Ilość osób</p>
+          <p>Ilość porcji</p>
           <div
             class="card__input-container card__input-container--padding-bottom"
           >
@@ -88,65 +87,106 @@
             </button>
             <input
               class="card__input-container--person-count-input"
-              formControlName="recipePersonCount"
+              formControlName="portions"
             />
             <button mat-mini-fab (click)="increasePersonCount()">
               <mat-icon>add</mat-icon>
             </button>
           </div>
-          <p>Poziom zaawansowania</p>
-          <div
-            class="card__input-container card__input-container--padding-bottom"
-          >
-            <mat-radio-group formControlName="recipeLevel">
-              <mat-radio-button
-                class="card__input-container--radio-button"
-                value="Łatwy"
-                >Łatwy</mat-radio-button
-              >
-              <mat-radio-button
-                class="card__input-container--radio-button"
-                value="Średni"
-                >Średni</mat-radio-button
-              >
-              <mat-radio-button
-                class="card__input-container--radio-button"
-                value="Trudny"
-                >Trudny</mat-radio-button
-              >
-            </mat-radio-group>
-          </div>
-          <p>Kategoria</p>
-          <div
-            class="card__input-container card__input-container--padding-bottom"
-          >
-            <mat-radio-group formControlName="recipeCategory">
-              <mat-radio-button
-                class="card__input-container--radio-button"
-                value="Śniadanie"
-                >Śniadanie</mat-radio-button
-              >
-              <mat-radio-button
-                class="card__input-container--radio-button"
-                value="II śniadanie"
-                >II śniadanie</mat-radio-button
-              >
-              <mat-radio-button
-                class="card__input-container--radio-button"
-                value="Obiad"
-                >Obiad</mat-radio-button
-              >
-              <mat-radio-button
-                class="card__input-container--radio-button"
-                value="Podwieczorek"
-                >Podwieczorek</mat-radio-button
-              >
-              <mat-radio-button
-                class="card__input-container--radio-button"
-                value="Kolacja"
-                >Kolacja</mat-radio-button
-              >
-            </mat-radio-group>
+          <div class="card__input-container row">
+            <div
+              class="card__input-container--padding-bottom col-lg-2 col-md-12 col-sm-12"
+            >
+              <p class="card__input-container--input-title">Kategoria</p>
+              <mat-radio-group formControlName="category">
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="śniadanie"
+                  >Śniadanie</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="II śniadanie"
+                  >II śniadanie</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="obiad"
+                  >Obiad</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="podwieczorek"
+                  >Podwieczorek</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="kolacja"
+                  >Kolacja</mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
+            <div
+              class="card__input-container--padding-bottom col-lg-2 col-md-12 col-sm-12"
+            >
+              <p class="card__input-container--input-title">
+                Poziom zaawansowania
+              </p>
+              <mat-radio-group formControlName="level">
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="łatwy"
+                  >Łatwy</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="średni"
+                  >Średni</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="trudny"
+                  >Trudny</mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
+            <div
+              class="card__input-container--padding-bottom col-lg-2 col-md-12 col-sm-12"
+            >
+              <p class="card__input-container--input-title">Typ diety</p>
+              <mat-radio-group formControlName="dietType">
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="wysokobiałkowa"
+                  >Wysokobiałkowa</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="bezglutenowa"
+                  >Bezglutenowa</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="ketogeniczna"
+                  >Ketogeniczna</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="wegańska"
+                  >Wegańska</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="wegetariańska"
+                  >Wegetariańska</mat-radio-button
+                >
+                <mat-radio-button
+                  class="card__input-container--radio-button"
+                  value="inna"
+                  >Inna</mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
           </div>
           <div>
             <button
@@ -164,6 +204,9 @@
       <mat-step [stepControl]="nutrientsFormGroup">
         <form [formGroup]="nutrientsFormGroup">
           <ng-template matStepLabel>Wartości odżywcze</ng-template>
+          <p class="card__input-container--header">
+            Wprowadź wartości odpowiadające całemu przepisowi.
+          </p>
           <div class="card__input-container">
             <mat-form-field
               class="card__input-container--input"
@@ -249,23 +292,22 @@
           </div>
         </form>
       </mat-step>
-      <mat-step
-        [completed]="recipeProductsAreValid && recipeProducts.length > 0"
-      >
+      <mat-step [completed]="productsAreValid && products.length > 0">
         <form>
           <ng-template matStepLabel>Składniki</ng-template>
           <div
             class="card__input-container"
-            *ngFor="let product of recipeProducts; let i = index"
+            *ngFor="let product of products; let i = index"
           >
             <app-add-product-to-recipe
               [product]="product"
+              [productIdIsChosen]="productIdIsChosen"
               (returnProductData)="saveProductData($event, i)"
               (productToDelete)="deleteProduct(i)"
             ></app-add-product-to-recipe>
           </div>
           <button
-            [disabled]="!recipeProductsAreValid"
+            [disabled]="!productsAreValid"
             class="card__input-container--margin-bottom"
             (click)="addAnotherProduct()"
             mat-mini-fab
@@ -275,7 +317,7 @@
           <div>
             <button mat-button matStepperPrevious>Powrót</button>
             <button
-              [disabled]="!recipeProductsAreValid || !recipeProducts.length"
+              [disabled]="!productsAreValid || !products.length"
               mat-button
               matStepperNext
               class="card__next-button"
@@ -286,12 +328,12 @@
         </form>
       </mat-step>
 
-      <mat-step [completed]="recipeStepsAreValid && recipeSteps.length > 0">
+      <mat-step [completed]="stepsAreValid && steps.length > 0">
         <form>
           <ng-template matStepLabel>Przepis</ng-template>
           <div
             class="card__input-container"
-            *ngFor="let recipeStep of recipeSteps; let i = index"
+            *ngFor="let recipeStep of steps; let i = index"
           >
             <app-add-another-step-to-recipe
               [index]="i"
@@ -301,7 +343,7 @@
             ></app-add-another-step-to-recipe>
           </div>
           <button
-            [disabled]="!recipeStepsAreValid"
+            [disabled]="!stepsAreValid"
             class="card__input-container--margin-bottom"
             (click)="addAnotherRecipeStep()"
             mat-mini-fab
@@ -311,7 +353,7 @@
           <div>
             <button mat-button matStepperPrevious>Powrót</button>
             <button
-              [disabled]="!recipeStepsAreValid || !recipeSteps.length"
+              [disabled]="!stepsAreValid || !steps.length"
               mat-button
               matStepperNext
               class="card__next-button"
@@ -324,24 +366,85 @@
       <mat-step>
         <form>
           <ng-template matStepLabel>Gotowe!</ng-template>
-          <h2>Wszystko gotowe!</h2>
-          <p class="card__end-text">Możesz teraz opublikować swój przepis</p>
+          <h2 *ngIf="!processIsFinished">Wszystko gotowe!</h2>
+          <p
+            *ngIf="mode === 'create' && !processIsFinished"
+            class="card__end-text"
+          >
+            Możesz teraz opublikować swój przepis
+          </p>
+          <p
+            *ngIf="mode === 'edit' && !processIsFinished"
+            class="card__end-text"
+          >
+            Możesz teraz edytować swój przepis
+          </p>
+
+          <h2
+            *ngIf="
+              mode === 'create' &&
+              processIsFinished &&
+              processIsFinishedSuccessfully
+            "
+          >
+            Przepis został dodany pomyślnie!
+          </h2>
+          <h2
+            *ngIf="
+              mode === 'edit' &&
+              processIsFinished &&
+              processIsFinishedSuccessfully
+            "
+          >
+            Przepis został edytowany pomyślnie!
+          </h2>
+          <a
+            *ngIf="processIsFinished && processIsFinishedSuccessfully"
+            class="link"
+            routerLink="/recipes"
+          >
+            Zobacz przepisy
+          </a>
+
+          <h2 *ngIf="processIsFinished && !processIsFinishedSuccessfully">
+            Ups! Coś poszło nie tak...
+          </h2>
+          <p
+            *ngIf="processIsFinished && !processIsFinishedSuccessfully"
+            class="card__end-text"
+          >
+            Spróbuj ponownie.
+          </p>
+
           <button
-            *ngIf="mode === 'create'"
+            *ngIf="
+              mode === 'create' &&
+              (!processIsFinished || !processIsFinishedSuccessfully)
+            "
             class="card__share-button"
             (click)="addNewRecipe()"
           >
             Opublikuj
           </button>
           <button
-            *ngIf="mode === 'edit'"
+            *ngIf="
+              mode === 'edit' &&
+              (!processIsFinished || !processIsFinishedSuccessfully)
+            "
             class="card__share-button"
             (click)="addNewRecipe()"
           >
             Edytuj
           </button>
+
           <div>
-            <button mat-button matStepperPrevious>Powrót</button>
+            <button
+              *ngIf="!processIsFinished && !processIsFinishedSuccessfully"
+              mat-button
+              matStepperPrevious
+            >
+              Powrót
+            </button>
           </div>
         </form>
       </mat-step>

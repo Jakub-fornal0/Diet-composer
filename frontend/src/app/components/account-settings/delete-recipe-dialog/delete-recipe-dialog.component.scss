@@ -1,0 +1,19 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .container__header {
+    margin-top: 10px;
+    padding-bottom: 5px;
+    text-align: center;
+    font-weight: 500;
+  }
+}
+
+.buttons-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

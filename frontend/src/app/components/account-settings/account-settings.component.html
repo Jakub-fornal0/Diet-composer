@@ -36,7 +36,7 @@
         <span class="inline-data__value text">{{ userData.weight }} kg</span>
       </div>
       <div class="inline-data">
-        <span class="inline-data__name">Wzrost: </span>
+        <span class="inline-data__name text">Wzrost: </span>
         <span class="inline-data__dotted-space"></span>
         <span class="inline-data__value">{{ userData.height }} cm</span>
       </div>
@@ -99,20 +99,20 @@
       <div *ngIf="userData.recipes.length" class="user-recipes-container__list">
         <div
           class="user-recipes-container__recipe"
-          *ngFor="let recipe of userData.recipes"
+          *ngFor="let recipe of userData.recipes; let i = index"
         >
           <div class="user-recipes-container__recipe--inline">
             <img
               class="user-recipes-container__image"
               [routerLink]="['/recipes/detail', recipe.id]"
-              [src]="recipe.recipeImage"
-              [alt]="recipe.recipeName"
+              [src]="recipe.image"
+              [alt]="recipe.name"
             />
             <p
               class="user-recipes-container__recipe-name text"
               [routerLink]="['/recipes/detail', recipe.id]"
             >
-              {{ recipe.recipeName }}
+              {{ recipe.name }}
             </p>
           </div>
           <div
@@ -123,17 +123,19 @@
               [routerLink]="['/recipes/edit', recipe.id]"
               >edit</mat-icon
             >
-            <mat-icon class="user-recipes-container__icon"
+            <mat-icon
+              class="user-recipes-container__icon"
+              (click)="deleteRecipe(i)"
               >delete_outline</mat-icon
             >
           </div>
         </div>
       </div>
-      <div
-        *ngIf="!userData.recipes.length"
-        class="user-recipes-container__list text"
-      >
+      <div *ngIf="!userData.recipes.length" class="data-container text">
         <p class="user-recipes-container__header">Nie dodano przepisów.</p>
+        <a class="user-recipes-container__header link" routerLink="/recipes/add"
+          >Dodaj przepis</a
+        >
       </div>
     </div>
   </mat-card>

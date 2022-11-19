@@ -1,5 +1,8 @@
 <div class="app-recipes">
-  <div class="app-recipes__container row row--without-wrap">
+  <div
+    *ngIf="userIsAuthenticated"
+    class="app-recipes__container row row--without-wrap"
+  >
     <mat-expansion-panel
       class="app-recipes__container--products-expansion-panel col-12 col-md-12 col-lg-4"
     >

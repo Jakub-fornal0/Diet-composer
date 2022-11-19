@@ -9,6 +9,7 @@ export interface Recipe {
   portions: number;
   level: string;
   category: string;
+  dietType: string;
 }
 
 export interface RecipeDetail {
@@ -25,9 +26,29 @@ export interface RecipeDetail {
   fats: number;
   proteins: number;
   carbohydrates: number;
+  category?: string;
+  dietType?: string;
+}
+
+export interface RecipeAddData {
+  id?: string;
+  name: string;
+  description: string;
+  cookingTime: number;
+  portions: number;
+  level: string;
+  category: string;
+  dietType: string;
+  author: string;
+  calories: number;
+  fats: number;
+  proteins: number;
+  carbohydrates: number;
+  products: string;
+  steps: string;
 }
 
 export interface RecipeStep {
-  id?: string;
-  stepName: string;
+  id?: number;
+  name: string;
 }

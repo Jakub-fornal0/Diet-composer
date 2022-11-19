@@ -7,5 +7,6 @@ router.post("/uploadImage", usersController.uploadImage);
 router.get("/downloadUserImage", usersController.downloadUserImage);
 router.post("/BodyMassIndex", usersController.BMI);
 router.get("/All", usersController.All);
+router.delete("/", usersController.deleteUser);
 
 module.exports = router;

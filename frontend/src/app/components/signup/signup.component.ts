@@ -10,10 +10,10 @@ import { registerData } from '../../interfaces/register.model';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent implements OnInit {
-  registerForm: FormGroup;
-  passwordIsHide: boolean = true;
-  registerData: registerData = { userName: '', email: '', password: '' };
-  error: string = '';
+  public registerForm: FormGroup;
+  public passwordIsHide: boolean = true;
+  public registerData: registerData = { userName: '', email: '', password: '' };
+  public error: string = '';
 
   constructor(
     private formBuilder: FormBuilder,
@@ -29,7 +29,7 @@ export class SignupComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  register() {
+  public register(): void {
     this.error = '';
     if (!this.registerForm.valid) {
       this.registerForm.markAllAsTouched();

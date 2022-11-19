@@ -8,14 +8,14 @@ import { MatDialogRef } from '@angular/material/dialog';
   styleUrls: ['./add-other-meal-to-schedule.component.scss'],
 })
 export class AddOtherMealToScheduleComponent implements OnInit {
-  snackMealForm: FormGroup;
+  public snackMealForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
     private dialogRef: MatDialogRef<AddOtherMealToScheduleComponent>
   ) {
     this.snackMealForm = this.formBuilder.group({
-      mealName: ['', [Validators.required]],
+      snackName: ['', [Validators.required]],
       calories: ['', [Validators.required]],
       fats: ['', [Validators.required]],
       carbohydrates: ['', [Validators.required]],
@@ -25,7 +25,7 @@ export class AddOtherMealToScheduleComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  saveOtherMeal() {
+  public saveOtherMeal(): void {
     this.dialogRef.close(this.snackMealForm.value);
   }
 }

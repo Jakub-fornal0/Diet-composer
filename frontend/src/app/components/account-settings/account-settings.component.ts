@@ -5,6 +5,9 @@ import { AccountService } from 'src/app/services/account.service';
 import { User } from '../../interfaces/user.model';
 import { SetBodyParametersDialogComponent } from './set-body-parameters-dialog/set-body-parameters-dialog.component';
 import { SetUserImageDialogComponent } from './set-user-image-dialog/set-user-image-dialog.component';
+import { DeleteRecipeDialogComponent } from './delete-recipe-dialog/delete-recipe-dialog.component';
+import { RecipeService } from 'src/app/services/recipe.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-account-settings',
@@ -12,21 +15,20 @@ import { SetUserImageDialogComponent } from './set-user-image-dialog/set-user-im
   styleUrls: ['./account-settings.component.scss'],
 })
 export class AccountSettingsComponent implements OnInit {
-  userData: User = UserConsts;
+  public userData: User = UserConsts;
 
   constructor(
     private dialog: MatDialog,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private recipeService: RecipeService,
+    private snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
-    this.accountService.getUserData().subscribe((res) => {
-      this.userData = res.user;
-      this.userData.recipes = res.recipes;
-    });
+    this.getUserData();
   }
 
-  openSetBodyParametersDialog(
+  public openSetBodyParametersDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
@@ -65,7 +67,7 @@ export class AccountSettingsComponent implements OnInit {
       });
   }
 
-  openSetUserImageDialog(
+  public openSetUserImageDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
@@ -85,5 +87,47 @@ export class AccountSettingsComponent implements OnInit {
             });
         }
       });
+  }
+
+  public deleteRecipe(index: number): void {
+    this.dialog
+      .open(DeleteRecipeDialogComponent, {
+        width: '500px',
+        enterAnimationDuration: '0ms',
+        exitAnimationDuration: '0ms',
+        data: this.userData.recipes[index],
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          const recipeId = this.userData.recipes[index].id;
+          if (recipeId) {
+            this.recipeService.deleteRecipe(recipeId).subscribe((res) => {
+              if ((res.message = 'Przepis użytkownika został usunięty')) {
+                this.snackBar.open('Przepis został usunięty.', '', {
+                  duration: 2000,
+                });
+              } else {
+                this.snackBar.open(
+                  'Coś poszło nie tak, spróbuj ponownie.',
+                  '',
+                  { duration: 2000 }
+                );
+              }
+            });
+
+            setTimeout(() => {
+              this.getUserData();
+            }, 500);
+          }
+        }
+      });
+  }
+
+  private getUserData(): void {
+    this.accountService.getUserData().subscribe((res) => {
+      this.userData = res.user;
+      this.userData.recipes = res.recipes;
+    });
   }
 }

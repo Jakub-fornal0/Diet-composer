@@ -22,16 +22,16 @@ import { Token } from '../interfaces/token.model';
 export class AuthService {
   private apiURL = environment.apiURL;
   private authStatusListener = new Subject<boolean>();
-  userProfile = new BehaviorSubject<UserProfile | null>(null);
-  jwtService: JwtHelperService = new JwtHelperService();
+  public userProfile = new BehaviorSubject<UserProfile | null>(null);
+  public jwtService: JwtHelperService = new JwtHelperService();
 
   constructor(private http: HttpClient) {}
 
-  userRegister(registerData: registerData): Observable<any> {
+  public userRegister(registerData: registerData): Observable<any> {
     return this.http.post<any>(`${this.apiURL}/signup`, registerData);
   }
 
-  login(loginData: loginData): Observable<any> {
+  public login(loginData: loginData): Observable<any> {
     return this.http.post<any>(`${this.apiURL}/signin`, loginData).pipe(
       map((data) => {
         var token = { token: data.token } as Token;
@@ -48,7 +48,7 @@ export class AuthService {
     );
   }
 
-  getAccessToken(): string {
+  public getAccessToken(): string {
     const localStorageToken = localStorage.getItem(LocalStorageConsts.TOKEN);
     if (localStorageToken) {
       const token = JSON.parse(localStorageToken) as Token;
@@ -65,7 +65,7 @@ export class AuthService {
     return '';
   }
 
-  userIsAuth(): boolean {
+  public userIsAuth(): boolean {
     this.getAccessToken();
     let userProfile = this.userProfile.getValue();
     if (!this.getAccessToken()) {
@@ -80,7 +80,7 @@ export class AuthService {
     return false;
   }
 
-  getAuthStatusListener() {
+  public getAuthStatusListener() {
     return this.authStatusListener.asObservable();
   }
 }

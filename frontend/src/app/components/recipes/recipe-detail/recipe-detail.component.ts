@@ -1,10 +1,16 @@
-import { RecipeDetail } from './../../../interfaces/recipe.model';
+import { RecipeDetail, RecipeStep } from './../../../interfaces/recipe.model';
 import { Component, OnInit } from '@angular/core';
 import { RecipeStepConsts } from '../../../consts/recipe-step-consts';
 import { Product } from '../../../interfaces/product.model';
 import { MatDialog } from '@angular/material/dialog';
 import { AddRecipeToScheduleComponent } from '../add-recipe-to-schedule/add-recipe-to-schedule.component';
-import { ProductService } from 'src/app/services/product.service';
+import { ProductService } from '../../../services/product.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { RecipeService } from '../../../services/recipe.service';
+import { RecipeDetailConsts } from '../../../consts/recipe-detail-consts';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -12,75 +18,110 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./recipe-detail.component.scss'],
 })
 export class RecipeDetailComponent implements OnInit {
-  products: Product[] = [];
-  recipeSteps: string[] = [];
-
-  // _________________________MOCKUP _________________________//
-  recipe: RecipeDetail = {
-    id: '1',
-    image: 'assets/zdj.jpg',
-    name: 'Zapiekanka makaronowa',
-
-    cookingTime: 45,
-    portions: 4,
-    level: 'Łatwy',
-    products: [
-      { id: 5, name: 'makaron pióra', quantity: 200, measureUnit: 'g' },
-      { id: 7, name: 'pierś z kurczaka', quantity: 0.2, measureUnit: 'kg' },
-      { id: 12, name: 'cebula', quantity: 1, measureUnit: 'szt' },
-      {
-        id: 13,
-        name: 'przecier pomidorowy',
-        quantity: 150,
-        measureUnit: 'ml',
-      },
-      { id: 67, name: 'pomidor', quantity: 150, measureUnit: 'g' },
-      { id: 15, name: 'ser zółty', quantity: 300, measureUnit: 'g' },
-      { id: 10, name: 'olej rzepakowy', quantity: 0.25, measureUnit: 'l' },
-      { id: 18, name: 'woda', quantity: 250, measureUnit: 'ml' },
-    ],
-    recipeStep: [
-      {
-        id: '1',
-        stepName: 'Cebulę pokrój w piórka, czosnek przeciśnij przez praskę.',
-      },
-      { id: '1', stepName: 'Podsmaż je na oleju.' },
-      { id: '1', stepName: 'Ugotuj makaron na sposób al dente.' },
-      {
-        id: '1',
-        stepName:
-          'Warzywa pokrój w paski i wraz z kurczakiem dodaj do całości. Duś około 15 minut.',
-      },
-      {
-        id: '1',
-        stepName:
-          'Następnie podlej szklanką wody i dodaj kostkę Rosołu z kury Knorr oraz przecier pomidorowy.',
-      },
-      {
-        id: '1',
-        stepName:
-          'Makaron wyłóż do naczynia żaroodpornego, zalej sosem i posyp startym serem.',
-      },
-      {
-        id: '1',
-        stepName:
-          'Włóż do piekarnika nagrzanego do 180 stopni na 20 minut. Następnie podawaj.',
-      },
-    ],
-    author: 'Pędzimąż Andrzej',
-    calories: 500,
-    fats: 1,
-    proteins: 2,
-    carbohydrates: 3,
-  };
-  // _________________________________________________//
+  public products: Product[] = [];
+  public recipeSteps: string[] = [];
+  public recipe: RecipeDetail = RecipeDetailConsts;
+  public authListenerSubs?: Subscription;
+  public userIsAuthenticated: boolean = false;
 
   constructor(
+    private snackBar: MatSnackBar,
     private dialog: MatDialog,
-    private productService: ProductService
+    private productService: ProductService,
+    private activatedRoute: ActivatedRoute,
+    private recipeService: RecipeService,
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.checkUserIsAuth();
+    this.getRecipeData();
+
+    if (this.userIsAuthenticated) {
+      this.getUserProducts();
+    }
+  }
+
+  private checkUserIsAuth(): void {
+    this.userIsAuthenticated = this.authService.userIsAuth();
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuth) => {
+        this.userIsAuthenticated = isAuth;
+      });
+  }
+
+  private getRecipeData(): void {
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('recipeId')) {
+        const recipeId = paramMap.get('recipeId') || '';
+
+        this.recipeService.getRecipeDetail(recipeId).subscribe({
+          error: (err) => {
+            if (err.status === 500) {
+              this.router.navigate(['/not-found']);
+            }
+          },
+          next: (res) => {
+            let recipeSteps: RecipeStep[] = [];
+            res.RecipeDetail.recipeSteps.forEach(
+              (recipeStep: { step: number; name: string }) => {
+                recipeSteps.push({
+                  id: recipeStep.step,
+                  name: recipeStep.name,
+                });
+              }
+            );
+
+            let products: Product[] = [];
+            res.RecipeDetail.products.forEach(
+              (product: {
+                id: number;
+                name: string;
+                recipeProduct: { quantity: number };
+                measureUnit: string;
+              }) => {
+                products.push({
+                  id: product.id,
+                  name: product.name,
+                  quantity: product.recipeProduct.quantity,
+                  measureUnit: product.measureUnit,
+                });
+              }
+            );
+
+            delete res.RecipeDetail['products'];
+            delete res.RecipeDetail['recipeSteps'];
+            this.recipe = res.RecipeDetail;
+            this.recipe.recipeStep = recipeSteps;
+            this.recipe.products = products;
+            this.recipe.calories = parseFloat(
+              (res.RecipeDetail.calories / res.RecipeDetail.portions).toFixed(2)
+            );
+            this.recipe.fats = parseFloat(
+              (res.RecipeDetail.fats / res.RecipeDetail.portions).toFixed(2)
+            );
+            this.recipe.carbohydrates = parseFloat(
+              (
+                res.RecipeDetail.carbohydrates / res.RecipeDetail.portions
+              ).toFixed(2)
+            );
+            this.recipe.proteins = parseFloat(
+              (res.RecipeDetail.proteins / res.RecipeDetail.portions).toFixed(2)
+            );
+
+            this.recipe.recipeStep.forEach(() =>
+              this.recipeSteps.push(RecipeStepConsts.TODO)
+            );
+            this.recipeSteps[0] = RecipeStepConsts.DOING;
+          },
+        });
+      }
+    });
+  }
+
+  private getUserProducts(): void {
     this.productService.getAllUserProducts().subscribe((res) => {
       res.Products.forEach((product: any) => {
         this.products.push({
@@ -91,14 +132,9 @@ export class RecipeDetailComponent implements OnInit {
         });
       });
     });
-
-    this.recipe.recipeStep.forEach(() =>
-      this.recipeSteps.push(RecipeStepConsts.TODO)
-    );
-    this.recipeSteps[0] = RecipeStepConsts.DOING;
   }
 
-  checkUserHaveProduct(recipeProduct: Product): boolean {
+  public checkUserHaveProduct(recipeProduct: Product): boolean {
     const foundProduct = this.products.find(
       (userProduct: Product) => userProduct.id === recipeProduct.id
     );
@@ -113,7 +149,7 @@ export class RecipeDetailComponent implements OnInit {
     return false;
   }
 
-  checkDisabled(i: number): boolean {
+  public checkDisabled(i: number): boolean {
     if (this.recipeSteps[i + 1] === RecipeStepConsts.DONE) {
       return true;
     }
@@ -125,7 +161,7 @@ export class RecipeDetailComponent implements OnInit {
     return true;
   }
 
-  makeStepAsDone(i: number) {
+  public makeStepAsDone(i: number): void {
     const doingIndex = this.recipeSteps.indexOf(RecipeStepConsts.DOING);
     const doingIndexDifferenceI: number = doingIndex - i;
     let indexSmallerThanDoingIndex: boolean = false;
@@ -145,16 +181,25 @@ export class RecipeDetailComponent implements OnInit {
     }
   }
 
-  openAddtoScheduleDialog(
+  public openAddtoScheduleDialog(
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
-    this.dialog.open(AddRecipeToScheduleComponent, {
-      width: '500px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      disableClose: true,
-      data: this.recipe,
-    });
+    this.dialog
+      .open(AddRecipeToScheduleComponent, {
+        width: '500px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+        disableClose: true,
+        data: this.recipe,
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          this.snackBar.open('Dodano do harmonogramu.', '', {
+            duration: 2000,
+          });
+        }
+      });
   }
 }

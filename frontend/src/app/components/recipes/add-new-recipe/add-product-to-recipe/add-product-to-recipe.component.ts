@@ -10,16 +10,17 @@ import { ProductService } from 'src/app/services/product.service';
   styleUrls: ['./add-product-to-recipe.component.scss'],
 })
 export class AddProductToRecipeComponent implements OnInit {
-  products!: Product[];
-
   @Input() product?: Product;
+  @Input() productIdIsChosen?: number;
   @Output() returnProductData = new EventEmitter<Product>();
   @Output() productToDelete = new EventEmitter();
 
-  addProductForm: FormGroup;
-  filteredProducts?: Observable<Product[]>;
-  inputMeasureUnit: string = '';
-  productDoesntExist: boolean = false;
+  public products!: Product[];
+  public addProductForm: FormGroup;
+  public filteredProducts?: Observable<Product[]>;
+  public inputMeasureUnit: string = '';
+  public productDoesntExist: boolean = false;
+  public productIsChosen: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -31,7 +32,24 @@ export class AddProductToRecipeComponent implements OnInit {
     });
 
     this.addProductForm.get('productQuantity')?.reset();
+    this.getFilteredProducts();
+  }
 
+  ngOnInit(): void {
+    this.getAllProducts();
+    this.setProduct();
+
+    this.addProductForm.valueChanges.subscribe(() => {
+      this.returnProductData.emit({
+        id: this.addProductForm.get('productName')?.value.id,
+        name: this.addProductForm.get('productName')?.value.name,
+        measureUnit: this.addProductForm.get('productName')?.value.measureUnit,
+        quantity: this.addProductForm.get('productQuantity')?.value,
+      });
+    });
+  }
+
+  private getFilteredProducts(): void {
     this.filteredProducts = this.addProductForm
       .get('productName')
       ?.valueChanges.pipe(
@@ -46,12 +64,14 @@ export class AddProductToRecipeComponent implements OnInit {
       );
   }
 
-  ngOnInit(): void {
+  private getAllProducts(): void {
     this.productService.getAllProducts().subscribe((res) => {
       this.products = res.data.allProducts;
     });
+  }
 
-    if (this.product) {
+  private setProduct(): void {
+    if (this.product && this.product?.measureUnit) {
       const productName = {
         id: this.product?.id,
         name: this.product?.name,
@@ -65,24 +85,16 @@ export class AddProductToRecipeComponent implements OnInit {
     } else {
       this.addProductForm.get('productQuantity')?.disable();
     }
-
-    this.addProductForm.valueChanges.subscribe(() => {
-      this.returnProductData.emit({
-        id: this.addProductForm.get('productName')?.value.id,
-        name: this.addProductForm.get('productName')?.value.name,
-        measureUnit: this.addProductForm.get('productName')?.value.measureUnit,
-        quantity: this.addProductForm.get('productQuantity')?.value,
-      });
-    });
   }
 
-  getProductName(product: Product) {
+  public getProductName(product: Product): string {
     return product.name;
   }
 
-  checkProductExist() {
+  public checkProductExist(): void {
     this.resetQuantityInput();
     this.productDoesntExist = false;
+    this.productIsChosen = false;
 
     const productName =
       typeof this.addProductForm.get('productName')?.value === 'string'
@@ -92,7 +104,8 @@ export class AddProductToRecipeComponent implements OnInit {
     this.products.forEach((product: Product) => {
       if (
         product.name.toLowerCase() === productName.toLowerCase() &&
-        product.id
+        product.id &&
+        product.measureUnit
       ) {
         this.productDoesntExist = false;
         this.inputMeasureUnit = product.measureUnit;
@@ -107,15 +120,25 @@ export class AddProductToRecipeComponent implements OnInit {
         this.resetQuantityInput();
       }
     });
+
+    if (
+      this.productIdIsChosen ===
+      this.addProductForm.get('productName')?.value.id
+    ) {
+      this.productDoesntExist = false;
+      this.productIsChosen = true;
+      this.inputMeasureUnit = '';
+      this.addProductForm.get('productQuantity')?.disable();
+    }
   }
 
-  resetQuantityInput() {
+  private resetQuantityInput(): void {
     this.addProductForm.get('productQuantity')?.reset();
     this.addProductForm.get('productQuantity')?.disable();
     this.inputMeasureUnit = '';
   }
 
-  deleteProduct() {
+  public deleteProduct(): void {
     this.productToDelete.emit();
   }
 }
