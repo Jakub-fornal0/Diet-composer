@@ -17,7 +17,10 @@
 
     <div class="detail-container col-lg-5 col-md-12 col-sm-12">
       <h1 class="detail-container__name">{{ recipe.name }}</h1>
-      <p class="detail-container__author" *ngIf="recipe.author">
+      <p
+        class="detail-container__author"
+        *ngIf="recipe.author !== 'Administrator'"
+      >
         Autor: {{ recipe.author }}
       </p>
       <div class="detail-container__inline-icon">
@@ -75,7 +78,9 @@
         <span
           >- {{ product.name }} {{ product.quantity }}{{ product.measureUnit }}
         </span>
-        <span class="products-container__product--icon-to-right"
+        <span
+          *ngIf="userIsAuthenticated"
+          class="products-container__product--icon-to-right"
           ><mat-icon
             *ngIf="checkUserHaveProduct(product)"
             class="products-container__product--have-product-icon"

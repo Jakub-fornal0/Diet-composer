@@ -8,6 +8,8 @@ import { ProductService } from '../../../services/product.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
 import { RecipeService } from '../../../services/recipe.service';
 import { RecipeDetailConsts } from '../../../consts/recipe-detail-consts';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -18,16 +20,26 @@ export class RecipeDetailComponent implements OnInit {
   products: Product[] = [];
   recipeSteps: string[] = [];
   recipe: RecipeDetail = RecipeDetailConsts;
+  authListenerSubs?: Subscription;
+  userIsAuthenticated: boolean = false;
 
   constructor(
     private dialog: MatDialog,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
     private recipeService: RecipeService,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
+    this.userIsAuthenticated = this.authService.userIsAuth();
+    this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe((isAuth) => {
+        this.userIsAuthenticated = isAuth;
+      });
+
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('recipeId')) {
         const recipeId = paramMap.get('recipeId') || '';
@@ -95,16 +107,18 @@ export class RecipeDetailComponent implements OnInit {
       }
     });
 
-    this.productService.getAllUserProducts().subscribe((res) => {
-      res.Products.forEach((product: any) => {
-        this.products.push({
-          id: product.product.id,
-          name: product.product.name,
-          measureUnit: product.product.measureUnit,
-          quantity: product.quantity,
+    if (this.userIsAuthenticated) {
+      this.productService.getAllUserProducts().subscribe((res) => {
+        res.Products.forEach((product: any) => {
+          this.products.push({
+            id: product.product.id,
+            name: product.product.name,
+            measureUnit: product.product.measureUnit,
+            quantity: product.quantity,
+          });
         });
       });
-    });
+    }
   }
 
   checkUserHaveProduct(recipeProduct: Product): boolean {
