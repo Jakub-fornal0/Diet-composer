@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Schedule } from '../../../interfaces/schedule.model';
 import { LocalStorageService } from '../../../services/local-storage.service';
 import { LocalStorageConsts } from '../../../consts/localstorage-consts';
@@ -19,6 +19,7 @@ export class AddRecipeToScheduleComponent implements OnInit {
   typeOfMealIsChosen: boolean = false;
 
   constructor(
+    private dialogRef: MatDialogRef<AddRecipeToScheduleComponent>,
     private localStorageService: LocalStorageService,
     @Inject(MAT_DIALOG_DATA) public data: RecipeDetail
   ) {
@@ -80,5 +81,7 @@ export class AddRecipeToScheduleComponent implements OnInit {
       LocalStorageConsts.SCHEDULE,
       this.schedule
     );
+
+    this.dialogRef.close(true);
   }
 }

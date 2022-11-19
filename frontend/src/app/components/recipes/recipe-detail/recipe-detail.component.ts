@@ -10,6 +10,7 @@ import { RecipeService } from '../../../services/recipe.service';
 import { RecipeDetailConsts } from '../../../consts/recipe-detail-consts';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/services/auth.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-recipe-detail',
@@ -24,6 +25,7 @@ export class RecipeDetailComponent implements OnInit {
   userIsAuthenticated: boolean = false;
 
   constructor(
+    private snackBar: MatSnackBar,
     private dialog: MatDialog,
     private productService: ProductService,
     private activatedRoute: ActivatedRoute,
@@ -172,12 +174,21 @@ export class RecipeDetailComponent implements OnInit {
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
-    this.dialog.open(AddRecipeToScheduleComponent, {
-      width: '500px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      disableClose: true,
-      data: this.recipe,
-    });
+    this.dialog
+      .open(AddRecipeToScheduleComponent, {
+        width: '500px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+        disableClose: true,
+        data: this.recipe,
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          this.snackBar.open('Dodano do harmonogramu.', '', {
+            duration: 2000,
+          });
+        }
+      });
   }
 }
