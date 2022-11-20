@@ -13,6 +13,7 @@ import {
 import { MatDialog } from '@angular/material/dialog';
 import { AddOtherMealToScheduleComponent } from './add-other-meal-to-schedule/add-other-meal-to-schedule.component';
 import { AccountService } from 'src/app/services/account.service';
+import { DeleteMealDialogComponent } from './delete-meal-dialog/delete-meal-dialog.component';
 
 @Component({
   selector: 'app-schedule',
@@ -139,35 +140,49 @@ export class ScheduleComponent implements OnInit {
   }
 
   public deleteMealFromSchedule(mealType: string): void {
-    if (
-      mealType === 'breakfast' ||
-      mealType === 'secondBreakfast' ||
-      mealType === 'lunch' ||
-      mealType === 'tea' ||
-      mealType === 'dinner'
-    ) {
-      if (this.schedule[mealType].eaten) {
-        this.scheduleDetails.eatenCalories -= this.schedule[mealType].calories;
-        this.scheduleDetails.eatenCarbohydrates -=
-          this.schedule[mealType].carbohydrates;
-        this.scheduleDetails.eatenProteins -= this.schedule[mealType].proteins;
-        this.scheduleDetails.eatenFats -= this.schedule[mealType].fats;
-      }
+    this.dialog
+      .open(DeleteMealDialogComponent, {
+        width: '500px',
+        enterAnimationDuration: '0ms',
+        exitAnimationDuration: '0ms',
+        data: 'one',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          if (
+            mealType === 'breakfast' ||
+            mealType === 'secondBreakfast' ||
+            mealType === 'lunch' ||
+            mealType === 'tea' ||
+            mealType === 'dinner'
+          ) {
+            if (this.schedule[mealType].eaten) {
+              this.scheduleDetails.eatenCalories -=
+                this.schedule[mealType].calories;
+              this.scheduleDetails.eatenCarbohydrates -=
+                this.schedule[mealType].carbohydrates;
+              this.scheduleDetails.eatenProteins -=
+                this.schedule[mealType].proteins;
+              this.scheduleDetails.eatenFats -= this.schedule[mealType].fats;
+            }
 
-      this.schedule[mealType].recipeId = '';
-      this.schedule[mealType].recipeName = '';
-      this.schedule[mealType].recipeImage = '';
-      this.schedule[mealType].proteins = 0;
-      this.schedule[mealType].fats = 0;
-      this.schedule[mealType].eaten = false;
-      this.schedule[mealType].carbohydrates = 0;
-      this.schedule[mealType].calories = 0;
+            this.schedule[mealType].recipeId = '';
+            this.schedule[mealType].recipeName = '';
+            this.schedule[mealType].recipeImage = '';
+            this.schedule[mealType].proteins = 0;
+            this.schedule[mealType].fats = 0;
+            this.schedule[mealType].eaten = false;
+            this.schedule[mealType].carbohydrates = 0;
+            this.schedule[mealType].calories = 0;
 
-      this.localStorageService.setItemToLocalStorage(
-        LocalStorageConsts.SCHEDULE,
-        this.schedule
-      );
-    }
+            this.localStorageService.setItemToLocalStorage(
+              LocalStorageConsts.SCHEDULE,
+              this.schedule
+            );
+          }
+        }
+      });
   }
 
   public clearScheduleDetails(): void {
@@ -222,9 +237,21 @@ export class ScheduleComponent implements OnInit {
   }
 
   public clearSchedule(): void {
-    this.localStorageService.removeItemFromLocalStorage(
-      LocalStorageConsts.SCHEDULE
-    );
-    window.location.reload();
+    this.dialog
+      .open(DeleteMealDialogComponent, {
+        width: '500px',
+        enterAnimationDuration: '0ms',
+        exitAnimationDuration: '0ms',
+        data: 'all',
+      })
+      .afterClosed()
+      .subscribe((data) => {
+        if (data) {
+          this.localStorageService.removeItemFromLocalStorage(
+            LocalStorageConsts.SCHEDULE
+          );
+          window.location.reload();
+        }
+      });
   }
 }

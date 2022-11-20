@@ -49,6 +49,7 @@ import { AddOtherMealToScheduleComponent } from './components/schedule/add-other
 import { DeleteRecipeDialogComponent } from './components/account-settings/delete-recipe-dialog/delete-recipe-dialog.component';
 import { HomeComponent } from './components/home/home.component';
 import { DeleteAllProductsDialogComponent } from './components/products/delete-all-products-dialog/delete-all-products-dialog.component';
+import { DeleteMealDialogComponent } from './components/schedule/delete-meal-dialog/delete-meal-dialog.component';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { DeleteAllProductsDialogComponent } from './components/products/delete-a
     DeleteRecipeDialogComponent,
     HomeComponent,
     DeleteAllProductsDialogComponent,
+    DeleteMealDialogComponent,
   ],
   imports: [
     HttpClientModule,

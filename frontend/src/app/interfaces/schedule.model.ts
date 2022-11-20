@@ -31,6 +31,7 @@ export interface ScheduleDetails {
 }
 
 export interface SnackMealData {
+  id?: number;
   snackName: string;
   calories: number;
   fats: number;
