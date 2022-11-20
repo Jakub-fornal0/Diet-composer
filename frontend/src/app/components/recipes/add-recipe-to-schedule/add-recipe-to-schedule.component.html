@@ -19,6 +19,19 @@
     >Do wybranej pory posiłku jest już przypisany przepis, czy chcesz go
     nadpisać?</span
   >
+  <div class="app-add-recipe-to-schedule__container--inputs">
+    <mat-form-field
+      class="app-add-recipe-to-schedule__container--time-input"
+      appearance="outline"
+    >
+      <mat-label>Godzina posiłku</mat-label>
+      <input matInput [formControl]="mealTime" type="time" required />
+      <mat-error>To pole jest wymagane.</mat-error>
+    </mat-form-field>
+    <mat-checkbox class="app-add-recipe-to-schedule__container--checkbox"
+      >Zaktualizować produkty?</mat-checkbox
+    >
+  </div>
 </div>
 <div mat-dialog-actions class="app-add-recipe-to-schedule__buttons">
   <button
@@ -31,7 +44,7 @@
   <button
     mat-raised-button
     mat-dialog-close
-    [disabled]="!checkTypeIsSelected()"
+    [disabled]="!checkValidations()"
     (click)="saveMealToSchedule()"
   >
     Dodaj

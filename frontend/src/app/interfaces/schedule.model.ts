@@ -7,6 +7,7 @@ export interface MealData {
   proteins: number;
   carbohydrates: number;
   eaten: boolean;
+  time: string;
 }
 
 export interface Schedule {

@@ -14,6 +14,7 @@ import { RecipeDetail } from '../../../interfaces/recipe.model';
 })
 export class AddRecipeToScheduleComponent implements OnInit {
   public typeOfMeal = new FormControl('');
+  public mealTime = new FormControl();
   public recipe?: RecipeDetail;
   public schedule: Schedule = ScheduleConsts;
   public typeOfMealIsChosen: boolean = false;
@@ -51,8 +52,8 @@ export class AddRecipeToScheduleComponent implements OnInit {
     });
   }
 
-  public checkTypeIsSelected(): boolean {
-    if (this.typeOfMeal.value) {
+  public checkValidations(): boolean {
+    if (this.typeOfMeal.value && this.mealTime.value) {
       return true;
     }
     return false;
@@ -75,6 +76,7 @@ export class AddRecipeToScheduleComponent implements OnInit {
       this.schedule[type].fats = this.recipe.fats;
       this.schedule[type].proteins = this.recipe.proteins;
       this.schedule[type].carbohydrates = this.recipe.carbohydrates;
+      this.schedule[type].time = this.mealTime.value;
     }
 
     this.localStorageService.setItemToLocalStorage(

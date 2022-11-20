@@ -5,7 +5,19 @@
         class="meals-container__meals"
         *ngFor="let mealType of typesOfMealENG; let i = index"
       >
-        <p class="meals-container__meal-header">{{ typesOfMealPL[i] }}:</p>
+        <p
+          *ngIf="
+            (mealType === 'breakfast' ||
+              mealType === 'secondBreakfast' ||
+              mealType === 'lunch' ||
+              mealType === 'tea' ||
+              mealType === 'dinner') &&
+            schedule[mealType].recipeId
+          "
+          class="meals-container__meal-header"
+        >
+          {{ typesOfMealPL[i] }} - {{ schedule[mealType].time }}:
+        </p>
         <div
           class="meals-container__meal-details row"
           *ngIf="
