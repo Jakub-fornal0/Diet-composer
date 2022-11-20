@@ -122,6 +122,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   private getUserProducts(): void {
+    this.products = [];
     this.productService.getAllUserProducts().subscribe((res) => {
       res.Products.forEach((product: any) => {
         this.products.push({
@@ -194,11 +195,12 @@ export class RecipeDetailComponent implements OnInit {
         data: this.recipe,
       })
       .afterClosed()
-      .subscribe((data) => {
+      .subscribe((data: Product[]) => {
         if (data) {
           this.snackBar.open('Dodano do harmonogramu.', '', {
             duration: 2000,
           });
+          this.products = data;
         }
       });
   }
