@@ -9,20 +9,20 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class RecipesFilterDialogComponent implements OnInit {
   public filterGroup: FormGroup;
-  private filters: string[] = [
-    'category',
-    'level',
-    'dietType',
-    'portions',
-    'cookingTime',
-    'caloriesmin',
-    'caloriesmax',
-    'carbohydratesmin',
-    'carbohydratesmax',
-    'proteinsmin',
-    'proteinsmax',
-    'fatsmax',
-    'fatsmin',
+  private filters: { ang: string; pl: string }[] = [
+    { ang: 'category', pl: 'kategoria' },
+    { ang: 'level', pl: 'poziom trudności' },
+    { ang: 'dietType', pl: 'typ diety' },
+    { ang: 'portions', pl: 'porcje' },
+    { ang: 'cookingTime', pl: 'czas' },
+    { ang: 'caloriesmin', pl: 'kalorie min' },
+    { ang: 'caloriesmax', pl: 'kalorie max' },
+    { ang: 'carbohydratesmin', pl: 'węglowodany min' },
+    { ang: 'carbohydratesmax', pl: 'węglowodany max' },
+    { ang: 'proteinsmin', pl: 'białka min' },
+    { ang: 'proteinsmax', pl: 'białka max' },
+    { ang: 'fatsmax', pl: 'tłuszcze min' },
+    { ang: 'fatsmin', pl: 'tłuszcze min' },
   ];
 
   constructor(
@@ -68,15 +68,33 @@ export class RecipesFilterDialogComponent implements OnInit {
 
   public saveFilters(): void {
     let filtersString: string = '?';
+    let filtersToDisplay: string = '';
     this.filters.forEach((filter) => {
-      if (this.filterGroup.get(filter)?.value) {
-        filtersString += filter;
+      if (this.filterGroup.get(filter.ang)?.value) {
+        filtersString += filter.ang;
         filtersString += '=';
-        filtersString += this.filterGroup.get(filter)?.value;
+        filtersString += this.filterGroup.get(filter.ang)?.value;
         filtersString += '&';
+
+        filtersToDisplay += filter.pl;
+        filtersToDisplay += ': ';
+        filtersToDisplay += this.filterGroup.get(filter.ang)?.value;
+        filtersToDisplay += ', ';
       }
     });
     filtersString = filtersString.substring(0, filtersString.length - 1);
-    this.dialogRef.close(filtersString);
+    filtersToDisplay = filtersToDisplay.substring(
+      0,
+      filtersToDisplay.length - 1
+    );
+    filtersToDisplay = filtersToDisplay.substring(
+      0,
+      filtersToDisplay.length - 1
+    );
+
+    this.dialogRef.close({
+      filtersString: filtersString,
+      filtersToDisplay: filtersToDisplay,
+    });
   }
 }

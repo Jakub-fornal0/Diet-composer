@@ -19,6 +19,7 @@ export class RecipesComponent implements OnInit {
   public currentPage: number = 1;
   public countOfRecipes: number = 0;
   public countOfPages: number = 0;
+  public choosenFilters: string = 'Nie wybrano filtrów.';
 
   // MOCKUP USUNAC POTEM//
   recipes: Recipe[] = [
@@ -230,12 +231,15 @@ export class RecipesComponent implements OnInit {
         disableClose: true,
       })
       .afterClosed()
-      .subscribe((filters: string) => {
-        if (filters) {
-          //WYWOLAX ENDPOINT
-          console.log(filters);
+      .subscribe(
+        (filters: { filtersString: string; filtersToDisplay: string }) => {
+          if (filters.filtersString && filters.filtersToDisplay) {
+            //WYWOLAX ENDPOINT
+            console.log(filters);
+            this.choosenFilters = filters.filtersToDisplay;
+          }
         }
-      });
+      );
   }
 
   public getRecipes(action: string): void {
