@@ -222,12 +222,20 @@ export class RecipesComponent implements OnInit {
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
-    this.dialog.open(RecipesFilterDialogComponent, {
-      width: '500px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      disableClose: true,
-    });
+    this.dialog
+      .open(RecipesFilterDialogComponent, {
+        width: '900px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe((filters: string) => {
+        if (filters) {
+          //WYWOLAX ENDPOINT
+          console.log(filters);
+        }
+      });
   }
 
   public getRecipes(action: string): void {
