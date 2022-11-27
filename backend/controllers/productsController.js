@@ -85,9 +85,3 @@ exports.getAll = async (req, res) => {
     res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
   }
 };
-
-/*
-Select distinct  *, count(1) as `liczba-trafien` from recipeproducts
-Inner join recipes on `recipeproducts`.`recipeId` = `recipes`.`id`
-where productId in  (select distinct productID from userproducts where userId = '16972da2-bdff-4b52-b264-35f31ec79436') Group by recipeId order by `liczba-trafien` DESC;
-*/

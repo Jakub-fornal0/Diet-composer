@@ -33,6 +33,8 @@ try {
   );
   db.recipes = require("../models/Recipe.js")(sequelize, Sequelize);
   db.recipeSteps = require("../models/RecipeStep.js")(sequelize, Sequelize);
+  db.mealData = require("../models/MealData.js")(sequelize, Sequelize);
+  db.snackMealData = require("../models/SnackMealData.js")(sequelize, Sequelize);
 
   //wiele do wielu(użytkownicy/produkty)
   db.users.belongsToMany(db.products, { through: db.userProducts });
@@ -58,8 +60,16 @@ try {
   db.users.hasMany(db.recipes, {onUpdate: 'CASCADE', onDelete: 'CASCADE'});
   db.recipes.belongsTo(db.users);
 
+  //wiele do wielu użytkownik -> harmonogram -> przepis
+  db.users.belongsToMany(db.recipes, { through: db.mealData });
+  db.recipes.belongsToMany(db.users, { through: db.mealData });
+  db.users.hasMany(db.mealData);
+  db.mealData.belongsTo(db.users);
+  db.recipes.hasMany(db.mealData);
+  db.mealData.belongsTo(db.recipes);
 
-  
+  db.users.hasMany(db.snackMealData, {onUpdate: 'CASCADE', onDelete: 'CASCADE'});
+  db.snackMealData.belongsTo(db.users, {foreignKey: 'userId', as: 'snacks'});
 
   console.log("Connection has been established successfully.");
 } catch (error) {
