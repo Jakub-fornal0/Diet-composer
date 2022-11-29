@@ -67,7 +67,7 @@ export class RecipesFilterDialogComponent implements OnInit {
   }
 
   public saveFilters(): void {
-    let filtersString: string = '?';
+    let filtersString: string = '&';
     let filtersToDisplay: string = '';
     this.filters.forEach((filter) => {
       if (this.filterGroup.get(filter.ang)?.value) {

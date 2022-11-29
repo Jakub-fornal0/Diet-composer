@@ -6,7 +6,8 @@
   <ul class="app-navbar__desktop">
     <li>
       <a
-        routerLink="/recipes"
+        [routerLink]="['/recipes']"
+        [queryParams]="{ page: 1 }"
         routerLinkActive="app-navbar__desktop--active"
         class="app-navbar__desktop--link"
         >Przepisy</a
@@ -76,7 +77,8 @@
       <a
         (click)="sidenav.toggle(); mobileMenuIsOpen = !mobileMenuIsOpen"
         class="app-navbar__desktop--mobile-link"
-        routerLink="/recipes"
+        [routerLink]="['/recipes']"
+        [queryParams]="{ page: 1 }"
         >Przepisy</a
       >
       <a

@@ -1,4 +1,7 @@
-<div class="app-recipes">
+<div *ngIf="!dataIsInitialized" class="app-recipes">
+  <img class="loading" src="/assets/loading-animation.gif" alt="loading" />
+</div>
+<div *ngIf="dataIsInitialized" class="app-recipes">
   <div
     *ngIf="userIsAuthenticated"
     class="app-recipes__container row row--without-wrap"
@@ -85,7 +88,7 @@
       class="app-recipes__paginator--button"
       mat-mini-fab
       [disabled]="currentPage === 1"
-      (click)="getRecipes('previous')"
+      (click)="getRecipesForPage('previous')"
     >
       <mat-icon>chevron_left</mat-icon>
     </button>
@@ -148,7 +151,7 @@
       class="app-recipes__paginator--button"
       mat-mini-fab
       [disabled]="currentPage === countOfPages"
-      (click)="getRecipes('next')"
+      (click)="getRecipesForPage('next')"
     >
       <mat-icon>chevron_right</mat-icon>
     </button>

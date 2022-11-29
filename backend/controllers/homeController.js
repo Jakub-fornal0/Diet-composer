@@ -130,19 +130,19 @@ exports.getSelectRecipe = async (req, res) => {
 
 exports.getRecipes = async (req, res) => {
   try {
-    let page = req.query.page || "0";
+    let page = req.query.page;
     let category = req.query.category;
     let level = req.query.level;
     let dietType = req.query.dietType;
     let portions = req.query.portions;
     let cookingTime = req.query.cookingTime;
-    let caloriesmin = req.query.caloriesmin || "0";
+    let caloriesmin = req.query.caloriesmin;
     let caloriesmax = req.query.caloriesmax;
-    let carbohydratesmin = req.query.carbohydratesmin || "0";
+    let carbohydratesmin = req.query.carbohydratesmin;
     let carbohydratesmax = req.query.carbohydratesmax;
-    let fatsmin = req.query.fatsmin || "0";
+    let fatsmin = req.query.fatsmin;
     let fatsmax = req.query.fatsmax;
-    let proteinsmin = req.query.proteinsmin || "0";
+    let proteinsmin = req.query.proteinsmin;
     let proteinsmax = req.query.proteinsmax;
     let query = "";
     if (category) query += "category = '" + category + "' AND ";

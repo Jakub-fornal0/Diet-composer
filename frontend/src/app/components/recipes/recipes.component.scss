@@ -7,6 +7,12 @@ $font-color: #616159;
   background-color: rgba($color: #91997f, $alpha: 0.7);
 }
 
+.loading {
+  margin-top: 10%;
+  width: 15%;
+  height: 15%;
+}
+
 .app-recipes {
   background-color: $recipes-background-color;
   display: flex;
@@ -198,6 +204,11 @@ $font-color: #616159;
 }
 
 @media (max-width: 992px) {
+  .loading {
+    width: 25%;
+    height: 25%;
+  }
+
   .app-recipes {
     .app-recipes__container {
       .app-recipes__container--products-expansion-panel {

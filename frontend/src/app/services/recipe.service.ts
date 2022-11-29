@@ -96,4 +96,11 @@ export class RecipeService {
       this.httpOptions
     );
   }
+
+  public getRecipes(params: string): Observable<any> {
+    return this.http.get<any>(
+      `${this.apiURL}/filteredRecipes${params}`,
+      this.httpOptions
+    );
+  }
 }
