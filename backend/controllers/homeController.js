@@ -150,16 +150,8 @@ exports.getRecipes = async (req, res) => {
     if (dietType) query += "dietType = '" + dietType + "' AND ";
     if (portions) query += "portions = " + portions + " AND ";
     if (cookingTime) query += "cookingTime <= " + cookingTime + " AND ";
-    if (caloriesmin)
-    query +=
-      "calories >= " +
-      caloriesmin +
-      " AND ";
-    if (caloriesmax)
-      query +=
-        "calories <= " +
-        caloriesmax +
-        " AND ";
+    if (caloriesmin) query += "calories >= " + caloriesmin + " AND ";
+    if (caloriesmax) query += "calories <= " + caloriesmax + " AND ";
     if (caloriesmin & caloriesmax)
       query +=
         "calories >= " +
@@ -168,15 +160,9 @@ exports.getRecipes = async (req, res) => {
         caloriesmax +
         " AND ";
     if (carbohydratesmin)
-      query +=
-        "carbohydrates >= " +
-        carbohydratesmin +
-        " AND ";
+      query += "carbohydrates >= " + carbohydratesmin + " AND ";
     if (carbohydratesmax)
-      query +=
-        "carbohydrates <= " +
-        carbohydratesmax +
-        " AND ";
+      query += "carbohydrates <= " + carbohydratesmax + " AND ";
     if (carbohydratesmin & carbohydratesmax)
       query +=
         "carbohydrates >=" +
@@ -184,22 +170,12 @@ exports.getRecipes = async (req, res) => {
         " AND carbohydrates <= " +
         carbohydratesmax +
         " AND ";
-    if (fatsmin)
-      query += "fats >=" + fatsmin + " AND ";
-    if (fatsmax)
-      query += "fats <= " + fatsmax + " AND ";
+    if (fatsmin) query += "fats >=" + fatsmin + " AND ";
+    if (fatsmax) query += "fats <= " + fatsmax + " AND ";
     if (fatsmin & fatsmax)
       query += "fats >=" + fatsmin + " AND fats <= " + fatsmax + " AND ";
-    if (proteinsmin)
-      query +=
-        "proteins >=" +
-        proteinsmin +
-        " AND ";
-    if (proteinsmax)
-      query +=
-        "proteins <= " +
-        proteinsmax +
-        " AND ";
+    if (proteinsmin) query += "proteins >=" + proteinsmin + " AND ";
+    if (proteinsmax) query += "proteins <= " + proteinsmax + " AND ";
     if (proteinsmin & proteinsmax)
       query +=
         "proteins >=" +
@@ -212,22 +188,59 @@ exports.getRecipes = async (req, res) => {
     const token = req.headers["x-access-token"];
     if (!token & (query.length > 0)) {
       console.log("bez tokenu z filtrami");
-      const data = await sequelize.query(
-        "SELECT id, image, name, description, cookingTime, portions, level, category FROM `recipes` WHERE " +
-          query +
-          " LIMIT 12 OFFSET " +
-          OFFSET,
-        { model: recipe }
-      );
-      res.status(200).send({ Recipes: data });
+      const data = await sequelize
+        .query(
+          "SELECT id, image, name, description, cookingTime, portions, level, category FROM `recipes` WHERE " +
+            query +
+            " LIMIT 12 OFFSET " +
+            OFFSET,
+          { model: recipe }
+        )
+        .then(async (results) => {
+          results.forEach((array) => {
+            array.image =
+              "http://localhost:3000/imagesRecipe/" + array.image + ".png";
+          });
+          const numberOfFilteredRecipes = await sequelize.query(
+            "SELECT COUNT(id) as 'number' FROM `recipes` WHERE " + query
+          );
+          res
+            .status(200)
+            .send({
+              Recipes: results,
+              NumberOfRecipes: numberOfFilteredRecipes[0][0].number,
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else if (!token & !query) {
       console.log("bez tokenu i bez filtrów");
-      const data = await sequelize.query(
-        "SELECT id, image, name, description, cookingTime, portions, level, category FROM `recipes` LIMIT 12 OFFSET " +
-          OFFSET,
-        { model: recipe }
-      );
-      res.status(200).send({ Recipes: data });
+      const data = await sequelize
+        .query(
+          "SELECT id, image, name, description, cookingTime, portions, level, category FROM `recipes` LIMIT 12 OFFSET " +
+            OFFSET,
+          { model: recipe }
+        )
+        .then(async (results) => {
+          results.forEach((array) => {
+            JSON.stringify(array);
+            array.image =
+              "http://localhost:3000/imagesRecipe/" + array.image + ".png";
+          });
+          const numberOfFilteredRecipes = await sequelize.query(
+            "SELECT COUNT(id) as 'number' FROM `recipes`"
+          );
+          res
+            .status(200)
+            .send({
+              Recipes: results,
+              NumberOfRecipes: numberOfFilteredRecipes[0][0].number,
+            });
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else if (token) {
       const userId = jwt.decode(req.headers["x-access-token"]).id;
       console.log("użytkownik: " + userId);
@@ -247,44 +260,130 @@ exports.getRecipes = async (req, res) => {
           console.log(product.length);
           if ((product.length > 0) & (query.length > 0)) {
             console.log("posiada token, produkty i filtry");
-            const data = await sequelize.query(
-              "SELECT DISTINCT `recipes`.`id`, `recipes`.`image`, `recipes`.`name`, `recipes`.`description`, `recipes`.`cookingTime`, `recipes`.`portions`, `recipes`.`level`, `recipes`.`category`, count(1) as `NumberOfProducts` FROM recipeproducts INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id` WHERE productId IN (SELECT DISTINCT productID FROM userproducts WHERE userId = '" +
-                userId +
-                "') AND  " +
-                query +
-                " GROUP BY recipeId ORDER BY `NumberOfProducts` DESC LIMIT 12 OFFSET " +
-                OFFSET,
-              { model: recipeProducts, userProducts }
-            );
-            res.status(200).send({ Recipes: data });
+            const data = await sequelize
+              .query(
+                "SELECT DISTINCT `recipes`.`id`, `recipes`.`image`, `recipes`.`name`, `recipes`.`description`, `recipes`.`cookingTime`, `recipes`.`portions`, `recipes`.`level`, `recipes`.`category`, count(1) as `NumberOfProducts` FROM recipeproducts INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id` WHERE productId IN (SELECT DISTINCT productID FROM userproducts WHERE userId = '" +
+                  userId +
+                  "') AND  " +
+                  query +
+                  " GROUP BY recipeId ORDER BY `NumberOfProducts` DESC LIMIT 12 OFFSET " +
+                  OFFSET,
+                { raw: true, model: recipeProducts, userProducts }
+              )
+              .then(async (results) => {
+                results.forEach((array) => {
+                  array.image =
+                    "http://localhost:3000/imagesRecipe/" +
+                    array.image +
+                    ".png";
+                });
+                const numberOfFilteredRecipes = await sequelize.query(
+                  "SELECT COUNT(`recipes`.`id`) as 'number', count(1) as `NumberOfProducts` FROM recipeproducts INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id` WHERE productId IN (SELECT productID FROM userproducts WHERE userId = '" +
+                    userId +
+                    "') AND  " +
+                    query +
+                    " GROUP BY recipeId ORDER BY `NumberOfProducts` DESC"
+                );
+                res
+                  .status(200)
+                  .send({
+                    Recipes: results,
+                    NumberOfRecipes: numberOfFilteredRecipes[0].length,
+                  });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           } else if ((product.length > 0) & (query.length == 0)) {
             console.log("posiada token i  produkty");
-            const data = await sequelize.query(
-              "SELECT DISTINCT `recipes`.`id`, `recipes`.`image`, `recipes`.`name`, `recipes`.`description`, `recipes`.`cookingTime`, `recipes`.`portions`, `recipes`.`level`, `recipes`.`category`, count(1) as `NumberOfProducts` FROM recipeproducts INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id` WHERE productId IN (SELECT DISTINCT productID FROM userproducts WHERE userId = '" +
-                userId +
-                "') GROUP BY recipeId ORDER BY `NumberOfProducts` DESC LIMIT 12 OFFSET " +
-                OFFSET,
-              { model: recipeProducts, userProducts }
-            );
-            res.status(200).send({ Recipes: data });
+            const data = await sequelize
+              .query(
+                "SELECT DISTINCT `recipes`.`id`, `recipes`.`image`, `recipes`.`name`, `recipes`.`description`, `recipes`.`cookingTime`, `recipes`.`portions`, `recipes`.`level`, `recipes`.`category`, count(1) as `NumberOfProducts` FROM recipeproducts INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id` WHERE productId IN (SELECT DISTINCT productID FROM userproducts WHERE userId = '" +
+                  userId +
+                  "') GROUP BY recipeId ORDER BY `NumberOfProducts` DESC LIMIT 12 OFFSET " +
+                  OFFSET,
+                { raw: true, model: recipeProducts, userProducts }
+              )
+              .then(async (results) => {
+                results.forEach((array) => {
+                  array.image =
+                    "http://localhost:3000/imagesRecipe/" +
+                    array.image +
+                    ".png";
+                });
+                const numberOfFilteredRecipes = await sequelize.query(
+                  "SELECT COUNT(`recipes`.`id`) as 'number' FROM recipeproducts INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id` WHERE productId IN (SELECT productID FROM userproducts WHERE userId = '" +
+                    userId +
+                    "') GROUP BY recipeId"
+                );
+                res
+                  .status(200)
+                  .send({
+                    Recipes: results,
+                    NumberOfRecipes: numberOfFilteredRecipes[0].length,
+                  });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           } else if ((product.length == 0) & (query.length > 0)) {
             console.log("posiada token i filtry");
-            const data = await sequelize.query(
-              "SELECT id, image, name, description, cookingTime, portions, level, category FROM `recipes` WHERE " +
-                query +
-                "LIMIT 12 OFFSET " +
-                OFFSET,
-              { model: recipe }
-            );
-            res.status(200).send({ Recipes: data });
+            const data = await sequelize
+              .query(
+                "SELECT id, image, name, description, cookingTime, portions, level, category FROM `recipes` WHERE " +
+                  query +
+                  "LIMIT 12 OFFSET " +
+                  OFFSET,
+                { model: recipe }
+              )
+              .then(async (results) => {
+                results.forEach((array) => {
+                  array.image =
+                    "http://localhost:3000/imagesRecipe/" +
+                    array.image +
+                    ".png";
+                });
+                const numberOfFilteredRecipes = await sequelize.query(
+                  "SELECT COUNT(id) as 'number' FROM `recipes` WHERE " + query
+                );
+                res
+                  .status(200)
+                  .send({
+                    Recipes: results,
+                    NumberOfRecipes: numberOfFilteredRecipes[0][0].number,
+                  });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           } else {
             console.log("posiada token");
-            const data = await sequelize.query(
-              "SELECT id, image, name, description, cookingTime, portions, level, category FROM `recipes` LIMIT 12 OFFSET " +
-                OFFSET,
-              { model: recipe }
-            );
-            res.status(200).send({ Recipes: data });
+            let data = await sequelize
+              .query(
+                "SELECT id, image, name, description, cookingTime, portions, level, category FROM `recipes` LIMIT 12 OFFSET " +
+                  OFFSET,
+                { model: recipe }
+              )
+              .then(async (results) => {
+                results.forEach((array) => {
+                  array.image =
+                    "http://localhost:3000/imagesRecipe/" +
+                    array.image +
+                    ".png";
+                });
+                const numberOfFilteredRecipes = await sequelize.query(
+                  "SELECT COUNT(id) as 'number' FROM `recipes`"
+                );
+                res
+                  .status(200)
+                  .send({
+                    Recipes: results,
+                    NumberOfRecipes: numberOfFilteredRecipes[0][0].number,
+                  });
+              })
+              .catch((err) => {
+                console.log(err);
+              });
           }
         })
         .catch((err) => {
@@ -298,6 +397,15 @@ exports.getRecipes = async (req, res) => {
   }
 };
 
+exports.getNumberOfRecipes = async (req, res) => {
+  try {
+    console.log("keste");
+    const NumberOfRecipes = await recipe.count();
+    res.status(200).send({ NumberOfAllRecipes: NumberOfRecipes });
+  } catch (error) {
+    res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
+  }
+};
 /*
 SELECT DISTINCT   `recipes`.`id`, `recipes`.`image`, `recipes`.`name`, `recipes`.`description`, `recipes`.`cookingTime`, `recipes`.`portions`, `recipes`.`level`, `recipes`.`category`, count(1) as `NumberOfProducts` FROM recipeproducts
 INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id`
