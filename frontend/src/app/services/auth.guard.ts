@@ -1,3 +1,4 @@
+import { SessionStorageService } from './session-storage.service';
 import { Injectable } from '@angular/core';
 import {
   ActivatedRouteSnapshot,
@@ -10,7 +11,11 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private sessionStorageService: SessionStorageService
+  ) {}
 
   public canActivate(
     route: ActivatedRouteSnapshot
@@ -19,6 +24,7 @@ export class AuthGuard implements CanActivate {
     | UrlTree
     | Observable<boolean | UrlTree>
     | Promise<boolean | UrlTree> {
+    this.sessionStorageService.clearSessionStorage();
     if (this.authService.userIsAuth()) {
       if (route.data['requiredAuth'] == false) {
         this.router.navigate(['/']);

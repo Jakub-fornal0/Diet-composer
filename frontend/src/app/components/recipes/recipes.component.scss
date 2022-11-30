@@ -175,6 +175,14 @@ $font-color: #616159;
       color: $font-color;
     }
 
+    .app-recipes__container--remove-filters {
+      color: #ab1818;
+      cursor: pointer;
+      font-weight: 500;
+      font-size: 18px;
+      margin-left: 5px;
+    }
+
     .app-recipes__container--number-of-recipes {
       width: 25%;
       text-align: right;
