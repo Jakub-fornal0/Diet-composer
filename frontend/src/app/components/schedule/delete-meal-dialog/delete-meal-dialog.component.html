@@ -1,0 +1,14 @@
+<div class="container">
+  <h3 *ngIf="data === 'one'" class="container__header">
+    Czy napewno chcesz usunąć przepis z harmonogramu?
+  </h3>
+  <h3 *ngIf="data === 'all'" class="container__header">
+    Czy napewno chcesz wyczyścić harmonogram?
+  </h3>
+  <p>Lista posiadanych produktów nie zostanie zaktualizowana.</p>
+</div>
+
+<div mat-dialog-actions class="buttons-container">
+  <button class="text" mat-button mat-dialog-close>Anuluj</button>
+  <button class="text" mat-raised-button (click)="deleteRecipe()">Usuń</button>
+</div>

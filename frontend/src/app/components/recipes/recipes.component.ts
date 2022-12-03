@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { SessionStorageService } from './../../services/session-storage.service';
+import { RecipeService } from 'src/app/services/recipe.service';
+import { Component, OnInit } from '@angular/core';
 import { Product } from './../../interfaces/product.model';
 import { Recipe } from './../../interfaces/recipe.model';
 import { MatDialog } from '@angular/material/dialog';
@@ -6,6 +8,8 @@ import { RecipesFilterDialogComponent } from './recipes-filter-dialog/recipes-fi
 import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { SessionStorageConsts } from '../../consts/sessionstorage-consts';
 
 @Component({
   selector: 'app-recipes',
@@ -15,164 +19,23 @@ import { AuthService } from '../../services/auth.service';
 export class RecipesComponent implements OnInit {
   public authListenerSubs?: Subscription;
   public userIsAuthenticated: boolean = true;
+  public dataIsInitialized: boolean = false;
   public products: Product[] = [];
   public currentPage: number = 1;
   public countOfRecipes: number = 0;
   public countOfPages: number = 0;
-
-  // MOCKUP USUNAC POTEM//
-  recipes: Recipe[] = [
-    {
-      id: '1',
-      image: 'assets/zdj.jpg',
-      name: '1 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '2',
-      image: 'assets/zdj.jpg',
-      name: '2 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Średni',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '3',
-      image: 'assets/zdj.jpg',
-      name: '3 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Trudny',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '4',
-      image: 'assets/zdj.jpg',
-      name: '4 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '5',
-      image: 'assets/zdj.jpg',
-      name: '5 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '6',
-      image: 'assets/zdj.jpg',
-      name: '6 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '7',
-      image: 'assets/zdj.jpg',
-      name: '7 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '8',
-      image: 'assets/zdj.jpg',
-      name: '8 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '9',
-      image: 'assets/zdj.jpg',
-      name: '9 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '10',
-      image: 'assets/zdj.jpg',
-      name: '10 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '11',
-      image: 'assets/zdj.jpg',
-      name: '11 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 4444,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-    {
-      id: '12',
-      image: 'assets/zdj.jpg',
-      name: '12 Przepis Przepis Przepis',
-      description:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
-      cookingTime: 45,
-      portions: 111,
-      level: 'Łatwy',
-      category: 'obiad',
-      dietType: 'inna',
-    },
-  ];
-  // ___________________ //
+  public filtersToDisplay: string = 'Nie wybrano filtrów.';
+  public filters: string = '';
+  public recipes: Recipe[] = [];
 
   constructor(
     private dialog: MatDialog,
     private productService: ProductService,
-    private authService: AuthService
+    private recipeService: RecipeService,
+    private authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
@@ -182,10 +45,52 @@ export class RecipesComponent implements OnInit {
       this.getUserProducts();
     }
 
-    //WYWOLAC ENDPOINT KTORY ZWRACA LICZBE PASUJACYCH PRZEPISOW
-    this.countOfRecipes = 4570;
-    this.countOfPages = Math.ceil(this.countOfRecipes / 12);
-    //JAK BEDZIE BACKEND TO WYWOLAC ENDPOINT PO PRZEPISY Z CURRENTPAGE
+    this.getRecipes();
+  }
+
+  private getRecipes(): void {
+    this.dataIsInitialized = false;
+    this.filters = '';
+    this.filtersToDisplay = 'Nie wybrano filtrów.';
+
+    let filtersSession: string =
+      this.sessionStorageService.getItemFromSessionStorage(
+        SessionStorageConsts.FILTERS
+      ) || '';
+
+    let filtersToDisplaySession: string =
+      this.sessionStorageService.getItemFromSessionStorage(
+        SessionStorageConsts.FILTERSTODISPLAY
+      ) || 'Nie wybrano filtrów.';
+
+    if (filtersSession && filtersToDisplaySession) {
+      this.filters = filtersSession;
+      this.filtersToDisplay = filtersToDisplaySession;
+    }
+
+    this.router.navigate(['/recipes'], {
+      queryParams: { page: this.currentPage },
+    });
+
+    this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
+      if (paramMap.has('page')) {
+        this.currentPage = Number(paramMap.get('page'));
+      }
+    });
+
+    let params: string = '?page=';
+    params += this.currentPage;
+
+    if (this.filters) {
+      params += this.filters;
+    }
+
+    this.recipeService.getRecipes(params).subscribe((res) => {
+      this.recipes = res.Recipes;
+      this.countOfRecipes = res.NumberOfRecipes;
+      this.countOfPages = Math.ceil(this.countOfRecipes / 12);
+      this.dataIsInitialized = true;
+    });
   }
 
   private checkUserIsAuth(): void {
@@ -215,6 +120,7 @@ export class RecipesComponent implements OnInit {
       .deleteUserProduct(this.products[index].id!)
       .subscribe(() => {
         this.products.splice(index, 1);
+        this.getRecipes();
       });
   }
 
@@ -222,25 +128,57 @@ export class RecipesComponent implements OnInit {
     enterAnimationDuration: string,
     exitAnimationDuration: string
   ): void {
-    this.dialog.open(RecipesFilterDialogComponent, {
-      width: '500px',
-      enterAnimationDuration,
-      exitAnimationDuration,
-      disableClose: true,
-    });
+    this.dialog
+      .open(RecipesFilterDialogComponent, {
+        width: '900px',
+        enterAnimationDuration,
+        exitAnimationDuration,
+        disableClose: true,
+      })
+      .afterClosed()
+      .subscribe(
+        (filters: { filtersString: string; filtersToDisplay: string }) => {
+          if (filters.filtersString && filters.filtersToDisplay) {
+            this.filtersToDisplay = filters.filtersToDisplay;
+            this.filters = filters.filtersString;
+
+            this.sessionStorageService.setItemToSessionStorage(
+              SessionStorageConsts.FILTERS,
+              this.filters
+            );
+            this.sessionStorageService.setItemToSessionStorage(
+              SessionStorageConsts.FILTERSTODISPLAY,
+              this.filtersToDisplay
+            );
+
+            this.getRecipes();
+          }
+        }
+      );
   }
 
-  public getRecipes(action: string): void {
+  public removeFilters(): void {
+    this.sessionStorageService.removeItemFromSessionStorage(
+      SessionStorageConsts.FILTERS
+    );
+    this.sessionStorageService.removeItemFromSessionStorage(
+      SessionStorageConsts.FILTERSTODISPLAY
+    );
+    this.getRecipes();
+  }
+
+  public getRecipesForPage(action: string): void {
     if (action === 'next') {
       this.currentPage++;
     } else {
       this.currentPage--;
     }
-    //TU WYWOLAC ENDPOINT DLA POBRANIA PRZEPISOW NA PAGE
+
+    this.getRecipes();
   }
 
   public setAsCurrentPage(numberOfSelectedPage: number): void {
     this.currentPage = numberOfSelectedPage;
-    //TU WYWOLAC ENDPOINT DLA POBRANIA PRZEPISOW NA PAGE
+    this.getRecipes();
   }
 }

@@ -1,4 +1,7 @@
-<div class="app-recipes">
+<div *ngIf="!dataIsInitialized" class="app-recipes">
+  <img class="loading" src="/assets/loading-animation.gif" alt="loading" />
+</div>
+<div *ngIf="dataIsInitialized" class="app-recipes">
   <div
     *ngIf="userIsAuthenticated"
     class="app-recipes__container row row--without-wrap"
@@ -63,7 +66,13 @@
     <div
       class="app-recipes__container--selected-filters col-6 col-md-4 col-lg-4"
     >
-      tu będą wypisane wybrane filtry
+      {{ filtersToDisplay }}
+      <span
+        *ngIf="filters"
+        class="app-recipes__container--remove-filters"
+        (click)="removeFilters()"
+        >x</span
+      >
     </div>
     <div
       class="app-recipes__container--number-of-recipes col-12 col-md-4 col-lg-4"
@@ -85,7 +94,7 @@
       class="app-recipes__paginator--button"
       mat-mini-fab
       [disabled]="currentPage === 1"
-      (click)="getRecipes('previous')"
+      (click)="getRecipesForPage('previous')"
     >
       <mat-icon>chevron_left</mat-icon>
     </button>
@@ -148,7 +157,7 @@
       class="app-recipes__paginator--button"
       mat-mini-fab
       [disabled]="currentPage === countOfPages"
-      (click)="getRecipes('next')"
+      (click)="getRecipesForPage('next')"
     >
       <mat-icon>chevron_right</mat-icon>
     </button>

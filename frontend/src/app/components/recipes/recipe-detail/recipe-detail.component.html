@@ -7,6 +7,7 @@
         [alt]="recipe.name"
       />
       <button
+        *ngIf="userIsAuthenticated"
         (click)="openAddtoScheduleDialog('0ms', '0ms')"
         class="image-container__button"
         mat-button

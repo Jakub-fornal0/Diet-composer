@@ -1,7 +1,484 @@
-<div mat-dialog-content>
-  <p>Tu się będzie wybierało filtry</p>
+<div mat-dialog-content [formGroup]="filterGroup">
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel__title">
+        <span class="expansion-panel__title--name">Kategoria: </span>
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="!filterGroup.get('category')?.value"
+          >-</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="filterGroup.get('category')?.value"
+          >{{ filterGroup.get("category")?.value }}</span
+        >
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-radio-group class="radio-group" formControlName="category">
+      <mat-radio-button class="radio-group__button" value="śniadanie"
+        >Śniadanie</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="II śniadanie"
+        >II śniadanie</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="obiad"
+        >Obiad</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="podwieczorek"
+        >Podwieczorek</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="kolacja"
+        >Kolacja</mat-radio-button
+      >
+    </mat-radio-group>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel__title">
+        <span class="expansion-panel__title--name">Poziom trudności: </span>
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="!filterGroup.get('level')?.value"
+          >-</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="filterGroup.get('level')?.value"
+          >{{ filterGroup.get("level")?.value }}</span
+        >
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-radio-group class="radio-group" formControlName="level">
+      <mat-radio-button class="radio-group__button" value="łatwy"
+        >Łatwy</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="średni"
+        >Średni</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="trudny"
+        >Trudny</mat-radio-button
+      >
+    </mat-radio-group>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel__title">
+        <span class="expansion-panel__title--name">Rodzaj diety: </span>
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="!filterGroup.get('dietType')?.value"
+          >-</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="filterGroup.get('dietType')?.value"
+          >{{ filterGroup.get("dietType")?.value }}</span
+        >
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <mat-radio-group class="radio-group" formControlName="dietType">
+      <mat-radio-button class="radio-group__button" value="wysokobiałkowa"
+        >Wysokobiałkowa</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="bezglutenowa"
+        >Bezglutenowa</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="ketogeniczna"
+        >Ketogeniczna</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="wegańska"
+        >Wegańska</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="wegetariańska"
+        >Wegetariańska</mat-radio-button
+      >
+      <mat-radio-button class="radio-group__button" value="inna"
+        >Inna</mat-radio-button
+      >
+    </mat-radio-group>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel__title">
+        <span class="expansion-panel__title--name">Ilość porcji: </span>
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="!filterGroup.get('portions')?.value"
+          >-</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('portions')?.value &&
+            filterGroup.get('portions')?.valid
+          "
+          >{{ filterGroup.get("portions")?.value }}</span
+        >
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>Ilość porcji</mat-label>
+        <input
+          matInput
+          formControlName="portions"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel__title">
+        <span class="expansion-panel__title--name">Czas: </span>
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="!filterGroup.get('cookingTime')?.value"
+          >-</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('cookingTime')?.value &&
+            filterGroup.get('cookingTime')?.valid
+          "
+          >{{ filterGroup.get("cookingTime")?.value }} min</span
+        >
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>Poniżej</mat-label>
+        <input
+          matInput
+          formControlName="cookingTime"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <span matSuffix>min</span>
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel__title">
+        <span class="expansion-panel__title--name">Kaloryczność: </span>
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            !filterGroup.get('caloriesmin')?.value &&
+            !filterGroup.get('caloriesmax')?.value
+          "
+          >-</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('caloriesmin')?.value &&
+            filterGroup.get('caloriesmin')?.valid &&
+            !filterGroup.get('caloriesmax')?.value
+          "
+          >> {{ filterGroup.get("caloriesmin")?.value }} kcal</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('caloriesmax')?.value &&
+            filterGroup.get('caloriesmax')?.valid &&
+            !filterGroup.get('caloriesmin')?.value
+          "
+        >
+          < {{ filterGroup.get("caloriesmax")?.value }} kcal</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('caloriesmax')?.value &&
+            filterGroup.get('caloriesmax')?.valid &&
+            filterGroup.get('caloriesmin')?.value &&
+            filterGroup.get('caloriesmin')?.valid
+          "
+        >
+          {{ filterGroup.get("caloriesmin")?.value }} kcal -
+          {{ filterGroup.get("caloriesmax")?.value }} kcal</span
+        >
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>od</mat-label>
+        <input
+          matInput
+          formControlName="caloriesmin"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <span matSuffix>kcal</span>
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>do</mat-label>
+        <input
+          matInput
+          formControlName="caloriesmax"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <span matSuffix>kcal</span>
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel__title">
+        <span class="expansion-panel__title--name">Węglowodany: </span>
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            !filterGroup.get('carbohydratesmin')?.value &&
+            !filterGroup.get('carbohydratesmax')?.value
+          "
+          >-</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('carbohydratesmin')?.value &&
+            filterGroup.get('carbohydratesmin')?.valid &&
+            !filterGroup.get('carbohydratesmax')?.value
+          "
+          >> {{ filterGroup.get("carbohydratesmin")?.value }} g</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('carbohydratesmax')?.value &&
+            filterGroup.get('carbohydratesmax')?.valid &&
+            !filterGroup.get('carbohydratesmin')?.value
+          "
+        >
+          < {{ filterGroup.get("carbohydratesmax")?.value }} g</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('carbohydratesmax')?.value &&
+            filterGroup.get('carbohydratesmax')?.valid &&
+            filterGroup.get('carbohydratesmin')?.value &&
+            filterGroup.get('carbohydratesmin')?.valid
+          "
+        >
+          {{ filterGroup.get("carbohydratesmin")?.value }} g -
+          {{ filterGroup.get("carbohydratesmax")?.value }} g</span
+        >
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>od</mat-label>
+        <input
+          matInput
+          formControlName="carbohydratesmin"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <span matSuffix>g</span>
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>do</mat-label>
+        <input
+          matInput
+          formControlName="carbohydratesmax"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <span matSuffix>g</span>
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel__title">
+        <span class="expansion-panel__title--name">Białka: </span>
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            !filterGroup.get('proteinsmin')?.value &&
+            !filterGroup.get('proteinsmax')?.value
+          "
+          >-</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('proteinsmin')?.value &&
+            filterGroup.get('proteinsmin')?.valid &&
+            !filterGroup.get('proteinsmax')?.value
+          "
+          >> {{ filterGroup.get("proteinsmin")?.value }} g</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('proteinsmax')?.value &&
+            filterGroup.get('proteinsmax')?.valid &&
+            !filterGroup.get('proteinsmin')?.value
+          "
+        >
+          < {{ filterGroup.get("proteinsmax")?.value }} g</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('proteinsmax')?.value &&
+            filterGroup.get('proteinsmax')?.valid &&
+            filterGroup.get('proteinsmin')?.value &&
+            filterGroup.get('proteinsmin')?.valid
+          "
+        >
+          {{ filterGroup.get("proteinsmin")?.value }} g -
+          {{ filterGroup.get("proteinsmax")?.value }} g</span
+        >
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>od</mat-label>
+        <input
+          matInput
+          formControlName="proteinsmin"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <span matSuffix>g</span>
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>do</mat-label>
+        <input
+          matInput
+          formControlName="proteinsmax"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <span matSuffix>g</span>
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-expansion-panel>
+
+  <mat-expansion-panel class="expansion-panel">
+    <mat-expansion-panel-header>
+      <mat-panel-title class="expansion-panel__title">
+        <span class="expansion-panel__title--name">Tłuszcze: </span>
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            !filterGroup.get('fatsmin')?.value &&
+            !filterGroup.get('fatsmax')?.value
+          "
+          >-</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('fatsmin')?.value &&
+            filterGroup.get('fatsmin')?.valid &&
+            !filterGroup.get('fatsmax')?.value
+          "
+          >> {{ filterGroup.get("fatsmin")?.value }} g</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('fatsmax')?.value &&
+            filterGroup.get('fatsmax')?.valid &&
+            !filterGroup.get('fatsmin')?.value
+          "
+        >
+          < {{ filterGroup.get("fatsmax")?.value }} g</span
+        >
+        <span
+          class="expansion-panel__title--value"
+          *ngIf="
+            filterGroup.get('fatsmax')?.value &&
+            filterGroup.get('fatsmax')?.valid &&
+            filterGroup.get('fatsmin')?.value &&
+            filterGroup.get('fatsmin')?.valid
+          "
+        >
+          {{ filterGroup.get("fatsmin")?.value }} g -
+          {{ filterGroup.get("fatsmax")?.value }} g</span
+        >
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>od</mat-label>
+        <input
+          matInput
+          formControlName="fatsmin"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <span matSuffix>g</span>
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="input-group">
+      <mat-form-field class="input" appearance="outline">
+        <mat-label>do</mat-label>
+        <input
+          matInput
+          formControlName="fatsmax"
+          type="number"
+          max="6000"
+          min="1"
+        />
+        <span matSuffix>g</span>
+        <mat-error>Niepoprawna wartość.</mat-error>
+      </mat-form-field>
+    </div>
+  </mat-expansion-panel>
 </div>
-<div mat-dialog-actions>
-  <button mat-button mat-dialog-close>Anuluj</button>
-  <button mat-raised-button mat-dialog-close color="primary">Zapisz</button>
+<div mat-dialog-actions class="buttons-container">
+  <button class="text" mat-button mat-dialog-close>Anuluj</button>
+  <button
+    class="text"
+    mat-raised-button
+    mat-dialog-close
+    [disabled]="!formIsValid()"
+    (click)="saveFilters()"
+  >
+    Zapisz
+  </button>
 </div>

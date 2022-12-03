@@ -6,7 +6,8 @@ export interface MealData {
   fats: number;
   proteins: number;
   carbohydrates: number;
-  eaten: boolean;
+  eaten: number;
+  time: string;
 }
 
 export interface Schedule {
@@ -30,6 +31,7 @@ export interface ScheduleDetails {
 }
 
 export interface SnackMealData {
+  id?: number;
   snackName: string;
   calories: number;
   fats: number;

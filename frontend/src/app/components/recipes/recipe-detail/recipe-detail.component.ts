@@ -122,6 +122,7 @@ export class RecipeDetailComponent implements OnInit {
   }
 
   private getUserProducts(): void {
+    this.products = [];
     this.productService.getAllUserProducts().subscribe((res) => {
       res.Products.forEach((product: any) => {
         this.products.push({
@@ -194,12 +195,26 @@ export class RecipeDetailComponent implements OnInit {
         data: this.recipe,
       })
       .afterClosed()
-      .subscribe((data) => {
-        if (data) {
-          this.snackBar.open('Dodano do harmonogramu.', '', {
-            duration: 2000,
-          });
+      .subscribe(
+        (data: { product: Product[]; correctAddedRecipe: boolean }) => {
+          if (data.correctAddedRecipe && data) {
+            this.snackBar.open('Dodano do harmonogramu.', '', {
+              duration: 2000,
+            });
+
+            if (data.product.length) {
+              this.products = data.product;
+            }
+          } else if (data) {
+            this.snackBar.open(
+              'Coś poszło nie tak! Nie dodano przepisu...',
+              '',
+              {
+                duration: 2000,
+              }
+            );
+          }
         }
-      });
+      );
   }
 }
