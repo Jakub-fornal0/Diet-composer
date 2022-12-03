@@ -9,20 +9,20 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class RecipesFilterDialogComponent implements OnInit {
   public filterGroup: FormGroup;
-  private filters: { ang: string; pl: string }[] = [
-    { ang: 'category', pl: 'kategoria' },
-    { ang: 'level', pl: 'poziom trudności' },
-    { ang: 'dietType', pl: 'typ diety' },
-    { ang: 'portions', pl: 'porcje' },
-    { ang: 'cookingTime', pl: 'czas' },
-    { ang: 'caloriesmin', pl: 'kalorie min' },
-    { ang: 'caloriesmax', pl: 'kalorie max' },
-    { ang: 'carbohydratesmin', pl: 'węglowodany min' },
-    { ang: 'carbohydratesmax', pl: 'węglowodany max' },
-    { ang: 'proteinsmin', pl: 'białka min' },
-    { ang: 'proteinsmax', pl: 'białka max' },
-    { ang: 'fatsmax', pl: 'tłuszcze min' },
-    { ang: 'fatsmin', pl: 'tłuszcze min' },
+  private filters: { ang: string; pl: string; unit: string }[] = [
+    { ang: 'category', pl: 'kategoria', unit: '' },
+    { ang: 'level', pl: 'poziom trudności', unit: '' },
+    { ang: 'dietType', pl: 'typ diety', unit: '' },
+    { ang: 'portions', pl: 'porcje', unit: '' },
+    { ang: 'cookingTime', pl: 'czas', unit: 'min' },
+    { ang: 'caloriesmin', pl: 'kalorie min', unit: 'kcal' },
+    { ang: 'caloriesmax', pl: 'kalorie max', unit: 'kcal' },
+    { ang: 'carbohydratesmin', pl: 'węglowodany min', unit: 'g' },
+    { ang: 'carbohydratesmax', pl: 'węglowodany max', unit: 'g' },
+    { ang: 'proteinsmin', pl: 'białka min', unit: 'g' },
+    { ang: 'proteinsmax', pl: 'białka max', unit: 'g' },
+    { ang: 'fatsmax', pl: 'tłuszcze min', unit: 'g' },
+    { ang: 'fatsmin', pl: 'tłuszcze min', unit: 'g' },
   ];
 
   constructor(
@@ -79,17 +79,15 @@ export class RecipesFilterDialogComponent implements OnInit {
         filtersToDisplay += filter.pl;
         filtersToDisplay += ': ';
         filtersToDisplay += this.filterGroup.get(filter.ang)?.value;
+        filtersToDisplay += filter.unit;
         filtersToDisplay += ', ';
       }
     });
+
     filtersString = filtersString.substring(0, filtersString.length - 1);
     filtersToDisplay = filtersToDisplay.substring(
       0,
-      filtersToDisplay.length - 1
-    );
-    filtersToDisplay = filtersToDisplay.substring(
-      0,
-      filtersToDisplay.length - 1
+      filtersToDisplay.length - 2
     );
 
     this.dialogRef.close({

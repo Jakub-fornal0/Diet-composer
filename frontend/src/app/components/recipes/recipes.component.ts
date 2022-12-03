@@ -1,3 +1,4 @@
+import { SessionStorageService } from './../../services/session-storage.service';
 import { RecipeService } from 'src/app/services/recipe.service';
 import { Component, OnInit } from '@angular/core';
 import { Product } from './../../interfaces/product.model';
@@ -8,6 +9,7 @@ import { ProductService } from '../../services/product.service';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../services/auth.service';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { SessionStorageConsts } from '../../consts/sessionstorage-consts';
 
 @Component({
   selector: 'app-recipes',
@@ -22,7 +24,8 @@ export class RecipesComponent implements OnInit {
   public currentPage: number = 1;
   public countOfRecipes: number = 0;
   public countOfPages: number = 0;
-  public choosenFilters: string = 'Nie wybrano filtrów.';
+  public filtersToDisplay: string = 'Nie wybrano filtrów.';
+  public filters: string = '';
   public recipes: Recipe[] = [];
 
   constructor(
@@ -31,7 +34,8 @@ export class RecipesComponent implements OnInit {
     private recipeService: RecipeService,
     private authService: AuthService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private sessionStorageService: SessionStorageService
   ) {}
 
   ngOnInit(): void {
@@ -42,15 +46,27 @@ export class RecipesComponent implements OnInit {
     }
 
     this.getRecipes();
-
-    //WYWOLAC ENDPOINT KTORY ZWRACA LICZBE PASUJACYCH PRZEPISOW
-    this.countOfRecipes = 4570;
-    this.countOfPages = Math.ceil(this.countOfRecipes / 12);
-    //JAK BEDZIE BACKEND TO WYWOLAC ENDPOINT PO PRZEPISY Z CURRENTPAGE
   }
 
-  private getRecipes(filters?: string): void {
+  private getRecipes(): void {
     this.dataIsInitialized = false;
+    this.filters = '';
+    this.filtersToDisplay = 'Nie wybrano filtrów.';
+
+    let filtersSession: string =
+      this.sessionStorageService.getItemFromSessionStorage(
+        SessionStorageConsts.FILTERS
+      ) || '';
+
+    let filtersToDisplaySession: string =
+      this.sessionStorageService.getItemFromSessionStorage(
+        SessionStorageConsts.FILTERSTODISPLAY
+      ) || 'Nie wybrano filtrów.';
+
+    if (filtersSession && filtersToDisplaySession) {
+      this.filters = filtersSession;
+      this.filtersToDisplay = filtersToDisplaySession;
+    }
 
     this.router.navigate(['/recipes'], {
       queryParams: { page: this.currentPage },
@@ -65,14 +81,14 @@ export class RecipesComponent implements OnInit {
     let params: string = '?page=';
     params += this.currentPage;
 
-    if (filters) {
-      params += filters;
+    if (this.filters) {
+      params += this.filters;
     }
-
-    console.log(params);
 
     this.recipeService.getRecipes(params).subscribe((res) => {
       this.recipes = res.Recipes;
+      this.countOfRecipes = res.NumberOfRecipes;
+      this.countOfPages = Math.ceil(this.countOfRecipes / 12);
       this.dataIsInitialized = true;
     });
   }
@@ -123,11 +139,32 @@ export class RecipesComponent implements OnInit {
       .subscribe(
         (filters: { filtersString: string; filtersToDisplay: string }) => {
           if (filters.filtersString && filters.filtersToDisplay) {
-            this.choosenFilters = filters.filtersToDisplay;
-            this.getRecipes(filters.filtersString);
+            this.filtersToDisplay = filters.filtersToDisplay;
+            this.filters = filters.filtersString;
+
+            this.sessionStorageService.setItemToSessionStorage(
+              SessionStorageConsts.FILTERS,
+              this.filters
+            );
+            this.sessionStorageService.setItemToSessionStorage(
+              SessionStorageConsts.FILTERSTODISPLAY,
+              this.filtersToDisplay
+            );
+
+            this.getRecipes();
           }
         }
       );
+  }
+
+  public removeFilters(): void {
+    this.sessionStorageService.removeItemFromSessionStorage(
+      SessionStorageConsts.FILTERS
+    );
+    this.sessionStorageService.removeItemFromSessionStorage(
+      SessionStorageConsts.FILTERSTODISPLAY
+    );
+    this.getRecipes();
   }
 
   public getRecipesForPage(action: string): void {

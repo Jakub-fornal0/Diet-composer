@@ -7,7 +7,7 @@ export const ScheduleConsts = {
     fats: 0,
     proteins: 0,
     carbohydrates: 0,
-    eaten: false,
+    eaten: 0,
     time: '00:00',
   },
   secondBreakfast: {
@@ -18,7 +18,7 @@ export const ScheduleConsts = {
     fats: 0,
     proteins: 0,
     carbohydrates: 0,
-    eaten: false,
+    eaten: 0,
     time: '00:00',
   },
   lunch: {
@@ -29,7 +29,7 @@ export const ScheduleConsts = {
     fats: 0,
     proteins: 0,
     carbohydrates: 0,
-    eaten: false,
+    eaten: 0,
     time: '00:00',
   },
   tea: {
@@ -40,7 +40,7 @@ export const ScheduleConsts = {
     fats: 0,
     proteins: 0,
     carbohydrates: 0,
-    eaten: false,
+    eaten: 0,
     time: '00:00',
   },
   dinner: {
@@ -51,7 +51,7 @@ export const ScheduleConsts = {
     fats: 0,
     proteins: 0,
     carbohydrates: 0,
-    eaten: false,
+    eaten: 0,
     time: '00:00',
   },
   snacks: [],

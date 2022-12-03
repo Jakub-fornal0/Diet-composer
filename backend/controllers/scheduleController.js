@@ -118,7 +118,6 @@ exports.addToSchedule = async (req, res) => {
     const userId = jwt.decode(req.headers["x-access-token"]).id;
     const { recipeId, time, type } = req.body;
     let temp;
-    
     switch (type) {
       case "śniadanie":
         temp = 1;
