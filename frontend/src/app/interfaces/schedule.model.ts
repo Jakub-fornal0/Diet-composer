@@ -6,7 +6,7 @@ export interface MealData {
   fats: number;
   proteins: number;
   carbohydrates: number;
-  eaten: boolean;
+  eaten: number;
   time: string;
 }
 

@@ -33,7 +33,7 @@
           <mat-checkbox
             class="meals-container__meal-details--checkbox col-lg-1 col-md-1 col-sm-1 col-12"
             (change)="setMealAsEaten(mealType)"
-            [checked]="schedule[mealType].eaten"
+            [checked]="schedule[mealType].eaten === 1"
           ></mat-checkbox>
           <img
             class="meals-container__meal-details--image col-lg-4 col-md-4 col-sm-4 col-12"
@@ -74,7 +74,7 @@
         <p class="details-container__data--name">Godzina:</p>
         <p class="details-container__data--dotted"></p>
         <p class="details-container__data--value">
-          {{ time | date: "H:mm:ss" }}
+          {{ time | date : "H:mm:ss" }}
         </p>
       </div>
       <div class="details-container__data">

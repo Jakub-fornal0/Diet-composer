@@ -34,9 +34,9 @@ export class AuthService {
   public login(loginData: loginData): Observable<any> {
     return this.http.post<any>(`${this.apiURL}/signin`, loginData).pipe(
       map((data) => {
-        var token = { token: data.token } as Token;
+        let token = { token: data.token } as Token;
         localStorage.setItem(LocalStorageConsts.TOKEN, JSON.stringify(token));
-        var userInfo = this.jwtService.decodeToken(token.token) as UserProfile;
+        let userInfo = this.jwtService.decodeToken(token.token) as UserProfile;
         this.userProfile.next(userInfo);
         this.authStatusListener.next(true);
         return true;

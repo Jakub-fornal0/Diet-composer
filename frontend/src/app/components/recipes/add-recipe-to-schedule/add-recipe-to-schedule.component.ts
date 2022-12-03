@@ -1,8 +1,7 @@
+import { ScheduleService } from './../../../services/schedule.service';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Schedule } from '../../../interfaces/schedule.model';
-import { LocalStorageService } from '../../../services/local-storage.service';
-import { LocalStorageConsts } from '../../../consts/localstorage-consts';
 import { FormControl } from '@angular/forms';
 import { ScheduleConsts } from '../../../consts/schedule-consts';
 import { RecipeDetail } from '../../../interfaces/recipe.model';
@@ -22,24 +21,26 @@ export class AddRecipeToScheduleComponent implements OnInit {
   public typeOfMealIsChosen: boolean = false;
   private userWantUpdateProduct: boolean = false;
   private userProducts: Product[] = [];
+  private correctAddedRecipe: boolean = false;
+  private mealTypes: { ang: string; pl: string }[] = [
+    { ang: 'breakfast', pl: 'śniadanie' },
+    { ang: 'secondBreakfast', pl: 'II śniadanie' },
+    { ang: 'lunch', pl: 'obiad' },
+    { ang: 'tea', pl: 'podwieczorek' },
+    { ang: 'dinner', pl: 'kolacja' },
+  ];
 
   constructor(
     private dialogRef: MatDialogRef<AddRecipeToScheduleComponent>,
-    private localStorageService: LocalStorageService,
     private productService: ProductService,
+    private scheduleService: ScheduleService,
     @Inject(MAT_DIALOG_DATA) public data: RecipeDetail
   ) {
     this.recipe = data;
   }
 
   ngOnInit(): void {
-    const dataFromLocalStorage =
-      this.localStorageService.getItemFromLocalStorage<Schedule>(
-        LocalStorageConsts.SCHEDULE
-      );
-    if (dataFromLocalStorage) {
-      this.schedule = dataFromLocalStorage;
-    }
+    this.getSchedule();
 
     this.typeOfMeal.valueChanges.subscribe(() => {
       this.typeOfMealIsChosen = false;
@@ -57,6 +58,12 @@ export class AddRecipeToScheduleComponent implements OnInit {
     });
   }
 
+  private getSchedule(): void {
+    this.scheduleService.getSchedule().subscribe((res) => {
+      this.schedule = res;
+    });
+  }
+
   public checkValidations(): boolean {
     if (this.typeOfMeal.value && this.mealTime.value) {
       return true;
@@ -65,38 +72,37 @@ export class AddRecipeToScheduleComponent implements OnInit {
   }
 
   public saveMealToSchedule(): void {
-    const type = this.typeOfMeal.value;
-    if (
-      (type === 'breakfast' ||
-        type === 'secondBreakfast' ||
-        type === 'lunch' ||
-        type === 'tea' ||
-        type === 'dinner') &&
-      this.recipe
-    ) {
-      this.schedule[type].recipeId = this.recipe.id;
-      this.schedule[type].recipeName = this.recipe.name;
-      this.schedule[type].recipeImage = this.recipe.image;
-      this.schedule[type].calories = this.recipe.calories;
-      this.schedule[type].fats = this.recipe.fats;
-      this.schedule[type].proteins = this.recipe.proteins;
-      this.schedule[type].carbohydrates = this.recipe.carbohydrates;
-      this.schedule[type].time = this.mealTime.value;
-    }
+    this.correctAddedRecipe = false;
 
-    if (this.userWantUpdateProduct) {
-      this.getUserProducts();
-      setTimeout(() => {
-        this.updateUserProduct();
-      }, 100);
-    }
-
-    this.localStorageService.setItemToLocalStorage(
-      LocalStorageConsts.SCHEDULE,
-      this.schedule
+    let processEnded: boolean = false;
+    const type = this.mealTypes.find(
+      (mealType) => mealType.ang === this.typeOfMeal.value
     );
 
-    this.dialogRef.close(this.userProducts);
+    if (type && this.recipe && this.recipe.id) {
+      this.scheduleService
+        .addRecipeToSchedule(this.recipe.id, this.mealTime.value, type.pl)
+        .subscribe((res) => {
+          if (res.message === 'Dodano przepis do harmonogramu!') {
+            this.correctAddedRecipe = true;
+          }
+          processEnded = true;
+
+          if (this.userWantUpdateProduct) {
+            this.getUserProducts();
+            setTimeout(() => {
+              this.updateUserProduct();
+            }, 100);
+          }
+
+          if (processEnded) {
+            this.dialogRef.close({
+              product: this.userProducts,
+              correctAddedRecipe: this.correctAddedRecipe,
+            });
+          }
+        });
+    }
   }
 
   public setUpdateUserProducts(): void {

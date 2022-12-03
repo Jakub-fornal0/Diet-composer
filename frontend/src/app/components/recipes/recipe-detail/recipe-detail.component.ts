@@ -195,13 +195,26 @@ export class RecipeDetailComponent implements OnInit {
         data: this.recipe,
       })
       .afterClosed()
-      .subscribe((data: Product[]) => {
-        if (data) {
-          this.snackBar.open('Dodano do harmonogramu.', '', {
-            duration: 2000,
-          });
-          this.products = data;
+      .subscribe(
+        (data: { product: Product[]; correctAddedRecipe: boolean }) => {
+          if (data.correctAddedRecipe && data) {
+            this.snackBar.open('Dodano do harmonogramu.', '', {
+              duration: 2000,
+            });
+
+            if (data.product.length) {
+              this.products = data.product;
+            }
+          } else if (data) {
+            this.snackBar.open(
+              'Coś poszło nie tak! Nie dodano przepisu...',
+              '',
+              {
+                duration: 2000,
+              }
+            );
+          }
         }
-      });
+      );
   }
 }

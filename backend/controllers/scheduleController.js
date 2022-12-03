@@ -60,7 +60,7 @@ exports.wholeSchedule = async (req, res) => {
             array.recipeImage="http://localhost:3000/imagesRecipe/" + array.recipeImage + ".png";
           });
           let snacks = await snack.findAll({
-            attributes:["snackName", "calories", "fats", "proteins", "carbohydrates"],
+            attributes:["id","snackName", "calories", "fats", "proteins", "carbohydrates"],
             where:{
                 userId: userId,
             }
@@ -114,15 +114,8 @@ exports.deleteSchedule = async (req, res) => {
 exports.addToSchedule = async (req, res) => {
   try {
     const userId = jwt.decode(req.headers["x-access-token"]).id;
-    const { recipeId, time } = req.body;
+    const { recipeId, time, type } = req.body;
     let temp;
-    let type = await recipes.findOne({
-      attributes: ["category"],
-      where: {
-        id: recipeId,
-      },
-    });
-    type = type.category;
     switch (type) {
       case "śniadanie":
         temp = 1;
