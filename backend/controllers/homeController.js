@@ -186,6 +186,7 @@ exports.getRecipes = async (req, res) => {
     query = query.slice(0, query.length - 4);
     let OFFSET = (page - 1) * 12;
     const token = req.headers["x-access-token"];
+    if(page <= 0 || !page) return res.status(404).send({ message: "Nie odnaleziono przepisów" });
     if (!token & (query.length > 0)) {
       console.log("bez tokenu z filtrami");
       const data = await sequelize
@@ -399,7 +400,6 @@ exports.getRecipes = async (req, res) => {
 
 exports.getNumberOfRecipes = async (req, res) => {
   try {
-    console.log("keste");
     const NumberOfRecipes = await recipe.count();
     res.status(200).send({ NumberOfAllRecipes: NumberOfRecipes });
   } catch (error) {
