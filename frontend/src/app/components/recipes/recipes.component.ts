@@ -81,6 +81,7 @@ export class RecipesComponent implements OnInit {
     let params: string = '?page=';
     params += this.currentPage;
 
+    //if filters exist then add to params string
     if (this.filters) {
       params += this.filters;
     }
