@@ -30,6 +30,7 @@ exports.signup = async (req, res) => {
         .status(409)
         .send({ message: "Użytkownik o podanym adresie email już istnieje!" });
     }
+    //created user must have default value like '-'
     user
       .create({
         userName: userName,
@@ -71,6 +72,8 @@ exports.signin = async (req, res) => {
     const token = jwt.sign({ id: loggedUser.id }, process.env.ACCESS_TOKEN, {
       expiresIn: "1h",
     });
+
+    //TODO: REFRESH token in not used in this version
     const refreshToken = jwt.sign(
       { id: loggedUser.id },
       process.env.REFRESH_TOKEN
