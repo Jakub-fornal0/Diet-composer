@@ -67,7 +67,6 @@ exports.wholeSchedule = async (req, res) => {
                 userId: userId,
             }
           });
-          
         res.status(200).send({ breakfast, secondBreakfast, lunch, tea, dinner, snacks });
       }).catch((err) => {
         res.status(402).send({

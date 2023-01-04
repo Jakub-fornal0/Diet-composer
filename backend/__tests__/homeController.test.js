@@ -1,73 +1,11 @@
 const request = require("supertest");
-const app = require("../index.js");
-
-/*
-const createRequester = () => {
-    // it is necessary to reload ../server module after mocks are defined
-    const app = require('../serwer');
-    return supertest(app);
-};
-
-describe('users api', () => {
-    // always we want to use default defined modules as initial state
-    beforeEach(() => jest.resetModules());
-
-    it('getting users', async () => {
-        jest.doMock('../dbs', () => {
-            // ../db mock
-            return {
-                getUsers: () => ['mocked john', 'mocked ann', 'mocked matt']
-            };
-        });
-        // we need to create requester after mock is defined
-        const requester = createRequester();
-        const users = await requester.get('/backend/users');
-        expect(users.body[0]).toBe('mocked john');
-        expect(users.body[1]).toBe('mocked ann');
-        expect(users.body[2]).toBe('mocked matt');
-    });
-})
-*/
-
-/*const request = require('supertest');
-
-const app = require('../index');
-
-const User = require('../../models/User');*/
-
-/*
-import request from 'supertest';
-import makeApp from '../index';
-import { jest } from '@jest/globals'
-
-const connection = jest.fn();
-const app = makeApp({
-    connection
-});
-
-it("mocks entire module", async () => {
-    User = jest.fn();
-  expect(User.mock).toBeTruthy();
-});
-
-
-
-it("returns undefined and has been called correct number of times", () => {
-    const mock = jest.fn();
-  
-    const result = mock();
-  
-    expect(result).toBeUndefined();
-    expect(mock).toHaveBeenCalledTimes(1);
-    expect(mock).toHaveBeenCalledWith();
-  });
-
-  */
-
+const app = require("../app.js");
+const { User} = require("../seeders/fakerUserData");
 
 global.app = app;
 
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE2OTcyZGEyLWJkZmYtNGI1Mi1iMjY0LTM1ZjMxZWM3OTQzNiIsImlhdCI6MTY2OTU1MTkwOCwiZXhwIjoxNjY5NTU1NTA4fQ.1eCGdQKwth7zqv2ZbxI66Q7f-sphbegCle6kEOfbsrU";
+const user = User();
 
 describe('User login testing:', () => {
     it('Valid login and password of an existing user', (done) => {
@@ -304,4 +242,3 @@ describe('Guest recipes testing:', () => {
         });
     });
 });
-
