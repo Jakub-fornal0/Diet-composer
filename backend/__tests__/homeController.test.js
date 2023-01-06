@@ -1,10 +1,11 @@
-const request = require('supertest');
-
-const app = require('../index');
+const request = require("supertest");
+const app = require("../app.js");
+const { User} = require("../seeders/fakerUserData");
 
 global.app = app;
 
 const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE2OTcyZGEyLWJkZmYtNGI1Mi1iMjY0LTM1ZjMxZWM3OTQzNiIsImlhdCI6MTY2OTU1MTkwOCwiZXhwIjoxNjY5NTU1NTA4fQ.1eCGdQKwth7zqv2ZbxI66Q7f-sphbegCle6kEOfbsrU";
+const user = User();
 
 describe('User login testing:', () => {
     it('Valid login and password of an existing user', (done) => {
