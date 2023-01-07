@@ -1,3 +1,4 @@
+require("dotenv").config();
 const db = require("../config/SeqdataBase");
 const { Sequelize } = require("sequelize");
 const bcrypt = require("bcrypt");
@@ -26,29 +27,26 @@ exports.signup = async (req, res) => {
       },
     });
     if (existingUser.length) {
-      return res
-        .status(409)
+      return res.status(409)
         .send({ message: "Użytkownik o podanym adresie email już istnieje!" });
     }
-    user
-      .create({
-        userName: userName,
-        email: email,
-        password: password,
-        gender: "-",
-        dietPurpose: "-",
-        physicalActivity: "-",
-      })
-      .then(() => {
-        res.status(201).send({ message: "Stworzono nowego użytkownika!" });
-      })
-      .catch((err) => {
-        res.status(500).send({
-          message:
-            err.message ||
-            "Powstał nieokreślony błąd podczas tworzenia nowego użytkownika",
-        });
+    user.create({
+      userName: userName,
+      email: email,
+      password: password,
+      gender: "-",
+      dietPurpose: "-",
+      physicalActivity: "-",
+    })
+    .then(() => {
+      res.status(201).send({ message: "Stworzono nowego użytkownika!" });
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message ||
+          "Powstał nieokreślony błąd podczas tworzenia nowego użytkownika",
       });
+    });
   } catch (error) {
     res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
   }
@@ -71,6 +69,8 @@ exports.signin = async (req, res) => {
     const token = jwt.sign({ id: loggedUser.id }, process.env.ACCESS_TOKEN, {
       expiresIn: "1h",
     });
+
+    //TODO: REFRESH token in not used in this version
     const refreshToken = jwt.sign(
       { id: loggedUser.id },
       process.env.REFRESH_TOKEN
@@ -108,20 +108,16 @@ exports.getSelectRecipe = async (req, res) => {
       where: {
         id: recipeId,
       },
-      include: [
-        {
-          model: products,
-          as: "products",
-        },
-        {
-          model: recipeSteps,
-
-          attributes: ["step", "name"],
-        },
-      ],
+      include: [{
+        model: products,
+        as: "products",
+      },
+      {
+        model: recipeSteps,
+        attributes: ["step", "name"],
+      }],
     });
-    data.image = "http://localhost:3000/imagesRecipe/" + data.image + ".png";
-
+    data.image = "http://localhost:"+process.env.PORT+"/imagesRecipe/" + data.image + ".png";
     res.status(200).send({ RecipeDetail: data });
   } catch (error) {
     res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
@@ -406,32 +402,3 @@ exports.getNumberOfRecipes = async (req, res) => {
     res.status(500).send({ message: "Błąd wewnętrzny serwera!" });
   }
 };
-/*
-SELECT DISTINCT   `recipes`.`id`, `recipes`.`image`, `recipes`.`name`, `recipes`.`description`, `recipes`.`cookingTime`, `recipes`.`portions`, `recipes`.`level`, `recipes`.`category`, count(1) as `NumberOfProducts` FROM recipeproducts
-INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id`
-WHERE productId IN (SELECT DISTINCT productID FROM userproducts 
-WHERE userId = '16972da2-bdff-4b52-b264-35f31ec79436') AND  category = 'II śniadanie'  
-GROUP BY recipeId ORDER BY `NumberOfProducts` DESC LIMIT 3 OFFSET 0;
-*/
-
-/*
-Select distinct  *, count(1) as `liczba-trafien` from recipeproducts
-Inner join recipes on `recipeproducts`.`recipeId` = `recipes`.`id`
-where productId in  (select distinct productID from userproducts where userId = '16972da2-bdff-4b52-b264-35f31ec79436') Group by recipeId order by `liczba-trafien` DESC;
-*/
-
-/*
-SELECT DISTINCT `recipes`.`id`, `recipes`.`image`, `recipes`.`name`, `recipes`.`description`, `recipes`.`cookingTime`, `recipes`.`portions`, `recipes`.`level`, `recipes`.`category`, count(1) as `NumberOfProducts` FROM recipeproducts
-INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id`
-WHERE productId IN (SELECT DISTINCT productID FROM userproducts 
-WHERE userId = '16972da2-bdff-4b52-b264-35f31ec79436') 
-GROUP BY recipeId ORDER BY `NumberOfProducts` DESC LIMIT 3 OFFSET 0;
-*/
-
-/*
-SELECT DISTINCT   `recipes`.`id`, `recipes`.`image`, `recipes`.`name`, `recipes`.`description`, `recipes`.`cookingTime`, `recipes`.`portions`, `recipes`.`level`, `recipes`.`category`, count(1) as `NumberOfProducts` FROM recipeproducts
-INNER JOIN recipes ON `recipeproducts`.`recipeId` = `recipes`.`id`
-WHERE productId IN (SELECT DISTINCT productID FROM userproducts 
-WHERE userId = '16972da2-bdff-4b52-b264-35f31ec79436') AND  category = 'II śniadanie'  
-GROUP BY recipeId ORDER BY `NumberOfProducts` DESC LIMIT 3 OFFSET 0;
-*/

@@ -13,7 +13,7 @@ const sequelize = new Sequelize(
       max: 10,
       min: 0,
       acquire: 30000,
-      idle: 10000,
+      idle: 0,
     },
   }
 );
@@ -68,6 +68,7 @@ try {
   db.recipes.hasMany(db.mealData);
   db.mealData.belongsTo(db.recipes);
 
+  //jeden do wielu (użytkownik/przekąski)
   db.users.hasMany(db.snackMealData, {onUpdate: 'CASCADE', onDelete: 'CASCADE'});
   db.snackMealData.belongsTo(db.users, {foreignKey: 'userId', as: 'snacks'});
 
