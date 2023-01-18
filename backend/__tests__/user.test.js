@@ -115,17 +115,4 @@ describe("User model unit tests", () => {
     expect(user.carbohydratesDemand).toBeGreaterThanOrEqual(0);
     expect(user.carbohydratesDemand).not.toBeNull();
   });
-  /*
-  describe('Associations tests', () => {
-    const Recipes = 'some dummy company'
-    const User = UserModel(sequelize, dataTypes);
-    console.log("to są asocjacja: ", User.associate);
-    beforeAll(() => {
-      User.associate({ Recipes })
-    })
-
-    it('defined a belongsTo association with Company', () => {
-      expect(User.hasMany).toBeCalledWith(Recipes);
-    })
-  })*/
 });
