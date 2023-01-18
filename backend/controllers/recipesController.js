@@ -14,7 +14,6 @@ const products = db.products;
 
 exports.addRecipes = async (req, res) => {
   try {
-    //photos saved in the database must have a random name
     var fileName = crypto.randomBytes(20).toString("hex");
     const Engine = (Name) => {
       return multer.diskStorage({
@@ -132,7 +131,6 @@ exports.addRecipes = async (req, res) => {
   }
 };
 
-//TODO: Fix recipe update. An error is returned when updating without a picture.
 exports.updateRecipes = async (req, res) => {
   try {
     var fileName = crypto.randomBytes(20).toString("hex");
