@@ -12,6 +12,7 @@ exports.wholeSchedule = async (req, res) => {
     let meals = await mealData.findAll({
       attributes: {
         exclude: ["id", "userId"],
+        //Query to return scheduele is like similar to INNNER JOIN so we need include a few specyfic column
         include: [
           [Sequelize.col("recipe.name"), "recipeName"],
           [Sequelize.col("recipe.image"), "recipeImage"],
@@ -66,7 +67,6 @@ exports.wholeSchedule = async (req, res) => {
                 userId: userId,
             }
           });
-          
         res.status(200).send({ breakfast, secondBreakfast, lunch, tea, dinner, snacks });
       }).catch((err) => {
         res.status(402).send({

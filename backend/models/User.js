@@ -1,6 +1,11 @@
 require("dotenv").config();
 const { DataTypes } = require("sequelize");
 const useBcrypt = require("sequelize-bcrypt");
+const {products} = require("../models/Product.js");
+const {userProducts} = require("../models/UserProduct.js");
+const {recipes} = require("../models/Recipe.js");
+const {mealData} = require("../models/MealData.js");
+const {snackMealData} = require("../models/SnackMealData.js");
 
 module.exports = (sequelize, Sequelize) => {
   const options = {
@@ -71,14 +76,8 @@ module.exports = (sequelize, Sequelize) => {
       physicalActivity: {
         type: DataTypes.ENUM,
         values: [
-          "brak ćwiczeń",
-          "znikoma",
-          "mała",
-          "umiarkowana",
-          "duża",
-          "bardzo duża",
-          "-",
-        ],
+          "brak ćwiczeń", "znikoma", "mała", "umiarkowana",
+          "duża", "bardzo duża", "-",],
       },
       BMI: {
         type: DataTypes.FLOAT,

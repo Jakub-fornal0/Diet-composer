@@ -81,6 +81,7 @@ export class ProductsComponent implements OnInit {
     this.productIsChosen = false;
     this.productDoesntExist = false;
 
+    //check product is string or object
     const productName =
       typeof this.productForm.get('product')?.value === 'string'
         ? this.productForm.get('product')?.value

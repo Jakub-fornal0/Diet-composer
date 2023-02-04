@@ -116,6 +116,11 @@ $register-button-color: white;
         padding-top: 40px;
       }
 
+      h3 {
+        font-weight: 500;
+        text-transform: uppercase;
+      }
+
       .app-signin__card--register-button {
         border: none;
         outline: none;

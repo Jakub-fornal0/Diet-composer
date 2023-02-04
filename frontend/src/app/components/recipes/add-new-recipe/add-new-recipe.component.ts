@@ -85,6 +85,7 @@ export class AddNewRecipeComponent implements OnInit {
   }
 
   private checkEditOrCreate(): void {
+    //if active route have recipe Id then update recipe or add new recipe
     this.activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       if (paramMap.has('recipeId')) {
         this.mode = 'edit';

@@ -275,7 +275,7 @@ exports.updateRecipes = async (req, res) => {
 };
   
 
-
+//Sequalize don't support bulk delete so we have to do it ourselves
 exports.deleteRecipes = async (req, res) => {
   try {
     const userId = jwt.decode(req.headers["x-access-token"]).id;
