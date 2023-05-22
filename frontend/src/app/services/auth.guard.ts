@@ -17,22 +17,18 @@ export class AuthGuard implements CanActivate {
     private sessionStorageService: SessionStorageService
   ) {}
 
-  public canActivate(
-    route: ActivatedRouteSnapshot
-  ):
-    | boolean
-    | UrlTree
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree> {
+  public canActivate(route: ActivatedRouteSnapshot): boolean {
     this.sessionStorageService.clearSessionStorage();
+    const requiredAuth = route.data['requiredAuth'];
+
     if (this.authService.userIsAuth()) {
-      if (route.data['requiredAuth'] == false) {
+      if (!requiredAuth) {
         this.router.navigate(['/']);
         return false;
       }
       return true;
     } else {
-      if (route.data['requiredAuth'] == true) {
+      if (requiredAuth) {
         this.router.navigate(['/login']);
         return false;
       }

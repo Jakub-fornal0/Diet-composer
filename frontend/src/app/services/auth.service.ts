@@ -20,10 +20,10 @@ import { Token } from '../interfaces/token.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private apiURL = environment.apiURL;
-  private authStatusListener = new Subject<boolean>();
   public userProfile = new BehaviorSubject<UserProfile | null>(null);
   public jwtService: JwtHelperService = new JwtHelperService();
+  private apiURL = environment.apiURL;
+  private authStatusListener = new Subject<boolean>();
 
   constructor(private http: HttpClient) {}
 
@@ -34,9 +34,12 @@ export class AuthService {
   public login(loginData: loginData): Observable<any> {
     return this.http.post<any>(`${this.apiURL}/signin`, loginData).pipe(
       map((data) => {
-        let token = { token: data.token } as Token;
+        const token = { token: data.token } as Token;
+        const userInfo = this.jwtService.decodeToken(
+          token.token
+        ) as UserProfile;
+
         localStorage.setItem(LocalStorageConsts.TOKEN, JSON.stringify(token));
-        let userInfo = this.jwtService.decodeToken(token.token) as UserProfile;
         this.userProfile.next(userInfo);
         this.authStatusListener.next(true);
         return true;
@@ -66,16 +69,13 @@ export class AuthService {
   }
 
   public userIsAuth(): boolean {
-    this.getAccessToken();
     let userProfile = this.userProfile.getValue();
-    if (!this.getAccessToken()) {
-      this.authStatusListener.next(false);
-      return false;
-    }
+
     if (userProfile) {
       this.authStatusListener.next(true);
       return true;
     }
+
     this.authStatusListener.next(false);
     return false;
   }

@@ -12,9 +12,8 @@ export class SessionStorageService {
     const dataFromStorage = sessionStorage.getItem(key);
     if (dataFromStorage) {
       return JSON.parse(dataFromStorage);
-    } else {
-      return undefined;
     }
+    return undefined;
   }
 
   public removeItemFromSessionStorage(key: string): void {
