@@ -11,5 +11,5 @@ export class HomeComponent implements OnInit {
     this.sessionStorageService.clearSessionStorage();
   }
 
-  ngOnInit(): void {}
+  public ngOnInit(): void {}
 }
