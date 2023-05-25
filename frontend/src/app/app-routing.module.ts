@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
-import { HomeComponent } from './components/home/home.component';
+import { AccountSettingsComponent } from './layouts/account-settings/account-settings.component';
+import { HomeComponent } from './layouts/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ProductsComponent } from './components/products/products.component';
-import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-new-recipe.component';
-import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe-detail.component';
-import { RecipesComponent } from './components/recipes/recipes.component';
-import { ScheduleComponent } from './components/schedule/schedule.component';
-import { SigninComponent } from './components/signin/signin.component';
-import { SignupComponent } from './components/signup/signup.component';
+import { ProductsComponent } from './layouts/products/products.component';
+import { AddNewRecipeComponent } from './layouts/recipes/add-new-recipe/add-new-recipe.component';
+import { RecipeDetailComponent } from './layouts/recipes/recipe-detail/recipe-detail.component';
+import { RecipesComponent } from './layouts/recipes/recipes.component';
+import { ScheduleComponent } from './layouts/schedule/schedule.component';
+import { SigninComponent } from './core/signin/signin.component';
+import { SignupComponent } from './core/signup/signup.component';
 import { AuthGuard } from './services/auth.guard';
 
 const routes: Routes = [

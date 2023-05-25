@@ -12,9 +12,8 @@ export class LocalStorageService {
     const dataFromStorage = localStorage.getItem(key);
     if (dataFromStorage) {
       return JSON.parse(dataFromStorage);
-    } else {
-      return undefined;
     }
+    return undefined;
   }
 
   public removeItemFromLocalStorage(key: string): void {

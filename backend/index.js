@@ -35,7 +35,7 @@ app.use("/product", productsRoutes);
 app.use("/recipes", recipesRoutes);
 app.use("/schedule", scheduleRoutes);
 
-//const port = process.env.PORT || 5000;
-//app.listen(port, () => console.log("Serwer uruchomiony"));
+const port = process.env.PORT || 5000;
+app.listen(port, () => console.log("Serwer uruchomiony"));
 
 module.exports = app;
