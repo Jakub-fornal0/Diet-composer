@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { AccountSettingsComponent } from './components/account-settings/account-settings.component';
 import { HomeComponent } from './components/home/home.component';
 import { NotFoundComponent } from './components/not-found/not-found.component';
-import { ProductsComponent } from './components/products/products.component';
+import { ProductsComponent } from './layouts/products/products.component';
 import { AddNewRecipeComponent } from './components/recipes/add-new-recipe/add-new-recipe.component';
 import { RecipeDetailComponent } from './components/recipes/recipe-detail/recipe-detail.component';
 import { RecipesComponent } from './components/recipes/recipes.component';
